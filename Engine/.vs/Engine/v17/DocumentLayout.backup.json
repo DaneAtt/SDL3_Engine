@@ -46,8 +46,7 @@
               "RelativeToolTip": "WindowRender.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-11T16:51:11.516Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T16:51:11.516Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "WindowRender.cpp",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAABcAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-11T16:39:38.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T16:39:38.947Z"
             },
             {
               "$type": "Document",
@@ -72,8 +70,7 @@
               "RelativeToolTip": "Engine.cpp",
               "ViewState": "AgIAACcAAAAAAAAAAAAAADMAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-11T13:02:57.197Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T13:02:57.197Z"
             },
             {
               "$type": "Document",
@@ -85,8 +82,7 @@
               "RelativeToolTip": "Engine.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-11T12:56:03.983Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T12:56:03.983Z"
             },
             {
               "$type": "Document",
@@ -94,12 +90,11 @@
               "Title": "TextureManager.h",
               "DocumentMoniker": "D:\\SDL3_Engine\\Engine\\TextureManager.h",
               "RelativeDocumentMoniker": "TextureManager.h",
-              "ToolTip": "D:\\SDL3_Engine\\Engine\\TextureManager.h*",
-              "RelativeToolTip": "TextureManager.h*",
+              "ToolTip": "D:\\SDL3_Engine\\Engine\\TextureManager.h",
+              "RelativeToolTip": "TextureManager.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-11T09:58:39.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T09:58:39.952Z"
             },
             {
               "$type": "Document",

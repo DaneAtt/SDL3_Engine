@@ -141,6 +141,7 @@ xcopy /y /d "$(ProjectDir)WindowRender.h" "D:\Game_cpp\Game\dependencies\Engine\
     <ClCompile Include="WindowRender.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ECS.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineAPI.h" />
     <ClInclude Include="TextureManager.h" />
