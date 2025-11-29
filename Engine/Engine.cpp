@@ -1,6 +1,8 @@
 #include "Engine.h"
-#include "WindowRender.h"
+#include "SDL3/sdl.h"
+#include "SDLWrapper.h"
 #include "TextureManager.h"
+#include "WindowRender.h"
 
 Engine::Engine()
 {
@@ -14,30 +16,13 @@ Engine::~Engine()
 	delete textureManager;
 }
 
-bool Engine::init(const char* title, int w, int h, int xpos, int ypos, WindowMode flag)
+bool Engine::init(const char* title, int w, int h, int xpos, int ypos, Flags flag)
 {
-	SDL_WindowFlags sdlFlag;
 
-	switch(flag)
-	{
-		case WindowMode::FULLSCREEN:
-		{
-			sdlFlag = SDL_WINDOW_FULLSCREEN;
-			break;
-		}
-		case WindowMode::BORDERLESS:
-		{
-			sdlFlag = SDL_WINDOW_BORDERLESS;
-			break;
-		}
-		default:
-		{
-			sdlFlag = SDL_WINDOW_RESIZABLE;
-			break;
-		}
-	}
+	int sdlXPos = (xpos == CENTERED) ? SDL_WINDOWPOS_CENTERED : xpos;
+	int sdlYPos = (ypos == CENTERED) ? SDL_WINDOWPOS_CENTERED : ypos;
 
-	if (windowRender->init(title, w, h, xpos, ypos, sdlFlag))
+	if (windowRender->init(title, w, h, sdlXPos, sdlYPos, flag))
 	{
 		isRunning = true;
 		return true;
@@ -70,6 +55,5 @@ void Engine::clean()
 {
 	windowRender->clean();
 }
-
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineAPI.h"
-#include <SDL3/SDL.h>
+#include "EngineTypes.h"
+#include "SDLWrapper.h"
 
 class ENGINE_API WindowRender
 {
@@ -8,16 +9,16 @@ public:
 	WindowRender();
 	~WindowRender();
 
-	bool init(const char* title, int w, int h, int xpos, int ypos, SDL_WindowFlags flag);
+	bool init(const char* title, int w, int h, int xpos, int ypos, Flags flag);
 	void clearRenderer();
 	void presentRenderer();
 	void clean();
 
-	SDL_Renderer* getRenderer() const { return renderer; };
+	Renderer* getRenderer() const { return renderer; }
 
 	bool isRunning = false;
 
 private:
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
+	Window* window = nullptr;
+	Renderer* renderer = nullptr;
 };

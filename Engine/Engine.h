@@ -1,10 +1,12 @@
 #pragma once
 #include "EngineAPI.h"
-#include "SDL3_image/SDL_image.h"
-#include "SDL3/SDL.h"
+#include "EngineTypes.h"
 
 class WindowRender;
 class TextureManager;
+class Texture;
+struct Rect;
+enum class FlipMode;
 
 enum class WindowMode
 {
@@ -19,17 +21,14 @@ public:
     ~Engine();
 
     // ========== CORE ==========
-    bool init(const char* title, int w, int h, 
-        int xpos = SDL_WINDOWPOS_CENTERED,
-        int ypos = SDL_WINDOWPOS_CENTERED,
-        WindowMode mode = WindowMode::RESIZABLE);
+    bool init(const char* title, int w, int h, int xpos, int ypos, Flags flag = Flags::RESIZABLE);
     void update();
     void handleEvents();
     void clean();
 
     // ========== WRAPPERS (80% use cases) ==========
-    SDL_Texture* loadTexture(const char* path);
-    void drawTexture(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip);
+    Texture* loadTexture(const char* path);
+    void drawTexture(Texture* tex, const Rect* srcRect, const Rect* desRect, FlipMode flip);
     void clearRender();
     void presentRender();
 
