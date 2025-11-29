@@ -1,18 +1,4 @@
-﻿  Engine.cpp
-D:\SDL3_Engine\Engine\TextureManager.h(20,27): warning C4251: 'TextureManager::textures': 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
-  (compiling source file 'Engine.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
-      see declaration of 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>'
-  
-  TextureManager.cpp
-D:\SDL3_Engine\Engine\TextureManager.h(20,27): warning C4251: 'TextureManager::textures': 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
-  (compiling source file 'TextureManager.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
-      see declaration of 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>'
-  
-  WindowRender.cpp
-  Generating Code...
-     Creating library D:\SDL3_Engine\Engine\x64\Debug\Engine.lib and object D:\SDL3_Engine\Engine\x64\Debug\Engine.exp
+﻿     Creating library D:\SDL3_Engine\Engine\x64\Debug\Engine.lib and object D:\SDL3_Engine\Engine\x64\Debug\Engine.exp
   Project1.vcxproj -> D:\SDL3_Engine\Engine\x64\Debug\Engine.dll
   D:\SDL3_Engine\Engine\x64\Debug\Engine.dll
   1 File(s) copied
@@ -20,6 +6,5 @@ D:\SDL3_Engine\Engine\TextureManager.h(20,27): warning C4251: 'TextureManager::t
   1 File(s) copied
   0 File(s) copied
   0 File(s) copied
-  D:\SDL3_Engine\Engine\TextureManager.h
-  1 File(s) copied
+  0 File(s) copied
   0 File(s) copied

@@ -74,7 +74,12 @@ public:
 		return groupBitset[mGroup];
 	}
 
-	void addGroup(Group mGroup);
+	void addGroup(Group mGroup)
+	{
+		groupBitset[mGroup] = true;
+		manager.AddToGroup(this, mGroup);
+	}
+
 	void delGroup(Group mGroup)
 	{
 		groupBitset[mGroup] = false;
@@ -82,7 +87,7 @@ public:
 
 	template <typename T> bool hasComponent() const
 	{
-		return componentBitset[getComponentTypeID<T>()]
+		return componentBitset[getComponentTypeID<T>()];
 	}
 
 	template <typename T, typename... TArgs> 
@@ -148,11 +153,29 @@ public:
 		}
 
 		entities.erase(std::remove_if(std::begin(entities), std::end(entities),
-			[](const std::unique_ptr<Entity> &mEntity) //reference cause unique ptr can't be copied
+			[](const std::unique_ptr<Entity>& mEntity) //reference cause unique ptr can't be copied
 			{
 				return !mEntity->isActive();
 			}),
 			std::end(entities));
+	}
+
+	void AddToGroup(Entity* mEntity, Group mGroup)
+	{
+		groupedEntities[mGroup].emplace_back(mEntity);
+	}
+
+	std::vector<Entity*>& getGroup(Group mGroup)
+	{
+		return groupedEntities[mGroup];
+	}
+
+	Entity& addEntity()
+	{
+		Entity* e = new Entity(*this);
+		std::unique_ptr<Entity> uPtr{ e };
+		entities.emplace_back(std::move(uPtr));
+		return *e;
 	}
 
 private:
