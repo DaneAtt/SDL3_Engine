@@ -1,46 +1,38 @@
 #pragma once
 #include "EngineAPI.h"
 #include "EngineTypes.h"
+#include "ECS.h"
+#include "SDL3/SDL.h"
 
 class WindowRender;
 class TextureManager;
-class Texture;
-struct Rect;
-enum class FlipMode;
-
-enum class WindowMode
-{
-    FULLSCREEN,
-    RESIZABLE,
-    BORDERLESS
-};
+class AssetManager;
+class AnimationJSON;
 
 class ENGINE_API Engine {
 public:
     Engine();
     ~Engine();
 
-    // ========== CORE ==========
-    bool init(const char* title, int w, int h, int xpos, int ypos, Flags flag = Flags::RESIZABLE);
+    bool init(const char* title, int w, int h, int xpos, int ypos);
     void update();
     void handleEvents();
     void clean();
 
-    // ========== WRAPPERS (80% use cases) ==========
-    Texture* loadTexture(const char* path);
-    void drawTexture(Texture* tex, const Rect* srcRect, const Rect* desRect, FlipMode flip);
-    void clearRender();
-    void presentRender();
 
+    static TextureManager* getTextureManager() { return textureManager; }
+    static WindowRender* getWindowRender() { return windowRender; }
+    static AssetManager* getAssetManager() { return assetManager; }
+    static Manager* getManager() { return manager; }
+    static AnimationJSON* getJSON() { return json; }
 
-
-    // ========== SUBSYSTEM ACCESS (Advanced use) ==========
-    TextureManager* getTextureManager() const { return textureManager; };
-    WindowRender* getWindowRender() const { return windowRender; };
-
-    bool isRunning = false;
+    static bool isRunning;
+    static SDL_Event event;
 
 private:
-    WindowRender* windowRender;
-    TextureManager* textureManager;
+    static WindowRender* windowRender;
+    static TextureManager* textureManager;
+    static AssetManager* assetManager;
+    static Manager* manager;
+    static AnimationJSON* json;
 };

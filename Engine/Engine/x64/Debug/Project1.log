@@ -1,27 +1,142 @@
-﻿  Engine.cpp
-D:\SDL3_Engine\Engine\TextureManager.h(24,24): warning C4251: 'TextureManager::textures': 'std::vector<Texture *,std::allocator<Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
+﻿  AnimationJSON.cpp
+D:\SDL3_Engine\Engine\Animation.h(23,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+  (compiling source file 'AnimationJSON.cpp')
+  
+D:\SDL3_Engine\Engine\AnimationJSON.h(21,7): warning C4251: 'AnimationJSON::j': 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>' needs to have dll-interface to be used by clients of 'AnimationJSON'
+  (compiling source file 'AnimationJSON.cpp')
+      D:\SDL3_Engine\Engine\packages\nlohmann.json.3.12.0\build\native\include\nlohmann\json.hpp(20112,7):
+      see declaration of 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>'
+  
+D:\SDL3_Engine\Engine\AnimationJSON.h(22,35): warning C4251: 'AnimationJSON::animations': 'std::map<std::string,Animation,std::less<std::string>,std::allocator<std::pair<const std::string,Animation>>>' needs to have dll-interface to be used by clients of 'AnimationJSON'
+  (compiling source file 'AnimationJSON.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\map(72,7):
+      see declaration of 'std::map<std::string,Animation,std::less<std::string>,std::allocator<std::pair<const std::string,Animation>>>'
+  
+D:\SDL3_Engine\Engine\AnimationJSON.cpp(18,22): warning C4101: 'destRect': unreferenced local variable
+  AssetManager.cpp
+D:\SDL3_Engine\Engine\TextureManager.h(22,28): warning C4251: 'TextureManager::textures': 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
+  (compiling source file 'AssetManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>'
+  
+D:\SDL3_Engine\Engine\AssetManager.h(22,38): warning C4251: 'AssetManager::textures': 'std::map<std::string,SDL_Texture *,std::less<std::string>,std::allocator<std::pair<const std::string,SDL_Texture *>>>' needs to have dll-interface to be used by clients of 'AssetManager'
+  (compiling source file 'AssetManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\map(72,7):
+      see declaration of 'std::map<std::string,SDL_Texture *,std::less<std::string>,std::allocator<std::pair<const std::string,SDL_Texture *>>>'
+  
+  ECS.cpp
+D:\SDL3_Engine\Engine\ECS.h(116,42): warning C4251: 'Entity::components': 'std::vector<std::unique_ptr<Component,std::default_delete<Component>>,std::allocator<std::unique_ptr<Component,std::default_delete<Component>>>>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'ECS.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<std::unique_ptr<Component,std::default_delete<Component>>,std::allocator<std::unique_ptr<Component,std::default_delete<Component>>>>'
+  
+D:\SDL3_Engine\Engine\ECS.h(119,18): warning C4251: 'Entity::componentBitset': 'std::bitset<32>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'ECS.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\bitset(72,7):
+      see declaration of 'std::bitset<32>'
+  
+D:\SDL3_Engine\Engine\ECS.h(120,14): warning C4251: 'Entity::groupBitset': 'std::bitset<32>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'ECS.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\bitset(72,7):
+      see declaration of 'std::bitset<32>'
+  
+D:\SDL3_Engine\Engine\ECS.h(187,39): warning C4251: 'Manager::entities': 'std::vector<std::unique_ptr<Entity,std::default_delete<Entity>>,std::allocator<std::unique_ptr<Entity,std::default_delete<Entity>>>>' needs to have dll-interface to be used by clients of 'Manager'
+  (compiling source file 'ECS.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<std::unique_ptr<Entity,std::default_delete<Entity>>,std::allocator<std::unique_ptr<Entity,std::default_delete<Entity>>>>'
+  
+  Engine.cpp
+D:\SDL3_Engine\Engine\ECS.h(116,42): warning C4251: 'Entity::components': 'std::vector<std::unique_ptr<Component,std::default_delete<Component>>,std::allocator<std::unique_ptr<Component,std::default_delete<Component>>>>' needs to have dll-interface to be used by clients of 'Entity'
   (compiling source file 'Engine.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
-      see declaration of 'std::vector<Texture *,std::allocator<Texture *>>'
+      see declaration of 'std::vector<std::unique_ptr<Component,std::default_delete<Component>>,std::allocator<std::unique_ptr<Component,std::default_delete<Component>>>>'
   
-  SDLWrapper.cpp
+D:\SDL3_Engine\Engine\ECS.h(119,18): warning C4251: 'Entity::componentBitset': 'std::bitset<32>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'Engine.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\bitset(72,7):
+      see declaration of 'std::bitset<32>'
+  
+D:\SDL3_Engine\Engine\ECS.h(120,14): warning C4251: 'Entity::groupBitset': 'std::bitset<32>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'Engine.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\bitset(72,7):
+      see declaration of 'std::bitset<32>'
+  
+D:\SDL3_Engine\Engine\ECS.h(187,39): warning C4251: 'Manager::entities': 'std::vector<std::unique_ptr<Entity,std::default_delete<Entity>>,std::allocator<std::unique_ptr<Entity,std::default_delete<Entity>>>>' needs to have dll-interface to be used by clients of 'Manager'
+  (compiling source file 'Engine.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<std::unique_ptr<Entity,std::default_delete<Entity>>,std::allocator<std::unique_ptr<Entity,std::default_delete<Entity>>>>'
+  
+D:\SDL3_Engine\Engine\TextureManager.h(22,28): warning C4251: 'TextureManager::textures': 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
+  (compiling source file 'Engine.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>'
+  
+D:\SDL3_Engine\Engine\AssetManager.h(22,38): warning C4251: 'AssetManager::textures': 'std::map<std::string,SDL_Texture *,std::less<std::string>,std::allocator<std::pair<const std::string,SDL_Texture *>>>' needs to have dll-interface to be used by clients of 'AssetManager'
+  (compiling source file 'Engine.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\map(72,7):
+      see declaration of 'std::map<std::string,SDL_Texture *,std::less<std::string>,std::allocator<std::pair<const std::string,SDL_Texture *>>>'
+  
+D:\SDL3_Engine\Engine\Animation.h(23,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+  (compiling source file 'Engine.cpp')
+  
+D:\SDL3_Engine\Engine\AnimationJSON.h(21,7): warning C4251: 'AnimationJSON::j': 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>' needs to have dll-interface to be used by clients of 'AnimationJSON'
+  (compiling source file 'Engine.cpp')
+      D:\SDL3_Engine\Engine\packages\nlohmann.json.3.12.0\build\native\include\nlohmann\json.hpp(20112,7):
+      see declaration of 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>'
+  
+D:\SDL3_Engine\Engine\AnimationJSON.h(22,35): warning C4251: 'AnimationJSON::animations': 'std::map<std::string,Animation,std::less<std::string>,std::allocator<std::pair<const std::string,Animation>>>' needs to have dll-interface to be used by clients of 'AnimationJSON'
+  (compiling source file 'Engine.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\map(72,7):
+      see declaration of 'std::map<std::string,Animation,std::less<std::string>,std::allocator<std::pair<const std::string,Animation>>>'
+  
   TextureManager.cpp
-D:\SDL3_Engine\Engine\TextureManager.h(24,24): warning C4251: 'TextureManager::textures': 'std::vector<Texture *,std::allocator<Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
+D:\SDL3_Engine\Engine\TextureManager.h(22,28): warning C4251: 'TextureManager::textures': 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>' needs to have dll-interface to be used by clients of 'TextureManager'
   (compiling source file 'TextureManager.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
-      see declaration of 'std::vector<Texture *,std::allocator<Texture *>>'
+      see declaration of 'std::vector<SDL_Texture *,std::allocator<SDL_Texture *>>'
   
+D:\SDL3_Engine\Engine\ECS.h(116,42): warning C4251: 'Entity::components': 'std::vector<std::unique_ptr<Component,std::default_delete<Component>>,std::allocator<std::unique_ptr<Component,std::default_delete<Component>>>>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'TextureManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<std::unique_ptr<Component,std::default_delete<Component>>,std::allocator<std::unique_ptr<Component,std::default_delete<Component>>>>'
+  
+D:\SDL3_Engine\Engine\ECS.h(119,18): warning C4251: 'Entity::componentBitset': 'std::bitset<32>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'TextureManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\bitset(72,7):
+      see declaration of 'std::bitset<32>'
+  
+D:\SDL3_Engine\Engine\ECS.h(120,14): warning C4251: 'Entity::groupBitset': 'std::bitset<32>' needs to have dll-interface to be used by clients of 'Entity'
+  (compiling source file 'TextureManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\bitset(72,7):
+      see declaration of 'std::bitset<32>'
+  
+D:\SDL3_Engine\Engine\ECS.h(187,39): warning C4251: 'Manager::entities': 'std::vector<std::unique_ptr<Entity,std::default_delete<Entity>>,std::allocator<std::unique_ptr<Entity,std::default_delete<Entity>>>>' needs to have dll-interface to be used by clients of 'Manager'
+  (compiling source file 'TextureManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(442,7):
+      see declaration of 'std::vector<std::unique_ptr<Entity,std::default_delete<Entity>>,std::allocator<std::unique_ptr<Entity,std::default_delete<Entity>>>>'
+  
+  Vector2D.cpp
   WindowRender.cpp
   Generating Code...
      Creating library D:\SDL3_Engine\Engine\x64\Debug\Engine.lib and object D:\SDL3_Engine\Engine\x64\Debug\Engine.exp
   Project1.vcxproj -> D:\SDL3_Engine\Engine\x64\Debug\Engine.dll
+          1 file(s) copied.
+  D:\SDL3_Engine\Engine\Animation.h
+  D:\SDL3_Engine\Engine\AnimationJSON.h
+  D:\SDL3_Engine\Engine\AssetManager.h
+  D:\SDL3_Engine\Engine\Components.h
+  D:\SDL3_Engine\Engine\ECS.h
+  D:\SDL3_Engine\Engine\Engine.h
+  D:\SDL3_Engine\Engine\EngineAPI.h
+  D:\SDL3_Engine\Engine\EngineTypes.h
+  D:\SDL3_Engine\Engine\Header.h
+  D:\SDL3_Engine\Engine\KeyboardController.h
+  D:\SDL3_Engine\Engine\SDLWrapper.h
+  D:\SDL3_Engine\Engine\SpriteComponent.h
+  D:\SDL3_Engine\Engine\TextureManager.h
+  D:\SDL3_Engine\Engine\TransformComponent.h
+  D:\SDL3_Engine\Engine\Vector2D.h
+  D:\SDL3_Engine\Engine\WindowRender.h
+  16 File(s) copied
   D:\SDL3_Engine\Engine\x64\Debug\Engine.dll
   1 File(s) copied
-  D:\SDL3_Engine\Engine\x64\Debug\Engine.lib
-  1 File(s) copied
-  0 File(s) copied
-  0 File(s) copied
-  0 File(s) copied
-  0 File(s) copied
-  0 File(s) copied
-  0 File(s) copied

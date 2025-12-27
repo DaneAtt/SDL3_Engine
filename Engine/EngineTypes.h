@@ -21,3 +21,9 @@ enum class ENGINE_API Flags
 };
 
 constexpr int CENTERED = -1;
+
+enum class ENGINE_API Key
+{
+	UP,
+	DOWN
+};

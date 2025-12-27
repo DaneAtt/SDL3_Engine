@@ -1,13 +1,9 @@
 #pragma once
 #include "EngineAPI.h"
-#include "EngineTypes.h"
-#include "SDLWrapper.h"
+#include "SDL3/sdl.h"
 #include "WindowRender.h"
 #include <iostream>
 #include <vector>
-
-struct SDL_FRect;
-enum SDL_FlipMode;
 
 class ENGINE_API TextureManager
 {
@@ -15,14 +11,13 @@ public:
 	TextureManager(WindowRender* windowRender);
 	~TextureManager();
 
-	Texture* LoadTexture(const char* path);
-	void Draw(Texture* tex, const Rect* srcRect, const Rect* desRect, double angle, FlipMode flip);
-	void Draw(Texture* tex, const Rect* srcRect, const Rect* desRect, FlipMode flip);
+	SDL_Texture* LoadTexture(const char* path);
+	void Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip);
+	void Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip);
+
+	void setRenderer(SDL_Renderer* r) { renderer = r; }
 
 private:
-	WindowRender* windowRender;
-	std::vector<Texture*> textures;
-
-	SDL_FRect* ConvertRect(const Rect* rect, SDL_FRect& out);
-	SDL_FlipMode ConvertFlip(FlipMode flip);
+	SDL_Renderer* renderer;
+	std::vector<SDL_Texture*> textures;
 };

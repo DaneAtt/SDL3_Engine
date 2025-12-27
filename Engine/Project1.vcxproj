@@ -104,6 +104,7 @@
       <PreprocessorDefinitions>ENGINE_EXPORTS;_DEBUG;_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_image-3.2.4\include;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_ttf-3.1.0\include;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3-3.2.22\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,14 +113,9 @@
       <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(TargetDir)$(TargetName).dll" "D:\Game_cpp\Game\x64\Debug\"
-xcopy /y /d "$(TargetDir)$(TargetName).lib" "D:\Game_cpp\Game\dependencies\Engine\lib\"
-xcopy /y /d "$(ProjectDir)Engine.h" "D:\Game_cpp\Game\dependencies\Engine\include\"
-xcopy /y /d "$(ProjectDir)EngineAPI.h" "D:\Game_cpp\Game\dependencies\Engine\include\"
-xcopy /y /d "$(ProjectDir)TextureManager.h" "D:\Game_cpp\Game\dependencies\Engine\include\"
-xcopy /y /d "$(ProjectDir)WindowRender.h" "D:\Game_cpp\Game\dependencies\Engine\include\"
-xcopy /y /d "$(ProjectDir)SDLWrapper.h" "D:\Game_cpp\Game\dependencies\Engine\include\"
-xcopy /y /d "$(ProjectDir)EngineTypes.h" "D:\Game_cpp\Game\dependencies\Engine\include\"</Command>
+      <Command>copy "$(TargetDir)engine.lib" "$(SolutionDir)..\..\..\Game_cpp\Game\dependencies\Engine\lib\engine.lib" /Y
+xcopy "$(ProjectDir)*.h" "$(SolutionDir)..\..\Game_cpp\Game\dependencies\Engine\include\" /E /I /Y
+xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Debug\" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,21 +133,41 @@ xcopy /y /d "$(ProjectDir)EngineTypes.h" "D:\Game_cpp\Game\dependencies\Engine\i
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationJSON.cpp" />
+    <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="ECS.cpp" />
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="SDLWrapper.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="WindowRender.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationJSON.h" />
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="Components.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineAPI.h" />
     <ClInclude Include="EngineTypes.h" />
-    <ClInclude Include="SDLWrapper.h" />
+    <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="WindowRender.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets" Condition="Exists('packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets'))" />
+  </Target>
 </Project>

@@ -1,4 +1,7 @@
+D:\SDL3_Engine\Engine\AnimationJSON.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\AnimationJSON.obj
+D:\SDL3_Engine\Engine\AssetManager.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\AssetManager.obj
+D:\SDL3_Engine\Engine\ECS.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\ECS.obj
 D:\SDL3_Engine\Engine\Engine.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\Engine.obj
-D:\SDL3_Engine\Engine\SDLWrapper.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\SDLWrapper.obj
 D:\SDL3_Engine\Engine\TextureManager.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\TextureManager.obj
+D:\SDL3_Engine\Engine\Vector2D.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\Vector2D.obj
 D:\SDL3_Engine\Engine\WindowRender.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\WindowRender.obj

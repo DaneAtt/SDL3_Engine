@@ -4,6 +4,7 @@
 #include <array>
 #include <memory>
 #include <vector>
+#include "EngineAPI.h"
 
 using ComponentID = std::size_t;
 using Group = std::size_t;
@@ -33,22 +34,25 @@ using GroupBitSet = std::bitset<maxGroups>;
 using ComponentArray = std::array<Component*, maxComponents>;
 
 
-class Component
+class ENGINE_API Component
 {
 public:
 	Entity* entity;
-	virtual void init();
-	virtual void update();
-	virtual void draw();
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
 
-	virtual ~Component();
+	virtual ~Component() {};
 
 };
 
-class Entity
+class ENGINE_API Entity
 {
 public:
 	Entity(Manager& mManager) : manager(mManager) {};
+
+	Entity(const Entity&) = delete;
+	Entity& operator=(const Entity&) = delete;
 
 	void update()
 	{
@@ -74,11 +78,7 @@ public:
 		return groupBitset[mGroup];
 	}
 
-	void addGroup(Group mGroup)
-	{
-		groupBitset[mGroup] = true;
-		manager.AddToGroup(this, mGroup);
-	}
+	void addGroup(Group mGroup);
 
 	void delGroup(Group mGroup)
 	{
@@ -97,17 +97,17 @@ public:
 		c->entity = this;
 		std::unique_ptr<Component> uPtr{ c };
 		components.emplace_back(std::move(uPtr));
-		componentArray[getComponentTypeID<T>] = c;
-		componentBitset[getComponentTypeID<T>] = true;
+		componentArray[getComponentTypeID<T>()] = c;
+		componentBitset[getComponentTypeID<T>()] = true;
 
-		c->init(); //initialise inside the T's init
+		c->init();
 		return *c;
 	}
 
 	template <typename T> T& getComponent() const
 	{
-		auto ptr = componentArray[getComponentTypeID<T>()]; //ptr is getting Array's index, which is Component's pointer
-		return *static_cast<T*>(ptr); //static cast to its T because its Component* right now
+		auto ptr = componentArray[getComponentTypeID<T>()];
+		return *static_cast<T*>(ptr);
 	}
 
 private:
@@ -120,9 +120,14 @@ private:
 	GroupBitSet groupBitset;
 };
 
-class Manager
+class ENGINE_API Manager
 {
 public:
+
+	Manager() = default;
+	Manager(const Manager&) = delete;
+	Manager& operator=(const Manager&) = delete;
+
 	void update()
 	{
 		for (auto& e : entities)
@@ -153,7 +158,7 @@ public:
 		}
 
 		entities.erase(std::remove_if(std::begin(entities), std::end(entities),
-			[](const std::unique_ptr<Entity>& mEntity) //reference cause unique ptr can't be copied
+			[](const std::unique_ptr<Entity>& mEntity)
 			{
 				return !mEntity->isActive();
 			}),

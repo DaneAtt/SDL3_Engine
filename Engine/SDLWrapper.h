@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineAPI.h"
+#include <cstdint>
 
 struct SDL_Texture;
 
@@ -43,3 +44,12 @@ public:
 private:
 	SDL_Renderer* sdlRenderer;
 };
+
+class ENGINE_API Timer
+{
+public:
+	static uint64_t GetTicks();
+
+};
+
+

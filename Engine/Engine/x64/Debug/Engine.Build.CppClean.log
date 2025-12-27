@@ -1,9 +1,12 @@
 d:\sdl3_engine\engine\engine\x64\debug\vc143.pdb
 d:\sdl3_engine\engine\engine\x64\debug\vc143.idb
 d:\sdl3_engine\engine\engine\x64\debug\windowrender.obj
+d:\sdl3_engine\engine\engine\x64\debug\vector2d.obj
 d:\sdl3_engine\engine\engine\x64\debug\texturemanager.obj
-d:\sdl3_engine\engine\engine\x64\debug\sdlwrapper.obj
 d:\sdl3_engine\engine\engine\x64\debug\engine.obj
+d:\sdl3_engine\engine\engine\x64\debug\ecs.obj
+d:\sdl3_engine\engine\engine\x64\debug\assetmanager.obj
+d:\sdl3_engine\engine\engine\x64\debug\animationjson.obj
 d:\sdl3_engine\engine\x64\debug\engine.dll
 d:\sdl3_engine\engine\x64\debug\engine.pdb
 d:\sdl3_engine\engine\x64\debug\engine.lib

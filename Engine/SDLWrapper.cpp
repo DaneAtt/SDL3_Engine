@@ -1,6 +1,7 @@
 #include "SDLWrapper.h"
 #include "SDL3/SDL.h"
 
+
 Texture::Texture(SDL_Texture* sdlTex) : sdlTexture(sdlTex) {}
 
 Texture::~Texture()
@@ -33,3 +34,9 @@ Renderer::~Renderer()
         sdlRenderer = nullptr;
     }
 }
+
+uint64_t Timer::GetTicks()
+{
+    return SDL_GetTicks();
+}
+

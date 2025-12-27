@@ -1,7 +1,12 @@
 #include "TextureManager.h"
 #include "SDL3_image/SDL_image.h"
+#include "Engine.h"
 
-TextureManager::TextureManager(WindowRender* windowRender) : windowRender(windowRender){}
+
+TextureManager::TextureManager(WindowRender* windowRender)
+{
+	renderer = windowRender->getRenderer();
+}
 
 TextureManager::~TextureManager()
 {
@@ -9,13 +14,13 @@ TextureManager::~TextureManager()
 	{
 		if(tex)
 		{
-			delete(tex);
+			SDL_DestroyTexture(tex);
 		}
 	}
 	textures.clear();
 }
 
-Texture* TextureManager::LoadTexture(const char* path)
+SDL_Texture* TextureManager::LoadTexture(const char* path)
 {
 	SDL_Surface* tempSurface = IMG_Load(path);
 	if (tempSurface == nullptr)
@@ -25,59 +30,40 @@ Texture* TextureManager::LoadTexture(const char* path)
 	}
 
 
-	SDL_Texture* sdlTex = SDL_CreateTextureFromSurface(windowRender->getRenderer()->getSDLRenderer(), tempSurface);
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_DestroySurface(tempSurface);
 
-	if (sdlTex == nullptr)
+	if (tex == nullptr)
 	{
 		std::cout << "Create texture failed: " << std::string(SDL_GetError()) << std::endl;
 	}
 
-	Texture* tex = new Texture(sdlTex);
 	textures.push_back(tex);
 
 	return tex;
 }
 
-void TextureManager::Draw(Texture* tex, const Rect* srcRect, const Rect* desRect, double angle, FlipMode flip)
+void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip)
 {
-	SDL_FRect sdlSrc, sdlDest;
 	SDL_RenderTextureRotated(
-		windowRender->getRenderer()->getSDLRenderer(),
-		tex->getSDLTexture(),
-		ConvertRect(srcRect, sdlSrc),
-		ConvertRect(desRect, sdlDest),
+		renderer,
+		tex,
+		srcRect,
+		desRect,
 		angle,
 		NULL,
-		ConvertFlip(flip)
+		flip
 		);
 }
 
-void TextureManager::Draw(Texture* tex, const Rect* srcRect, const Rect* desRect, FlipMode flip)
+void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip)
 {
-	SDL_FRect sdlSrc, sdlDest;
-
 	SDL_RenderTexture(
-		windowRender->getRenderer()->getSDLRenderer(),
-		tex->getSDLTexture(),
-		ConvertRect(srcRect, sdlSrc),
-		ConvertRect(desRect, sdlDest)
+		renderer,
+		tex,
+		srcRect,
+		desRect
 	);
 
 }
 
-SDL_FRect* TextureManager::ConvertRect(const Rect* rect, SDL_FRect& out)
-{
-	if (!rect) return nullptr;
-	out = { rect->x, rect->y, rect->w, rect->h };
-	return &out;
-}
-
-SDL_FlipMode TextureManager::ConvertFlip(FlipMode flip)
-{
-	switch (flip) {
-	case FlipMode::HORIZONTAL: return SDL_FLIP_HORIZONTAL;
-	case FlipMode::VERTICAL: return SDL_FLIP_VERTICAL;
-	default: return SDL_FLIP_NONE;
-	}
-}
