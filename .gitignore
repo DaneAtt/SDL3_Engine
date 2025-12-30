@@ -34,4 +34,6 @@
 .vs/
 *.pdb
 *.ilk
-.vs/
+*.idb
+*.log
+*.exp
