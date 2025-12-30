@@ -25,6 +25,8 @@ public:
 
     SDL_FRect* getWorldHitBox() { return &worldHitbox; }
 
+    bool isON(){ return On; }
+
     // getters for debug
     const SDL_FRect& getLastDebugHitbox() const { return lastDebugHitbox; }
     const SDL_FRect& getLastDebugTarget() const { return lastDebugTarget; }

@@ -24,6 +24,8 @@ private:
 	HitBoxComponent* hitbox;
 	const char* animationID;
 	int previousAnimIndex = -1;
+	float boxStartX;
+	float boxStartY;
 
 public:
 
@@ -44,7 +46,6 @@ public:
 		animated = animation;
 		animIndex = 0;
 		animationID = id;
-
 		setTex(id);
 
 	}
@@ -135,9 +136,15 @@ public:
 					if (currentAnimation.Hitbo && currentAnimation.HitboxMap.count(animIndex))
 					{
 						SDL_FRect* frameHitbox = &currentAnimation.HitboxMap[animIndex];
+
 						if (animIndex != previousAnimIndex)
 						{
-							hitbox->updateFromFrame(frameHitbox, transform->position.x, transform->position.y);
+							if (!hitbox->isON())
+							{
+								boxStartX = transform->position.x;
+								boxStartY = transform->position.y;
+							}
+							hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY);
 						}
 
 					}

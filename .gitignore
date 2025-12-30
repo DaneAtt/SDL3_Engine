@@ -37,3 +37,4 @@
 *.idb
 *.log
 *.exp
+/Engine/Engine/x64/Debug/Engine.tlog
