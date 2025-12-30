@@ -99,58 +99,58 @@ D:\SDL3_Engine\Engine\SpatialGrid.h(27,79): warning C4251: 'SpatialGrid::objectC
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\unordered_map(61,7):
       see declaration of 'std::unordered_map<CollisionComponent *,std::vector<std::pair<int,int>,std::allocator<std::pair<int,int>>>,std::hash<CollisionComponent *>,std::equal_to<CollisionComponent *>,std::allocator<std::pair<CollisionComponent *const ,std::vector<std::pair<int,int>,std::allocator<std::pair<int,int>>>>>>'
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(63,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Engine.cpp')
-  
 D:\SDL3_Engine\Engine\SpriteComponent.h(64,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(70,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(65,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(71,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(71,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(80,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(72,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Engine.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(81,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(96,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(82,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(107,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(97,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(117,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(108,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'Engine.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(118,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(119,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(119,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(120,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(120,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(124,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(121,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(125,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(147,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(126,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(148,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(150,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(149,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(151,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(150,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(152,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Engine.cpp')
+  
+D:\SDL3_Engine\Engine\SpriteComponent.h(153,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
 D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
@@ -159,22 +159,22 @@ D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversio
 D:\SDL3_Engine\Engine\CollisionComponent.h(32,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(49,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(44,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(50,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(45,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(70,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(65,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(71,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(66,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(98,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(93,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(99,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(94,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Engine.cpp')
   
   HitboxComponent.cpp
@@ -231,58 +231,58 @@ D:\SDL3_Engine\Engine\AnimationJSON.h(28,7): warning C4251: 'AnimationJSON::anim
       D:\SDL3_Engine\Engine\packages\nlohmann.json.3.12.0\build\native\include\nlohmann\json.hpp(20112,7):
       see declaration of 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>'
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(63,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'HitboxComponent.cpp')
-  
 D:\SDL3_Engine\Engine\SpriteComponent.h(64,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(70,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(65,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(71,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(71,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(80,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(72,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(81,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(96,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(82,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(107,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(97,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(117,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(108,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(118,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(119,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(119,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(120,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(120,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(124,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(121,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(125,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(147,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(126,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(148,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(150,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(149,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(151,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(150,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(152,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'HitboxComponent.cpp')
+  
+D:\SDL3_Engine\Engine\SpriteComponent.h(153,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
 D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
@@ -291,22 +291,22 @@ D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversio
 D:\SDL3_Engine\Engine\CollisionComponent.h(32,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(49,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(44,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(50,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(45,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(70,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(65,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(71,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(66,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(98,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(93,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(99,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(94,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'HitboxComponent.cpp')
   
 D:\SDL3_Engine\Engine\HealthComponent.h(29,13): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
@@ -387,58 +387,58 @@ D:\SDL3_Engine\Engine\AnimationJSON.h(28,7): warning C4251: 'AnimationJSON::anim
       D:\SDL3_Engine\Engine\packages\nlohmann.json.3.12.0\build\native\include\nlohmann\json.hpp(20112,7):
       see declaration of 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>'
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(63,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Map.cpp')
-  
 D:\SDL3_Engine\Engine\SpriteComponent.h(64,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(70,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(65,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(71,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(71,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(80,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(72,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Map.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(81,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(96,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(82,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(107,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(97,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(117,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(108,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'Map.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(118,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(119,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(119,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(120,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(120,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(124,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(121,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(125,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(147,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(126,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(148,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(150,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(149,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(151,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(150,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(152,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Map.cpp')
+  
+D:\SDL3_Engine\Engine\SpriteComponent.h(153,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
 D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
@@ -447,22 +447,22 @@ D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversio
 D:\SDL3_Engine\Engine\CollisionComponent.h(32,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(49,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(44,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(50,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(45,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(70,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(65,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(71,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(66,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(98,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(93,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(99,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(94,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Map.cpp')
   
 D:\SDL3_Engine\Engine\Map.cpp(59,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
@@ -536,58 +536,58 @@ D:\SDL3_Engine\Engine\AnimationJSON.h(28,7): warning C4251: 'AnimationJSON::anim
       D:\SDL3_Engine\Engine\packages\nlohmann.json.3.12.0\build\native\include\nlohmann\json.hpp(20112,7):
       see declaration of 'nlohmann::json_abi_v3_12_0::basic_json<std::map,std::vector,std::string,bool,int64_t,uint64_t,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector<uint8_t,std::allocator<uint8_t>>,void>'
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(63,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Spatialgrid.cpp')
-  
 D:\SDL3_Engine\Engine\SpriteComponent.h(64,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(70,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(65,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(71,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(71,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(80,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(72,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(81,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(96,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(82,26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(107,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(97,31): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(117,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(108,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(118,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(119,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(119,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(120,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(120,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(124,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(121,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
 D:\SDL3_Engine\Engine\SpriteComponent.h(125,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(147,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(126,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(148,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(150,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(149,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(151,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\SpriteComponent.h(150,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\SpriteComponent.h(152,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Spatialgrid.cpp')
+  
+D:\SDL3_Engine\Engine\SpriteComponent.h(153,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
 D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
@@ -596,22 +596,22 @@ D:\SDL3_Engine\Engine\CollisionComponent.h(31,40): warning C4244: '=': conversio
 D:\SDL3_Engine\Engine\CollisionComponent.h(32,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(49,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(44,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(50,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(45,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(70,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(65,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(71,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(66,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(98,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(93,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
-D:\SDL3_Engine\Engine\CollisionComponent.h(99,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\SDL3_Engine\Engine\CollisionComponent.h(94,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Spatialgrid.cpp')
   
   TextureManager.cpp

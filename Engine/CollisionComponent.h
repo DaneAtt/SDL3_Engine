@@ -31,11 +31,6 @@ public:
 				collisionWidth = anim.collisionRect.w;
 				collisionHeight = anim.collisionRect.h;
 			}
-			else 
-			{
-				collisionWidth = transform->width;
-				collisionHeight = transform->height;
-			}
 		}
 		else 
 		{

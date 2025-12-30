@@ -23,6 +23,7 @@ private:
 	Animation currentAnimation;
 	HitBoxComponent* hitbox;
 	const char* animationID;
+	int previousAnimIndex = -1;
 
 public:
 
@@ -131,16 +132,18 @@ public:
 
 				if (hitbox)
 				{
-					if (currentAnimation.Hitbo && currentAnimation.HitboxMap.count(animIndex) > 0)
+					if (currentAnimation.Hitbo && currentAnimation.HitboxMap.count(animIndex))
 					{
-						SDL_FRect frameHitbox = currentAnimation.HitboxMap[animIndex];
+						SDL_FRect* frameHitbox = &currentAnimation.HitboxMap[animIndex];
 						hitbox->updateFromFrame(frameHitbox, transform->position.x, transform->position.y);
+
 					}
-					else
+					else if ((!currentAnimation.HitboxMap.count(animIndex)))
 					{
 						hitbox->deactivate();
 					}
 				}
+				previousAnimIndex = animIndex;
 			}
 			else
 			{

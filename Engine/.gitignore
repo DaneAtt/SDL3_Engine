@@ -1,8 +1,0 @@
-*.obj
-*.ilk
-*.lib
-*.dll
-x64/
-Debug/
-Release/
-.vs/
