@@ -135,7 +135,10 @@ public:
 					if (currentAnimation.Hitbo && currentAnimation.HitboxMap.count(animIndex))
 					{
 						SDL_FRect* frameHitbox = &currentAnimation.HitboxMap[animIndex];
-						hitbox->updateFromFrame(frameHitbox, transform->position.x, transform->position.y);
+						if (animIndex != previousAnimIndex)
+						{
+							hitbox->updateFromFrame(frameHitbox, transform->position.x, transform->position.y);
+						}
 
 					}
 					else if ((!currentAnimation.HitboxMap.count(animIndex)))
