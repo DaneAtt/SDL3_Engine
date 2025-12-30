@@ -14,7 +14,8 @@ WindowRender::~WindowRender()
 
 bool WindowRender::init(const char* title, int w, int h, int xpos, int ypos)
 {
-
+	winSize.w = w;
+	winSize.h = h;
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		SDL_CreateWindowAndRenderer(title, w, h, SDL_WINDOW_RESIZABLE ,&window, &renderer);

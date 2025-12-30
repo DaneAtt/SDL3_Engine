@@ -1,6 +1,5 @@
 #pragma once
 #include "EngineAPI.h"
-#include "EngineTypes.h"
 #include "ECS.h"
 #include "SDL3/SDL.h"
 
@@ -8,6 +7,11 @@ class WindowRender;
 class TextureManager;
 class AssetManager;
 class AnimationJSON;
+class SpatialGrid;
+class CollisionComponent;
+class HitboxComponent;
+struct Size;
+
 
 class ENGINE_API Engine {
 public:
@@ -25,6 +29,9 @@ public:
     static AssetManager* getAssetManager() { return assetManager; }
     static Manager* getManager() { return manager; }
     static AnimationJSON* getJSON() { return json; }
+    static SpatialGrid* getCollisionGrid() { return collisionGrid; }
+    static SDL_Rect* getCamera() { return &camera; }
+    static void initCollisionGrid(int worldWidth, int worldHeight);
 
     static bool isRunning;
     static SDL_Event event;
@@ -35,4 +42,6 @@ private:
     static AssetManager* assetManager;
     static Manager* manager;
     static AnimationJSON* json;
+    static SpatialGrid* collisionGrid;
+    static SDL_Rect camera;
 };

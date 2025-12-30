@@ -12,17 +12,19 @@ using json = nlohmann::json;
 class ENGINE_API AnimationJSON
 {
 public:
-	AnimationJSON();
+	AnimationJSON(int speed);
 	~AnimationJSON();
-	void loadJSON(std::string path);
+	void loadAnimationJSON(const char* path);
 	Animation& searchAnimation(std::string name);
 	void setSpeed(int speed) { Speed = speed; }
 
-	json j;
 	std::map<std::string, Animation> animations;
 
 	
 private:
 	int Speed;
+
+protected:
+	json animationJ;
 
 };

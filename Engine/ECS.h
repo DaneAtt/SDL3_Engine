@@ -4,6 +4,7 @@
 #include <array>
 #include <memory>
 #include <vector>
+#include <typeindex>
 #include "EngineAPI.h"
 
 using ComponentID = std::size_t;
@@ -13,16 +14,16 @@ class Component;
 class Entity;
 class Manager;
 
-inline ComponentID getNewComponentTypeID()
-{
-	static ComponentID lastID = 0u;
-	return lastID++;
-}
+// single exported counter function (defined in ECS.cpp)
+ENGINE_API ComponentID getNewComponentTypeID();
+
+// exported accessor implemented in ECS.cpp that keeps a single map
+ENGINE_API ComponentID getComponentTypeIDForType(const std::type_index& typeIndex);
 
 template <typename T> inline ComponentID getComponentTypeID() noexcept
 {
-	static ComponentID typeID = getNewComponentTypeID();
-	return typeID;
+    static ComponentID typeID = getComponentTypeIDForType(std::type_index(typeid(T)));
+    return typeID;
 }
 
 constexpr std::size_t maxComponents = 32;
@@ -110,12 +111,15 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
+	// debug helper (remove after debugging)
+	size_t getComponentCount() const { return components.size(); }
+
 private:
 	Manager& manager;
 	bool active = true;
 	std::vector<std::unique_ptr<Component>> components;
 
-	ComponentArray componentArray;
+	ComponentArray componentArray{};
 	ComponentBitSet componentBitset;
 	GroupBitSet groupBitset;
 };

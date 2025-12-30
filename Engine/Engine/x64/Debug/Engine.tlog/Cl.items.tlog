@@ -2,6 +2,9 @@ D:\SDL3_Engine\Engine\AnimationJSON.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\A
 D:\SDL3_Engine\Engine\AssetManager.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\AssetManager.obj
 D:\SDL3_Engine\Engine\ECS.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\ECS.obj
 D:\SDL3_Engine\Engine\Engine.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\Engine.obj
+D:\SDL3_Engine\Engine\HitboxComponent.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\HitboxComponent.obj
+D:\SDL3_Engine\Engine\Map.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\Map.obj
+D:\SDL3_Engine\Engine\Spatialgrid.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\Spatialgrid.obj
 D:\SDL3_Engine\Engine\TextureManager.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\TextureManager.obj
 D:\SDL3_Engine\Engine\Vector2D.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\Vector2D.obj
 D:\SDL3_Engine\Engine\WindowRender.cpp;D:\SDL3_Engine\Engine\Engine\x64\Debug\WindowRender.obj

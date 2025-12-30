@@ -14,6 +14,7 @@ public:
 	SDL_Texture* LoadTexture(const char* path);
 	void Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip);
 	void Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip);
+	void DrawDebugRectF(const SDL_FRect* rect, SDL_Color color);
 
 	void setRenderer(SDL_Renderer* r) { renderer = r; }
 

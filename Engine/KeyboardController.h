@@ -20,61 +20,29 @@ public:
 
 	}
 
-	void update() override
-	{
+    void update() override
+    {
+        const bool* keystates = SDL_GetKeyboardState(NULL);
+        transform->velocity.x = 0;
+        transform->velocity.y = 0;
 
-		if (Engine::event.type == SDL_EVENT_KEY_DOWN)
-		{
-			switch (Engine::event.key.key)
-			{
-			case SDLK_W:
-				transform->velocity.y = -1;
-				//sprite->Play("Walk");
-				break;
-			case SDLK_A:
-				transform->velocity.x = -1;
-				//sprite->Play("Walk");
-				sprite->spriteFlip = SDL_FLIP_HORIZONTAL;
-				break;
-			case SDLK_S:
-				transform->velocity.y = 1;
-				//sprite->Play("Walk");
-				break;
-			case SDLK_D:
-				transform->velocity.x = 1;
-				//sprite->Play("Walk");
-				break;
-			default:
-				break;
-			}
-		}
+        if (keystates[SDL_SCANCODE_W]) transform->velocity.y = -1;
+        if (keystates[SDL_SCANCODE_S]) transform->velocity.y = 1;
+        if (keystates[SDL_SCANCODE_A])
+        {
+            transform->velocity.x = -1;
+            sprite->spriteFlip = SDL_FLIP_HORIZONTAL;
+        }
+        if (keystates[SDL_SCANCODE_D])
+        {
+            transform->velocity.x = 1;
+            sprite->spriteFlip = SDL_FLIP_NONE;
+        }
 
-		if (Engine::event.type == SDL_EVENT_KEY_UP)
-		{
-			switch (Engine::event.key.key)
-			{
-			case SDLK_W:
-				transform->velocity.y = 0;
-				//sprite->Play("Idle");
-				break;
-			case SDLK_A:
-				transform->velocity.x = 0;
-				//sprite->Play("Idle");
-				sprite->spriteFlip = SDL_FLIP_NONE;
-				break;
-			case SDLK_S:
-				transform->velocity.y = 0;
-				//sprite->Play("Idle");
-				break;
-			case SDLK_D:
-				transform->velocity.x = 0;
-				//sprite->Play("Idle");
-				break;
-			case SDLK_ESCAPE:
-				Engine::isRunning = false;
-			default:
-				break;
-			}
-		}
-	}
+        if (keystates[SDL_SCANCODE_W] == 0 && keystates[SDL_SCANCODE_S] == 0) transform->velocity.y = 0;
+        if (keystates[SDL_SCANCODE_A] == 0 && keystates[SDL_SCANCODE_D] == 0) transform->velocity.x = 0;
+
+        if (keystates[SDL_SCANCODE_ESCAPE]) Engine::isRunning = false;
+    }
+
 };

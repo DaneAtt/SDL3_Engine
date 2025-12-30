@@ -9,9 +9,9 @@ public:
 	Vector2D position;
 	Vector2D velocity;
 
-	int speed = 5;
+	int speed = 15;
 
-	int height = 32;
+	int height = 48;
 	int width = 32;
 	int scale = 1;
 
@@ -51,7 +51,13 @@ public:
 
 	void update() override
 	{
+		curPosition = position;
 		position.x += velocity.x * speed;
 		position.y += velocity.y * speed;
 	}
+
+	Vector2D getPreviousPos() { return curPosition; }
+
+private:
+	Vector2D curPosition;
 };

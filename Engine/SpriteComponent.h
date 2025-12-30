@@ -8,6 +8,7 @@
 #include "SDL3/sdl.h"
 #include "Animation.h"
 #include "AnimationJSON.h"
+#include "HitboxComponent.h"
 
 class SpriteComponent : public Component
 {
@@ -19,15 +20,15 @@ private:
 	bool animated = false;
 	int frames = 0;
 	int speed = 1;
-
-	// srcW, srcH;
+	Animation currentAnimation;
+	HitBoxComponent* hitbox;
+	const char* animationID;
 
 public:
 
 	int animIndex;
 	Uint32 currentTime;
-
-	//std::map<const char*, Animation> animations;
+	SDL_FRect* currentFrame = nullptr;
 
 	SDL_FlipMode spriteFlip = SDL_FLIP_NONE;
 
@@ -41,11 +42,7 @@ public:
 	{
 		animated = animation;
 		animIndex = 0;
-
-		if (animated) {
-
-			currentAnimation = Engine::getJSON()->searchAnimation(id);
-		}
+		animationID = id;
 
 		setTex(id);
 
@@ -66,8 +63,24 @@ public:
 		srcRect.w = transform->width;
 		srcRect.h = transform->height;
 
-		destRect.w = transform->width;
-		destRect.h = transform->height;
+		if (animated)
+		{
+			currentAnimation = Engine::getJSON()->searchAnimation(animationID);
+			currentFrame = &currentAnimation.Frames[0];
+			transform->width = currentFrame->w;
+			transform->height = currentFrame->h;
+
+			if (currentAnimation.Hitbo)
+			{
+				hitbox = &entity->addComponent<HitBoxComponent>();
+			}
+		}
+		else
+		{
+			destRect.w = transform->width;
+			destRect.h = transform->height;
+		}
+
 	}
 
 	void update() override
@@ -82,7 +95,7 @@ public:
 				}
 				currentTime = SDL_GetTicks();
 				Uint32 delta = currentTime - currentAnimation.lastFrameTime;
-				if (delta >= currentAnimation.DefaultDuration)
+				if (delta >= currentAnimation.Duration)
 				{
 					currentAnimation.lastFrameTime = currentTime;
 					animIndex++;
@@ -96,18 +109,46 @@ public:
 					}
 				}
 
-				SDL_FRect& currentFrame = currentAnimation.Frames[animIndex];
-				srcRect.x = currentFrame.x;
-				srcRect.y = currentFrame.y;
-				srcRect.w = currentFrame.w;
-				srcRect.h = currentFrame.h;
+				currentFrame = &currentAnimation.Frames[animIndex];
+				srcRect = *currentFrame;
 
+				if (currentAnimation.fixedFrame)
+				{
+					destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
+					destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
+					destRect.w = transform->width * transform->scale;
+					destRect.h = transform->height * transform->scale;
+				}
+				else
+				{
+					destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
+					destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
+					//transform->width = currentFrame->w;
+					//transform->height = currentFrame->h ;
+					destRect.w = currentFrame->w * transform->scale;
+					destRect.h = currentFrame->h * transform->scale;
+				}
+
+				if (hitbox)
+				{
+					if (currentAnimation.Hitbo && currentAnimation.HitboxMap.count(animIndex) > 0)
+					{
+						SDL_FRect frameHitbox = currentAnimation.HitboxMap[animIndex];
+						hitbox->updateFromFrame(frameHitbox, transform->position.x, transform->position.y);
+					}
+					else
+					{
+						hitbox->deactivate();
+					}
+				}
 			}
-
-			destRect.x = static_cast<int>(transform->position.x); //- Game::camera.x;
-			destRect.y = static_cast<int>(transform->position.y); //- Game::camera.y;
-			destRect.w = transform->width * transform->scale;
-			destRect.h = transform->height * transform->scale;
+			else
+			{
+				destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
+				destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
+				destRect.w = transform->width * transform->scale;
+				destRect.h = transform->height * transform->scale;
+			}
 		}
 		catch (std::exception)
 		{
@@ -120,6 +161,11 @@ public:
 		Engine::getTextureManager()->Draw(texture, &srcRect, &destRect, spriteFlip);
 	}
 
-private:
-	Animation currentAnimation;
+	SDL_FRect* getDestRect()
+	{
+		return &destRect;
+	}
+
+	Animation& getCurrentAnimation() { return currentAnimation; }
+
 };

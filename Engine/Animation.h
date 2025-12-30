@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "SDL3/SDL.h"
+#include <map>
 
 
 struct Animation
@@ -9,22 +10,26 @@ struct Animation
 	int anchorX;
 	int anchorY;
 	bool Loop;
-	double Speed;
-	double DefaultDuration;
-	std::string Name;
+	double Duration;
+	bool fixedFrame;
+	bool Hitbo;
 	std::vector<SDL_FRect> Frames;
+	std::map<int, SDL_FRect> HitboxMap;
 	Uint32 lastFrameTime;
+	SDL_FRect collisionRect;
 
 
 	Animation() {}
 
-	Animation(std::string name, bool loop, int speed, double defaultduration, int achX, int achY, const std::vector<SDL_FRect>& frames)
+	Animation(bool loop, bool fixed, bool hitbo,std::map<int, SDL_FRect> hitboxmap, SDL_FRect collisionrect,double duration, int achX, int achY, const std::vector<SDL_FRect>& frames)
 	{
 		lastFrameTime = SDL_GetTicks();
-		Name = name;
 		Loop = loop;
-		Speed = speed;
-		DefaultDuration = defaultduration;
+		fixedFrame = fixed;
+		Hitbo = hitbo;
+		HitboxMap = hitboxmap;
+		collisionRect = collisionRect;
+		Duration = duration;
 		anchorX = achX;
 		anchorY = achY;
 		Frames = frames;

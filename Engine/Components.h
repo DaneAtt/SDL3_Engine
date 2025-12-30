@@ -3,3 +3,7 @@
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include "KeyboardController.h"
+#include "TileComponent.h"
+#include "CollisionComponent.h"
+#include "HitboxComponent.h"
+#include "HealthComponent.h"
