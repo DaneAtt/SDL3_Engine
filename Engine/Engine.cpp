@@ -9,7 +9,8 @@
 #include "LoadingManager.h"
 #include <vector>
 
-SDL_Event Engine::event;
+SDL_Event* Engine::event = nullptr;
+std::queue<SDL_Event> Engine::events;
 bool Engine::isRunning = false;
 WindowRender* Engine::windowRender = nullptr;
 TextureManager* Engine::textureManager = nullptr;
@@ -29,6 +30,7 @@ Engine::Engine()
 	json = new AnimationJSON(1);
     collisionGrid = new SpatialGrid();
 	loadingMgr = new LoadingManager();
+	event = new SDL_Event;
 }
 
 Engine::~Engine()
@@ -63,19 +65,34 @@ void Engine::update()
 
 void Engine::handleEvents()
 {
-	SDL_PollEvent(&Engine::event);
-
-	if (event.type == SDL_EVENT_QUIT)
+	while (SDL_PollEvent(event))
 	{
+
+		if (event->type == SDL_EVENT_QUIT)
+		{
 			isRunning = false;
-	}
+		}
+		if (event->type == SDL_EVENT_WINDOW_RESIZED)
+		{
+			Size winSize = windowRender->getWinSize();
+			camera.w = winSize.w;
+			camera.h = winSize.h;
+			std::cout << "Window resized! New camera size: " << camera.w << " x " << camera.h << "\n";
+		}
 
-	if (event.type == SDL_EVENT_WINDOW_RESIZED)
-	{
-		Size winSize = windowRender->getWinSize();
-		camera.w = winSize.w;
-		camera.h = winSize.h;
-		std::cout << "Window resized! New camera size: " << camera.w << " x " << camera.h << "\n";
+		switch (event->type)
+		{
+		case SDL_EVENT_MOUSE_BUTTON_DOWN:
+		case SDL_EVENT_MOUSE_BUTTON_UP:
+		case SDL_EVENT_KEY_DOWN:
+			events.push(*event);
+			break;
+
+		case SDL_EVENT_WINDOW_FOCUS_GAINED:
+		case SDL_EVENT_WINDOW_FOCUS_LOST:
+			// Handle focus events
+			break;
+		}
 	}
 }
 
@@ -89,10 +106,7 @@ void Engine::clean()
 	delete collisionGrid;
 }
 
-void Engine::initCollisionGrid(int worldWidth, int worldHeight) {
+void Engine::initCollisionGrid(int worldWidth, int worldHeight) 
+{
 	collisionGrid = new SpatialGrid(worldWidth, worldHeight);
 }
-
-
-
-

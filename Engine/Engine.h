@@ -2,6 +2,7 @@
 #include "EngineAPI.h"
 #include "ECS.h"
 #include "SDL3/SDL.h"
+#include <queue>
 
 class WindowRender;
 class TextureManager;
@@ -34,9 +35,10 @@ public:
     static SDL_Rect* getCamera() { return &camera; }
     static void initCollisionGrid(int worldWidth, int worldHeight);
     static LoadingManager* getLoadingMgr() { return loadingMgr; }
+    static SDL_Event* getEvent() { return event; }
+    static std::queue<SDL_Event>& getEventQueue() { return events; }
 
     static bool isRunning;
-    static SDL_Event event;
 
 private:
     static WindowRender* windowRender;
@@ -47,4 +49,6 @@ private:
     static SpatialGrid* collisionGrid;
     static SDL_Rect camera;
     static LoadingManager* loadingMgr;
+    static SDL_Event* event;
+    static std::queue<SDL_Event> events;
 };
