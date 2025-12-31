@@ -4,8 +4,9 @@
 #include "WindowRender.h"
 #include "AssetManager.h"
 #include "AnimationJSON.h"
-#include "CollisionComponent.h"
+#include "Components.h"
 #include "SpatialGrid.h"
+#include "LoadingManager.h"
 #include <vector>
 
 SDL_Event Engine::event;
@@ -16,6 +17,7 @@ AssetManager* Engine::assetManager = nullptr;
 Manager* Engine::manager = nullptr;
 AnimationJSON* Engine::json = nullptr;
 SpatialGrid* Engine::collisionGrid = nullptr;
+LoadingManager* Engine::loadingMgr = nullptr;
 SDL_Rect Engine::camera = { 0, 0, 0, 0 };
 
 Engine::Engine()
@@ -26,6 +28,7 @@ Engine::Engine()
 	assetManager = new AssetManager(manager, textureManager);
 	json = new AnimationJSON(1);
     collisionGrid = new SpatialGrid();
+	loadingMgr = new LoadingManager();
 }
 
 Engine::~Engine()
@@ -83,6 +86,7 @@ void Engine::clean()
 	delete assetManager;
 	delete manager;
 	delete json;
+	delete collisionGrid;
 }
 
 void Engine::initCollisionGrid(int worldWidth, int worldHeight) {

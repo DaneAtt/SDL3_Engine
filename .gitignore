@@ -38,3 +38,6 @@
 *.log
 *.exp
 /Engine/Engine/x64/Debug/Engine.tlog
+*.tlog
+*.ipdb
+*.iobj

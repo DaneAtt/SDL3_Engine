@@ -7,3 +7,4 @@
 #include "CollisionComponent.h"
 #include "HitboxComponent.h"
 #include "HealthComponent.h"
+#include "DamageComponent.h"

@@ -18,7 +18,7 @@ bool WindowRender::init(const char* title, int w, int h, int xpos, int ypos)
 	winSize.h = h;
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
-		SDL_CreateWindowAndRenderer(title, w, h, SDL_WINDOW_RESIZABLE ,&window, &renderer);
+		SDL_CreateWindowAndRenderer(title, w, h, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN,&window, &renderer);
 		SDL_SetWindowPosition(window, xpos, ypos);
 
 
@@ -51,4 +51,12 @@ void WindowRender::clean()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+}
+
+void WindowRender::showWindow()
+{
+	if (window)
+	{
+		SDL_ShowWindow(window);
+	}
 }

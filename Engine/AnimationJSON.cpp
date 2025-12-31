@@ -7,7 +7,13 @@ AnimationJSON::~AnimationJSON() {}
 
 void AnimationJSON::loadAnimationJSON(const char* path)
 {
-	if (!animationJ.empty()) return;
+	std::set<std::string> loadedFiles;  // Track loaded file paths
+
+	if (loadedFiles.find(path) != loadedFiles.end()) {
+		return;  //Only blocks THIS specific file if already loaded
+	}
+	loadedFiles.insert(path);
+
 	std::ifstream file(path);
 	if (!file.is_open()) { std::cout << "Animation JSON File not found" << "\n"; return; }
 	file >> animationJ;

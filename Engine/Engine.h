@@ -10,6 +10,7 @@ class AnimationJSON;
 class SpatialGrid;
 class CollisionComponent;
 class HitboxComponent;
+class LoadingManager;
 struct Size;
 
 
@@ -32,6 +33,7 @@ public:
     static SpatialGrid* getCollisionGrid() { return collisionGrid; }
     static SDL_Rect* getCamera() { return &camera; }
     static void initCollisionGrid(int worldWidth, int worldHeight);
+    static LoadingManager* getLoadingMgr() { return loadingMgr; }
 
     static bool isRunning;
     static SDL_Event event;
@@ -44,4 +46,5 @@ private:
     static AnimationJSON* json;
     static SpatialGrid* collisionGrid;
     static SDL_Rect camera;
+    static LoadingManager* loadingMgr;
 };

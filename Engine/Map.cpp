@@ -95,7 +95,7 @@ std::vector<Map::TileData>& Map::searchMap(std::string id)
 }
 
 
-void Map::createEntities(std::string id, int group)
+void Map::createEntities(std::string texID,std::string id, int group)
 {
 	if (mapLayers.find(id) == mapLayers.end()) {
 		std::cout << "Warning: Map '" << id << "' not found\n";
@@ -117,7 +117,7 @@ void Map::createEntities(std::string id, int group)
 			tileData.srcX, 
 			tileData.srcY,
 			Scale, 
-			id, 
+			texID,
 			tileData.flip
 		);
 		tile.addGroup(group);  // Game passes the group number

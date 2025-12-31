@@ -4,6 +4,7 @@
 #include "SDL3/SDL.h"
 #include <iostream>
 #include <fstream>
+#include <set>
 #include <nlohmann/json.hpp>
 #include <map>
 
@@ -18,13 +19,10 @@ public:
 	Animation& searchAnimation(std::string name);
 	void setSpeed(int speed) { Speed = speed; }
 
-	std::map<std::string, Animation> animations;
-
-	
 private:
 	int Speed;
-
-protected:
-	json animationJ;
+	nlohmann::json animationJ;
+	std::map<std::string, Animation> animations;
+	std::set<std::string> loadedFiles;
 
 };

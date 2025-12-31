@@ -21,7 +21,12 @@ public:
 
     ENGINE_API void updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY);
 
-    void deactivate(){ On = false; }
+    void deactivate()
+    {
+        On = false;         
+        lastDebugTarget = { 0, 0, 0, 0 };
+        alreadyHit.clear();
+    }
 
     SDL_FRect* getWorldHitBox() { return &worldHitbox; }
 
@@ -40,4 +45,5 @@ private:
     SDL_FRect lastDebugHitbox;
     SDL_FRect lastDebugTarget;
     bool drawDebug = false;
+    std::vector<Entity*> alreadyHit;
 };

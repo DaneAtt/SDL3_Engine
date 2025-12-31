@@ -6,21 +6,27 @@
 class HealthComponent : public Component
 {
 public:
-	HealthComponent() {}
+	HealthComponent() { health = 10000; }
+	HealthComponent(int health) 
+	{
+		this->health = health;
+	}
 	~HealthComponent() {}
 
 	void init() override
 	{
-		health = 100;
 		manager = Engine::getManager();
-
+		name = *entity->getComponent<SpriteComponent>().getName();
 	}
 
 	void update() override
 	{
-		if (health < 0)
+		if (health <= 0)
 		{
-			std::cout << &entity << " died" << "\n";
+			std::cout << name << " died" << "\n";
+
+
+			entity->destroy();
 		}
 	}
 	
@@ -29,9 +35,10 @@ public:
 		health -= damage;
 	}
 
+	int getHealth() { return health; }
 
 private:
 	int health;
 	Manager* manager;
-
+	std::string name;
 };

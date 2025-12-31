@@ -26,6 +26,7 @@ private:
 	int previousAnimIndex = -1;
 	float boxStartX;
 	float boxStartY;
+	std::string name;
 
 public:
 
@@ -39,6 +40,7 @@ public:
 	SpriteComponent(const char* id) 
 	{
 		setTex(id);
+		name = id;
 	}
 
 	SpriteComponent(const char* id, bool animation)
@@ -47,7 +49,7 @@ public:
 		animIndex = 0;
 		animationID = id;
 		setTex(id);
-
+		name = id;
 	}
 
 	~SpriteComponent() {}
@@ -55,6 +57,7 @@ public:
 	void setTex(std::string id)
 	{
 		texture = Engine::getAssetManager()->GetTexture(id);
+
 	}
 
 	void init() override
@@ -181,4 +184,5 @@ public:
 
 	Animation& getCurrentAnimation() { return currentAnimation; }
 
+	std::string* getName(){ return &name; }
 };

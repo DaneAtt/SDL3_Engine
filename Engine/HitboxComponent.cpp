@@ -5,6 +5,7 @@
 #include "SpatialGrid.h"
 #include "Engine.h"
 #include "EngineAPI.h"
+#include "DamageComponent.h"
 
 void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY)
 {
@@ -14,9 +15,10 @@ void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, floa
     worldHitbox.h = animHitbox->h * transform->scale;
 
     lastDebugHitbox = worldHitbox;  // always update
-    drawDebug = true;                // always show hitbox
+    drawDebug = true;                // show hitbox
 
     On = true;
+    alreadyHit.clear();
 }
 
 void HitBoxComponent::update()
@@ -24,17 +26,29 @@ void HitBoxComponent::update()
     if (On)
     {
         auto nearby = Engine::getCollisionGrid()->Query(&worldHitbox);
+        auto& entDam = entity->getComponent<DamageComponent>();
+        double damage = entDam.getDamage();
+
         for (auto* otherCol : nearby)
         {
             Entity* target = otherCol->entity;
             if (target == this->entity) continue;
+            if (!target->isActive()) continue;
             if (!target->hasComponent<HealthComponent>()) continue;
+
+            if (std::find(alreadyHit.begin(), alreadyHit.end(), target) != alreadyHit.end()) continue;
+
             if (SDL_HasRectIntersectionFloat(&worldHitbox, otherCol->getRect()))
             {
                 std::cout << "Contact\n";
-                otherCol->entity->getComponent<HealthComponent>().TakeDamage(1);
+                otherCol->entity->getComponent<HealthComponent>().TakeDamage(damage);
+                alreadyHit.push_back(target);
                 lastDebugTarget = *otherCol->getRect();
             }
         }
+    }
+    else
+    {
+        drawDebug = false;
     }
 }

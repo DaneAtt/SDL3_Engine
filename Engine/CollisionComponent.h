@@ -14,29 +14,23 @@ public:
 
 	CollisionComponent() : isStatic(false) {}
 	CollisionComponent(bool staticCollider) : isStatic(staticCollider) {}
-	~CollisionComponent() {}
+	~CollisionComponent() { Engine::getCollisionGrid()->Remove(this); }
 
 	void init() override
 	{
 		transform = &entity->getComponent<TransformComponent>();
+		collisionWidth = transform->width;
+		collisionHeight = transform->height;
 
 		// If entity has SpriteComponent with animation, get collision from that
 		if (entity->hasComponent<SpriteComponent>()) {
 			sprite = &entity->getComponent<SpriteComponent>();
-
 			Animation& anim = sprite->getCurrentAnimation();
-
-			if (!anim.Frames.empty()) 
+			if (!anim.Frames.empty())
 			{
 				collisionWidth = anim.collisionRect.w;
 				collisionHeight = anim.collisionRect.h;
 			}
-		}
-		else 
-		{
-			// No sprite, use transform size
-			collisionWidth = transform->width;
-			collisionHeight = transform->height;
 		}
 
 		transformRect.x = transform->position.x;

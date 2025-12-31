@@ -28,7 +28,8 @@ public:
 		return currentSize;
 	}
 
-	bool isRunning = false;
+	void showWindow();
+
 
 private:
 	SDL_Window* window = nullptr;
