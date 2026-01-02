@@ -92,9 +92,26 @@ public:
 			currentPath.clear();
 		}
 
-		if (currentPath.empty()) {
-			currentPathIndex = 0;
+		float closestDistance = FLT_MAX;
+		int closestIndex = 0;
+		int waypointIndex = 0;
+
+		for (auto& waypoint : currentPath)
+		{
+			Vector2D waypointWorld;
+			waypointWorld.x = (waypoint.second * cellSizeX) + (cellSizeX / 2.0f);
+			waypointWorld.y = (waypoint.first * cellSizeY) + (cellSizeY / 2.0f);
+			Vector2D direction = waypointWorld - transform->position;
+			float distToWaypoint = direction.Length();
+			if (waypointIndex >= currentPathIndex && distToWaypoint < closestDistance)
+			{
+				closestIndex = waypointIndex;
+				closestDistance = distToWaypoint;
+			}
+			waypointIndex++;
 		}
+
+		currentPathIndex = closestIndex;
 	}
 
 	void followPathSmooth()
