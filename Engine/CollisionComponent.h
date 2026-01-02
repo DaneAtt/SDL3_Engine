@@ -46,11 +46,12 @@ public:
 	{
 		if (isStatic) return;
 		transform = &entity->getComponent<TransformComponent>();
+		float deltaTime = Engine::getDeltaTime();
 
 		// Calculate predicted position
 		Vector2D predictedPos;
-		predictedPos.x = transform->position.x + (transform->velocity.x * transform->speed);
-		predictedPos.y = transform->position.y + (transform->velocity.y * transform->speed);
+		predictedPos.x = transform->position.x + (transform->velocity.x * transform->speed * deltaTime);
+		predictedPos.y = transform->position.y + (transform->velocity.y * transform->speed * deltaTime);
 
 		// Create predicted rect
 		SDL_FRect predictedRect;
@@ -70,7 +71,8 @@ public:
 			if (!otherRect) continue;
 
 			if (SDL_HasRectIntersectionFloat(&predictedRect, otherRect)) {
-				std::cout << "Collision at " << transform->position.x << ", " << transform->position.y << " " << "Wall at:" << otherRect->x << ", " << otherRect->y << '\n';
+				std::cout << "Collision at " << transform->position.x << ", " << transform->position.y  << " Collider at:" << otherRect->x << ", " << otherRect->y << 
+					" Which Entity:" << &entity << '\n';
 				willCollide = true;
 				break;
 			}
@@ -84,8 +86,8 @@ public:
 		// Update current transformRect for spatial grid
 		transformRect.x = transform->position.x;
 		transformRect.y = transform->position.y;
-		transformRect.w = transform->width * transform->scale;
-		transformRect.h = transform->height * transform->scale;
+		transformRect.w = collisionWidth * transform->scale;
+		transformRect.h = collisionHeight * transform->scale;
 
 		// Only update grid if position changed
 		if (!areRectsEqual(&transformRect, &lastRect)) {

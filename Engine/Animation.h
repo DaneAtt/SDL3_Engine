@@ -15,7 +15,6 @@ struct Animation
 	bool Hitbo;
 	std::vector<SDL_FRect> Frames;
 	std::map<int, SDL_FRect> HitboxMap;
-	Uint32 lastFrameTime;
 	SDL_FRect collisionRect;
 
 
@@ -23,7 +22,6 @@ struct Animation
 
 	Animation(bool loop, bool fixed, bool hitbo,std::map<int, SDL_FRect> hitboxmap, SDL_FRect collisionrect,double duration, int achX, int achY, const std::vector<SDL_FRect>& frames)
 	{
-		lastFrameTime = SDL_GetTicks();
 		Loop = loop;
 		fixedFrame = fixed;
 		Hitbo = hitbo;

@@ -43,6 +43,11 @@ public:
         if (keystates[SDL_SCANCODE_A] == 0 && keystates[SDL_SCANCODE_D] == 0) transform->velocity.x = 0;
 
         if (keystates[SDL_SCANCODE_ESCAPE]) Engine::isRunning = false;
+
+        if (transform->velocity.x != 0 || transform->velocity.y != 0)
+        {
+            transform->velocity.Normalize();
+        }
     }
 
 };

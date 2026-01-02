@@ -8,3 +8,5 @@
 #include "HitboxComponent.h"
 #include "HealthComponent.h"
 #include "DamageComponent.h"
+#include "TeamComponent.h"
+#include "AIComponent.h"

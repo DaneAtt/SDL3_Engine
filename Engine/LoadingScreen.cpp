@@ -97,8 +97,9 @@ void LoadingScreen::update(float deltaTime)
     }
 
     frameTimer += deltaTime;
+    float frameDuration = (currentAnim.Duration / currentAnim.Frames.size()) / 5.0f;
 
-    if (frameTimer >= currentAnim.Duration)
+    if (frameTimer >= frameDuration)
     {
         frameTimer = 0.0f;
         currentFrame++;

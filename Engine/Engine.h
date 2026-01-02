@@ -12,6 +12,7 @@ class SpatialGrid;
 class CollisionComponent;
 class HitboxComponent;
 class LoadingManager;
+class PathFinder;
 struct Size;
 
 
@@ -31,13 +32,17 @@ public:
     static AssetManager* getAssetManager() { return assetManager; }
     static Manager* getManager() { return manager; }
     static AnimationJSON* getJSON() { return json; }
+    static void initCollisionGrid(int worldWidth, int worldHeight);
     static SpatialGrid* getCollisionGrid() { return collisionGrid; }
     static SDL_Rect* getCamera() { return &camera; }
-    static void initCollisionGrid(int worldWidth, int worldHeight);
     static LoadingManager* getLoadingMgr() { return loadingMgr; }
     static SDL_Event* getEvent() { return event; }
     static std::queue<SDL_Event>& getEventQueue() { return events; }
-
+    static float& getDeltaTime() { return deltaTime; }
+    static void setDeltaTime(float dt);
+    static void calDeltaTime();
+    static void initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
+    static PathFinder* getPathFinder() { return pathFinder; }
     static bool isRunning;
 
 private:
@@ -51,4 +56,7 @@ private:
     static LoadingManager* loadingMgr;
     static SDL_Event* event;
     static std::queue<SDL_Event> events;
+    static float deltaTime;
+    static Uint64 lastFrameTime;
+    static PathFinder* pathFinder;
 };

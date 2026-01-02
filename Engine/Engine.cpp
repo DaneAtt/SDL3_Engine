@@ -7,8 +7,11 @@
 #include "Components.h"
 #include "SpatialGrid.h"
 #include "LoadingManager.h"
+#include "PathFinder.h"
 #include <vector>
 
+float Engine::deltaTime = 0.0f;
+Uint64 Engine::lastFrameTime = 0;
 SDL_Event* Engine::event = nullptr;
 std::queue<SDL_Event> Engine::events;
 bool Engine::isRunning = false;
@@ -19,6 +22,7 @@ Manager* Engine::manager = nullptr;
 AnimationJSON* Engine::json = nullptr;
 SpatialGrid* Engine::collisionGrid = nullptr;
 LoadingManager* Engine::loadingMgr = nullptr;
+PathFinder* Engine::pathFinder = nullptr;
 SDL_Rect Engine::camera = { 0, 0, 0, 0 };
 
 Engine::Engine()
@@ -28,7 +32,6 @@ Engine::Engine()
 	textureManager = new TextureManager(windowRender);
 	assetManager = new AssetManager(manager, textureManager);
 	json = new AnimationJSON(1);
-    collisionGrid = new SpatialGrid();
 	loadingMgr = new LoadingManager();
 	event = new SDL_Event;
 }
@@ -39,7 +42,6 @@ Engine::~Engine()
 
 bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
 {
-
 	if (windowRender->init(title, w, h, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED))
 	{
 		textureManager->setRenderer(windowRender->getRenderer());
@@ -60,7 +62,7 @@ bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
 
 void Engine::update()
 {
-
+	calDeltaTime();
 }
 
 void Engine::handleEvents()
@@ -109,4 +111,18 @@ void Engine::clean()
 void Engine::initCollisionGrid(int worldWidth, int worldHeight) 
 {
 	collisionGrid = new SpatialGrid(worldWidth, worldHeight);
+}
+
+void Engine::calDeltaTime()
+{
+	Uint64 currentTime = SDL_GetTicks();
+	float dt = (currentTime - lastFrameTime) / 1000.0f;
+	lastFrameTime = currentTime;
+	deltaTime = dt;
+}
+
+void Engine::initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY)
+{
+	pathFinder = new PathFinder(mapWidth, mapHeight, cellSizeX, cellSizeY);
+
 }

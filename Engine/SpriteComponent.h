@@ -27,6 +27,7 @@ private:
 	float boxStartX;
 	float boxStartY;
 	std::string name;
+	float frameTimer;
 
 public:
 
@@ -50,6 +51,7 @@ public:
 		animationID = id;
 		setTex(id);
 		name = id;
+		float frameTimer = 0.0f;
 	}
 
 	~SpriteComponent() {}
@@ -98,11 +100,13 @@ public:
 					std::cout << "ERROR: Animation has no frames!\n";
 					return;  // Exit early
 				}
-				currentTime = SDL_GetTicks();
-				Uint32 delta = currentTime - currentAnimation.lastFrameTime;
-				if (delta >= currentAnimation.Duration)
+				float delta = Engine::getDeltaTime();
+				float frameDuration = (currentAnimation.Duration / currentAnimation.Frames.size()) / 5.0f ;
+
+				frameTimer += delta;
+				if (frameTimer >= frameDuration)
 				{
-					currentAnimation.lastFrameTime = currentTime;
+					frameTimer -= frameDuration;
 					animIndex++;
 					if (animIndex >= currentAnimation.Frames.size()) {
 						if (currentAnimation.Loop) {
@@ -160,8 +164,8 @@ public:
 			}
 			else
 			{
-				destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
-				destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
+				destRect.x = transform->position.x - Engine::getCamera()->x;
+				destRect.y = transform->position.y - Engine::getCamera()->y;
 				destRect.w = transform->width * transform->scale;
 				destRect.h = transform->height * transform->scale;
 			}

@@ -2,6 +2,7 @@
 #include "ECS.h"
 #include "Vector2D.h"
 #include "SDL3/SDL.h"
+#include "Engine.h"
 
 class TransformComponent : public Component
 {
@@ -9,8 +10,7 @@ public:
 	Vector2D position;
 	Vector2D velocity;
 
-	int speed = 15;
-
+	int speed = 0;
 	int height = 48;
 	int width = 32;
 	int scale = 1;
@@ -20,19 +20,22 @@ public:
 		position.Zero();
 	}
 
-	TransformComponent(float x, float y, int sc)
+	TransformComponent(float x, float y, int sc, int spd)
 	{
 		position.x = x;
 		position.y = y;
 		scale = sc;
+		speed = spd * 100;
 	}
 
-	//player position
-	TransformComponent(int sc)
+	TransformComponent(float x, float y, int h, int w, int sc, int spd)
 	{
-		position.x = 50;
-		position.y = 50;
+		position.x = x;
+		position.y = y;
+		height = h;
+		width = w;
 		scale = sc;
+		speed = spd * 100;
 	}
 
 	TransformComponent(float x, float y, int h, int w, int sc)
@@ -51,13 +54,15 @@ public:
 
 	void update() override
 	{
+		deltaTime = Engine::getDeltaTime();
 		curPosition = position;
-		position.x += velocity.x * speed;
-		position.y += velocity.y * speed;
+		position.x += velocity.x * speed * deltaTime;
+		position.y += velocity.y * speed * deltaTime;
 	}
 
 	Vector2D getPreviousPos() { return curPosition; }
 
 private:
 	Vector2D curPosition;
+	float deltaTime;
 };

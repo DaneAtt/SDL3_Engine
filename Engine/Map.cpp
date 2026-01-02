@@ -21,14 +21,11 @@ void Map::loadMapJSON(const char* path)
 	file >> mapJ;
 	file.close();
 
-
 	for (auto& [name, tiles] : mapJ.items()) {
 		try {
 			tileVec.clear();
-
-			int x = 0;  // Current column
-			int y = 0;  // Current row
-
+			int x = 0; //current column
+			int y = 0; //current row
 			int width = tiles["width"];
 			int height = tiles["height"];
 			mapWidth = width;
@@ -38,11 +35,9 @@ void Map::loadMapJSON(const char* path)
 			for (const auto& tile : tiles["layers"]) {
 				std::string tileStr = tile;
 				std::regex remove("\\{[hvd]\\}");
-
 				bool hasH = (tileStr.find("{h}") != std::string::npos);
 				bool hasV = (tileStr.find("{v}") != std::string::npos);
 				SDL_FlipMode flip = SDL_FLIP_NONE;
-
 				if (hasH && hasV) {
 					flip = SDL_FLIP_HORIZONTAL_AND_VERTICAL;
 				}
@@ -54,21 +49,20 @@ void Map::loadMapJSON(const char* path)
 				}
 
 				int tileIndex = std::stoi(std::regex_replace(tileStr, remove, ""));
-
-
 				int xPos = x * tileSize.x * Scale;
 				int yPos = y * tileSize.y * Scale;
 
-				if (tileIndex <= 100 && tileIndex > 0) {
-					TileData data;
-                    data.srcX = ((tileIndex - 1) % 10) * 32;
-                    data.srcY = ((tileIndex - 1) / 10) * 48;
-                    data.xPos = xPos;
-                    data.yPos = yPos;
-                    data.flip = flip;
-
-					tileVec.push_back(data);
+				TileData data;
+				if (tileIndex > 0 && tileIndex <= 100) 
+				{
+					data.srcX = ((tileIndex - 1) % 10) * 32;
+					data.srcY = ((tileIndex - 1) / 10) * 48;
+					data.xPos = xPos;
+					data.yPos = yPos;
+					data.flip = flip;
 				}
+
+				tileVec.push_back(data);
 
 				x++;
 				if (x >= width) {
@@ -94,16 +88,13 @@ std::vector<Map::TileData>& Map::searchMap(std::string id)
 	return mapLayers[id];
 }
 
-
-void Map::createEntities(std::string texID,std::string id, int group)
+void Map::createEntities(std::string texID, std::string id, int group)
 {
 	if (mapLayers.find(id) == mapLayers.end()) {
 		std::cout << "Warning: Map '" << id << "' not found\n";
 		return;
 	}
-
 	Manager* manager = Engine::getManager();
-
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());
 		tile.addComponent<TransformComponent>(
@@ -114,13 +105,13 @@ void Map::createEntities(std::string texID,std::string id, int group)
 			Scale
 		);
 		tile.addComponent<TileComponent>(
-			tileData.srcX, 
+			tileData.srcX,
 			tileData.srcY,
-			Scale, 
+			Scale,
 			texID,
 			tileData.flip
 		);
-		tile.addGroup(group);  // Game passes the group number
+		tile.addGroup(group);
 	}
 }
 
@@ -130,20 +121,17 @@ void Map::createColliders(std::string id, int group)
 		std::cout << "Warning: Map '" << id << "' not found\n";
 		return;
 	}
-
 	Manager* manager = Engine::getManager();
-
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());
 		tile.addComponent<TransformComponent>(
 			tileData.xPos,
 			tileData.yPos,
-			32,
+			48,
 			32,
 			Scale
 		);
 		tile.addComponent<CollisionComponent>(true);
-		tile.addGroup(group);  // Game passes the group number
+		tile.addGroup(group);
 	}
-
 }

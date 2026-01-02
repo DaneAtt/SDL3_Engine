@@ -122,6 +122,15 @@
     <ClInclude Include="LoadingScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TeamComponent.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

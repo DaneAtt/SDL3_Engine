@@ -101,3 +101,19 @@ std::ostream& operator<<(std::ostream& stream, const Vector2D& vec)
 	stream << "(" << vec.x << "," << vec.y << ")";
 	return stream;
 }
+
+float Vector2D::Length()
+{
+	return sqrt(x * x + y * y);
+}
+
+Vector2D& Vector2D::Normalize()
+{
+	float length = Length();
+	if (length != 0)  // or: if (length > 0.0001f) for floating point safety
+	{
+		x /= length;
+		y /= length;
+	}
+	return *this;
+}
