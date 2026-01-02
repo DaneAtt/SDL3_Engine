@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ECS.h"
 #include "TransformComponent.h"
 #include "Vector2D.h"
@@ -23,7 +23,7 @@ public:
 	{
 		currentState = State::Idle;
 	}
-	
+
 	~AIComponent() {}
 
 	void init() override
@@ -44,9 +44,7 @@ public:
 			ChaseEntity(target);
 			break;
 		case State::Attack:
-
 			break;
-
 		}
 		deltaTime = Engine::getDeltaTime();
 	}
@@ -57,19 +55,19 @@ public:
 		targetPos = eTrans->position;
 
 		float distance = (targetPos - transform->position).Length();
-
-		if (distance < 150.0f) {  // Adjust this value
+		if (distance < 150.0f) {
 			transform->velocity.Zero();
 			return;
 		}
 
+		// Recalculate path every 0.5 seconds OR if we have no path
 		pathUpdateTimer += Engine::getDeltaTime();
 		if (pathUpdateTimer >= PATH_UPDATE_INTERVAL || currentPath.empty()) {
 			pathUpdateTimer = 0.0f;
 			updatePath(entity);
 		}
 
-		followPath();
+		followPathSmooth();
 	}
 
 	void updatePath(Entity* target)
@@ -83,26 +81,31 @@ public:
 		// Find path
 		PathFinder::Pair src = std::make_pair(srcRow, srcCol);
 		PathFinder::Pair dest = std::make_pair(destRow, destCol);
-		currentPath = Engine::getPathFinder()->findPath(src, dest);
-		currentPathIndex = 0;
+
+		std::vector<PathFinder::Pair> rawPath = Engine::getPathFinder()->findPath(src, dest);
+
+		// Smooth the path
+		if (!rawPath.empty()) {
+			currentPath = Engine::getPathFinder()->smoothPath(rawPath);
+		}
+		else {
+			currentPath.clear();
+		}
+
+		if (currentPath.empty()) {
+			currentPathIndex = 0;
+		}
 	}
 
-	void followPath()
+	void followPathSmooth()
 	{
-		if (currentPath.empty()) {
+		if (currentPath.empty() || currentPathIndex >= currentPath.size()) {
+			std::cout << "PATH IS EMPTY!" << std::endl;
 			transform->velocity.Zero();
 			return;
 		}
 
-		// SAFETY CHECK 2: Index out of bounds
-		if (currentPathIndex >= currentPath.size()) {
-			transform->velocity.Zero();
-			currentPath.clear();  // Clear the path
-			currentPathIndex = 0;
-			return;
-		}
-
-		// Get current waypoint (in grid coordinates)
+		// Get current waypoint
 		PathFinder::Pair waypoint = currentPath[currentPathIndex];
 
 		// Convert to world coordinates (center of cell)
@@ -110,34 +113,32 @@ public:
 		waypointWorld.x = (waypoint.second * cellSizeX) + (cellSizeX / 2.0f);
 		waypointWorld.y = (waypoint.first * cellSizeY) + (cellSizeY / 2.0f);
 
-		// Move toward waypoint
+		// Calculate direction
 		Vector2D direction = waypointWorld - transform->position;
 		float distToWaypoint = direction.Length();
 
-		// Reached waypoint? Move to next one
-		if (distToWaypoint < std::min(cellSizeX, cellSizeY) / 2.0f) {
+		// Close enough to waypoint?
+		if (distToWaypoint < 10.0f) {
 			currentPathIndex++;
 
-			// Reached end of path?
 			if (currentPathIndex >= currentPath.size()) {
 				transform->velocity.Zero();
 				currentPath.clear();
 				currentPathIndex = 0;
 				return;
 			}
+			return;
 		}
 
-		// Move toward current waypoint
+		// Set velocity toward waypoint
 		direction.Normalize();
-		transform->velocity.x = direction.x;
-		transform->velocity.y = direction.y;
+		transform->velocity = direction;
 	}
 
-	void SetTarget(Entity* newTarget) 
+	void SetTarget(Entity* newTarget)
 	{
 		target = newTarget;
 	}
-
 
 private:
 	TransformComponent* transform;
@@ -147,9 +148,9 @@ private:
 	int speed;
 	float deltaTime;
 
-	std::vector<PathFinder::Pair> currentPath;  // The path to follow
-	int currentPathIndex = 0;  // Which waypoint we're heading to
-	float pathUpdateTimer = 0.0f;  // When to recalculate path
+	std::vector<PathFinder::Pair> currentPath;
+	int currentPathIndex = 0;
+	float pathUpdateTimer = 0.0f;
 	const float PATH_UPDATE_INTERVAL = 0.5f;  // Recalculate every 0.5 seconds
 	int cellSizeX, cellSizeY;
 };

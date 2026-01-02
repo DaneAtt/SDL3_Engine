@@ -1,72 +1,132 @@
 #pragma once
-#include <cmath>        // For sqrt() in heuristic
-#include <set>          // For open list
-#include <utility>      // For pair
-#include <stack>        // For path reconstruction
-#include <vector>       // For returning path
-#include <cfloat>       // For FLT_MAX
-#include <cstring>      // For memset (or just avoid memset)
-#include <string>
+#include <queue>
+#include <vector>
+#include <cmath>
+#include <stack>
+#include <utility>
+#include <cfloat>
 #include "Map.h"
 
 class PathFinder {
 public:
-    // Creating a shortcut for int, int pair type
+    // Shortcut for row,col pair
     typedef std::pair<int, int> Pair;
 
-    // Creating a shortcut for pair<int, pair<int, int>> type
-    typedef std::pair<double, std::pair<int, int> > pPair;
+    // Shortcut for f-value and cell coordinates
+    typedef std::pair<double, Pair> pPair;
 
-    // A structure to hold the necessary parameters
+    // Structure to hold cell details
     struct cell {
-        // Row and Column index of its parent
-        // Note that 0 <= i <= ROW-1 & 0 <= j <= COL-1
-        int parent_i, parent_j;
-        // f = g + h
-        double f, g, h;
+        int parent_i, parent_j; // Parent cell coordinates
+        double f, g, h;         // f = g + h
     };
 
-    PathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY) {
-        this->cellSizeX = cellSizeX;
-        this->cellSizeY = cellSizeY;
-        this->cols = mapWidth / cellSizeX;
-        this->rows = mapHeight / cellSizeY;
-
+    // Constructor: map dimensions and cell sizes
+    PathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY) : cellSizeX(cellSizeX), cellSizeY(cellSizeY)
+    {
+        rows = mapHeight / cellSizeY;
+        cols = mapWidth / cellSizeX;
         collisionGrid.resize(rows, std::vector<bool>(cols, true));
     }
 
+    // Build collision grid from map layer
+    void buildCollisionGrid(Map& map, std::string layerID) {
+        // Reset grid to all walkable
+        for (int i = 0;i < rows;i++)
+            for (int j = 0;j < cols;j++)
+                collisionGrid[i][j] = true;
+
+        auto& collisionTiles = map.searchMap(layerID);
+
+        // Mark tiles as blocked
+        for (const auto& tile : collisionTiles) {
+            int row = tile.yPos / cellSizeY;
+            int col = tile.xPos / cellSizeX;
+            if (isValid(row, col)) collisionGrid[row][col] = false;
+        }
+    }
+
+    std::vector<Pair> smoothPath(const std::vector<Pair>& path) {
+        if (path.size() < 3) return path;  // Too short to smooth
+
+        std::vector<Pair> smoothed;
+        smoothed.push_back(path[0]);  // Always keep start
+
+        int i = 0;
+        while (i < path.size() - 1) {
+            int farthest = i + 1;  // Default: next cell
+
+            // Try to see how far we can "see" from current position
+            for (int j = i + 2; j < path.size(); j++) {
+                if (hasLineOfSight(path[i], path[j])) {
+                    farthest = j;  // Can see this far, keep going
+                }
+                else {
+                    break;  // Can't see further, stop
+                }
+            }
+
+            smoothed.push_back(path[farthest]);  // Add farthest visible point
+            i = farthest;  // Jump to that point
+        }
+
+        return smoothed;
+    }
+
+    // Check if there's a clear line of sight between two cells
+    bool hasLineOfSight(Pair a, Pair b) {
+        // Bresenham's line algorithm - draws a line between two points
+        int x0 = a.second;  // Start column
+        int y0 = a.first;   // Start row
+        int x1 = b.second;  // End column
+        int y1 = b.first;   // End row
+
+        int dx = abs(x1 - x0);  // Horizontal distance
+        int dy = abs(y1 - y0);  // Vertical distance
+
+        int sx = (x0 < x1) ? 1 : -1;  // Step direction X (left or right)
+        int sy = (y0 < y1) ? 1 : -1;  // Step direction Y (up or down)
+
+        int err = dx - dy;  // Error term for line drawing
+
+        // Walk along the line
+        while (true) {
+            // Check if this cell is blocked
+            if (!isWalkableAt(y0, x0)) {
+                return false;  // Hit a wall, can't see through
+            }
+
+            // Reached the end?
+            if (x0 == x1 && y0 == y1) {
+                return true;  // Clear line of sight!
+            }
+
+            // Move to next cell along the line
+            int e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+        }
+    }
+
+    // Helper: check if a cell is walkable (needed for line of sight)
+    bool isWalkableAt(int row, int col) {
+        if (!isValid(row, col)) return false;  // Out of bounds
+        return collisionGrid[row][col];        // true = walkable
+    }
+
+    // Main pathfinding function
     std::vector<Pair> findPath(Pair src, Pair dest) {
         return aStarSearch(src, dest);
     }
 
-    void buildCollisionGrid(Map& map, std::string layerID) {
-        // Reset grid to all walkable
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                collisionGrid[i][j] = true;  // true = walkable
-            }
-        }
-
-        std::vector<Map::TileData>& collisionTiles = map.searchMap(layerID);
-
-        // Mark tiles as blocked
-        for (const auto& tile : collisionTiles) {
-            int col = tile.xPos / cellSizeX;
-            int row = tile.yPos / cellSizeY;
-
-            if (isValid(row, col)) {
-                collisionGrid[row][col] = false;  // false = blocked
-            }
-        }
-    }
-
     int getCellSizeX() const { return cellSizeX; }
     int getCellSizeY() const { return cellSizeY; }
-
-    bool isWalkableAt(int row, int col) {
-        if (!isValid(row, col)) return false;
-        return collisionGrid[row][col];  // true = walkable, false = blocked
-    }
 
     int getRows() const {
         return rows;
@@ -79,467 +139,136 @@ public:
 private:
     int rows, cols, cellSizeX, cellSizeY;
     std::vector<std::vector<bool>> collisionGrid;
-    // A Utility Function to check whether given cell (row, col)
-    // is a valid cell or not.
-    bool isValid(int row, int col) {
-        // Returns true if row number and column number
-        // is in range
-        return (row >= 0) && (row < rows) && (col >= 0) && (col < cols);
+
+    // Check if cell is inside grid
+    bool isValid(int row, int col) { return row >= 0 && row < rows && col >= 0 && col < cols; }
+
+    // Check if cell is walkable
+    bool isUnBlocked(int row, int col) { return collisionGrid[row][col]; }
+
+    // Check if cell is destination
+    bool isDestination(int row, int col, Pair dest) { return row == dest.first && col == dest.second; }
+
+    // Heuristic: Euclidean distance
+    double calculateHValue(int row, int col, Pair dest) {
+        return sqrt((row - dest.first) * (row - dest.first) + (col - dest.second) * (col - dest.second));
     }
 
-    // A Utility Function to check whether the given cell is
-    // blocked or not
-    bool isUnBlocked(int row, int col)
-    {
-        // Check the pre-built collision grid
-        return collisionGrid[row][col];
-    }
-
-    // A Utility Function to check whether destination cell has
-    // been reached or not
-    bool isDestination(int row, int col, Pair dest)
-    {
-        if (row == dest.first && col == dest.second)
-            return (true);
-        else
-            return (false);
-    }
-
-    // A Utility Function to calculate the 'h' heuristics.
-    double calculateHValue(int row, int col, Pair dest)
-    {
-        // Return using the distance formula
-        return ((double)sqrt((row - dest.first) * (row - dest.first)
-            + (col - dest.second) * (col - dest.second)));
-    }
-
-    // A Utility Function to trace the path from the source
-    // to destination
-    std::vector<Pair> tracePath(std::vector<std::vector<cell>>& cellDetails, Pair dest)
-    {
-        std::vector<Pair> path;
-        int row = dest.first;
-        int col = dest.second;
-
+    // Trace path from destination to source using parent pointers
+    std::vector<Pair> tracePath(std::vector<std::vector<cell>>& cellDetails, Pair dest) {
         std::stack<Pair> Path;
+        int row = dest.first;   // current row, start at destination
+        int col = dest.second;  // current column, start at destination
 
-        while (!(cellDetails[row][col].parent_i == row
-            && cellDetails[row][col].parent_j == col)) {
-            Path.push(std::make_pair(row, col));
-            int temp_row = cellDetails[row][col].parent_i;
-            int temp_col = cellDetails[row][col].parent_j;
-            row = temp_row;
-            col = temp_col;
+        // Follow parent pointers until reaching the start cell
+        while (!(cellDetails[row][col].parent_i == row && cellDetails[row][col].parent_j == col)) {
+            Path.push({ row, col }); // push current cell onto path stack
+
+            int temp_row = cellDetails[row][col].parent_i; // parent row of current cell
+            int temp_col = cellDetails[row][col].parent_j; // parent column of current cell
+
+            row = temp_row; // move to parent row
+            col = temp_col; // move to parent column
         }
 
-        Path.push(std::make_pair(row, col));
+        // push the starting cell
+        Path.push({ row, col }); // row/col now at source
 
-        // Convert stack to vector
+        // Convert the stack into a vector (path from start to end)
+        std::vector<Pair> path;
         while (!Path.empty()) {
-            path.push_back(Path.top());
-            Path.pop();
+            Pair p = Path.top();    // get the next cell from stack
+            Path.pop();             // remove it from stack
+            path.push_back(p);      // add to path vector
         }
-
         return path;
     }
 
-    // A Function to find the shortest path between
-    // a given source cell to a destination cell according
-    // to A* Search Algorithm
-    std::vector<Pair> aStarSearch(Pair src, Pair dest)
-    {   
+    // Comparator for priority queue (min f-value at top)
+    struct compare {
+        bool operator()(const pPair& a, const pPair& b) { return a.first > b.first; }
+    };
+
+    // The A* search algorithm
+    std::vector<Pair> aStarSearch(Pair src, Pair dest) {
         std::vector<Pair> emptyPath;
-        // 1.0 Validation
-        // If the source is out of range
-        if (isValid(src.first, src.second) == false) {
-            printf("Source is invalid\n");
-            return emptyPath;
-        }
 
-        // If the destination is out of range
-        if (isValid(dest.first, dest.second) == false) {
-            printf("Destination is invalid\n");
-            return emptyPath;
-        }
+        // 1.0 Validate source and destination
+        if (!isValid(src.first, src.second) || !isValid(dest.first, dest.second)) return emptyPath;
+        if (!isUnBlocked(src.first, src.second) || !isUnBlocked(dest.first, dest.second)) return emptyPath;
+        if (isDestination(src.first, src.second, dest)) return emptyPath;
 
-        // Either the source or the destination is blocked
-        if (isUnBlocked(src.first, src.second) == false
-            || isUnBlocked(dest.first, dest.second)
-            == false) {
-            printf("Source or the destination is blocked\n");
-            return emptyPath;
-        }
-
-        // If the destination cell is the same as source cell
-        if (isDestination(src.first, src.second, dest)
-            == true) {
-            printf("We are already at the destination\n");
-            return emptyPath;
-        }
-
-        // 2.0 Create a closed list and initialise it to false which
-        // means that no cell has been included yet This closed
-        // list is implemented as a boolean 2D Vector
+        // 2.0 Closed list: tracks explored cells
         std::vector<std::vector<bool>> closedList(rows, std::vector<bool>(cols, false));
 
-        // Declare a 2D array of structure to hold the details
-        // of that Vector
+        // 3.0 Cell details: store f, g, h and parent
         std::vector<std::vector<cell>> cellDetails(rows, std::vector<cell>(cols));
 
-        int i, j;
-        // Initialize all cells to "unknown" (FLT_MAX = infinity)
-        for (i = 0; i < rows; i++) {
-            for (j = 0; j < cols; j++) {
-                cellDetails[i][j].f = FLT_MAX; // Don't know cost yet
-                cellDetails[i][j].g = FLT_MAX;
-                cellDetails[i][j].h = FLT_MAX;
-                cellDetails[i][j].parent_i = -1; // No parent yet
-                cellDetails[i][j].parent_j = -1;
+        // 4.0 Initialize all cells
+        for (int i = 0;i < rows;i++)
+            for (int j = 0;j < cols;j++) {
+                cellDetails[i][j].f = cellDetails[i][j].g = cellDetails[i][j].h = FLT_MAX;
+                cellDetails[i][j].parent_i = cellDetails[i][j].parent_j = -1;
             }
-        }
 
-        // Set up starting cell
-        i = src.first, j = src.second;
-        cellDetails[i][j].f = 0.0; // Distance from start to start = 0
-        cellDetails[i][j].g = 0.0; // We'll calculate this properly later
-        cellDetails[i][j].h = 0.0;
-        cellDetails[i][j].parent_i = i; // Start is its own parent
+        // 5.0 Initialize source cell
+        int i = src.first, j = src.second;
+        cellDetails[i][j].f = cellDetails[i][j].g = cellDetails[i][j].h = 0.0;
+        cellDetails[i][j].parent_i = i;
         cellDetails[i][j].parent_j = j;
 
-        /*
-         4. Create an open list having information as-
-         <f, <i, j>>
-         where f = g + h,
-         and i, j are the row and column index of that cell
-         Note that 0 <= i <= ROW-1 & 0 <= j <= COL-1
-         This open list is implemented as a set of pair of
-         pair.*/
-        std::set<pPair> openList;
+        // 6.0 Open list: priority queue sorted by f-value
+        std::priority_queue<pPair, std::vector<pPair>, compare> openList;
+        openList.push({ 0.0,{i,j} });
 
-        // Put the starting cell on the open list and set its
-        // 'f' as 0
-        openList.insert(std::make_pair(0.0, std::make_pair(i, j)));
+        // 7.0 Movement directions (N,S,E,W + diagonals)
+        int rowDir[8] = { -1, 1, 0, 0, -1, -1, 1, 1 };
+        int colDir[8] = { 0, 0, 1, -1, 1, -1, 1, -1 };
+        double moveCost[8] = { 1,1,1,1,1.414,1.414,1.414,1.414 }; // diagonal = sqrt(2)
 
-        // We set this boolean value as false as initially
-        // the destination is not reached.
-        bool foundDest = false;
-
-        // 5. MAIN LOOP - explore cells until we find destination
+        // 8.0 Main loop: process cells until destination is found or open list is empty
         while (!openList.empty()) {
-            // Get cell with LOWEST f-value (most promising)
-            pPair p = *openList.begin();
-            openList.erase(openList.begin()); // Remove it from open list
+            // Get cell with lowest f-value from open list
+            auto p = openList.top(); openList.pop();
+            i = p.second.first;   // current row
+            j = p.second.second;  // current column
 
-            // Add this vertex to the closed list
-            i = p.second.first; // Row
-            j = p.second.second; // Column
-            closedList[i][j] = true; // Mark as explored
+            if (closedList[i][j]) continue; // skip if already evaluated
 
-            /*
-             Generating all the 8 successor of this cell
+            closedList[i][j] = true; // mark current cell as evaluated
 
-                 N.W   N   N.E
-                   \   |   /
-                    \  |  /
-                 W----Cell----E
-                      / | \
-                    /   |  \
-                 S.W    S   S.E
+            // 9.0 Explore all 8 neighbors
+            for (int dir = 0; dir < 8; dir++) {
+                int ni = i + rowDir[dir]; // neighbor row
+                int nj = j + colDir[dir]; // neighbor column
 
-             Cell-->Popped Cell (i, j)
-             N -->  North       (i-1, j)
-             S -->  South       (i+1, j)
-             E -->  East        (i, j+1)
-             W -->  West        (i, j-1)
-             N.E--> North-East  (i-1, j+1)
-             N.W--> North-West  (i-1, j-1)
-             S.E--> South-East  (i+1, j+1)
-             S.W--> South-West  (i+1, j-1)*/
+                if (!isValid(ni, nj)) continue;      // skip invalid cells
+                if (!isUnBlocked(ni, nj)) continue;  // skip blocked cells
 
-             // To store the 'g', 'h' and 'f' of the 8 successors
-            double gNew, hNew, fNew;
-
-            //----------- 1st Successor (North) ------------
-
-            // Only process this cell if this is a valid one
-            if (isValid(i - 1, j) == true) {
-                // If the destination cell is the same as the
-                // current successor
-                if (isDestination(i - 1, j, dest) == true) {
-                    cellDetails[i - 1][j].parent_i = i;
-                    cellDetails[i - 1][j].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-                // Not destination, check if we should explore it
-                else if (closedList[i - 1][j] == false // Not explored yet
-                    && isUnBlocked(i - 1, j) == true) { // Not blocked
-                    // Calculate costs
-                    gNew = cellDetails[i][j].g + 1.0; // +1 for cardinal direction
-                    hNew = calculateHValue(i - 1, j, dest); // Euclidean distance
-                    fNew = gNew + hNew;
-
-                    // If it isn’t on the open list, add it to
-                    // the open list. Make the current square
-                    // the parent of this square. Record the
-                    // f, g, and h costs of the square cell
-                    //                OR
-                    // If it is on the open list already, check
-                    // to see if this path to that square is
-                    // better, using 'f' cost as the measure.
-                    if (cellDetails[i - 1][j].f == FLT_MAX // Never visited
-                        || cellDetails[i - 1][j].f > fNew) { // Or found better path
-
-                        // Add to open list
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i - 1, j)));
-
-                        // Update the details of this cell
-                        cellDetails[i - 1][j].f = fNew;
-                        cellDetails[i - 1][j].g = gNew;
-                        cellDetails[i - 1][j].h = hNew;
-                        cellDetails[i - 1][j].parent_i = i; // Current cell is parent
-                        cellDetails[i - 1][j].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 2nd Successor (South) ------------
-
-            if (isValid(i + 1, j) == true) {
-                if (isDestination(i + 1, j, dest) == true) {
-                    cellDetails[i + 1][j].parent_i = i;
-                    cellDetails[i + 1][j].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-                else if (closedList[i + 1][j] == false
-                    && isUnBlocked(i + 1, j)
-                    == true) {
-                    gNew = cellDetails[i][j].g + 1.0;
-                    hNew = calculateHValue(i + 1, j, dest);
-                    fNew = gNew + hNew;
-
-                    if (cellDetails[i + 1][j].f == FLT_MAX
-                        || cellDetails[i + 1][j].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i + 1, j)));
-
-                        cellDetails[i + 1][j].f = fNew;
-                        cellDetails[i + 1][j].g = gNew;
-                        cellDetails[i + 1][j].h = hNew;
-                        cellDetails[i + 1][j].parent_i = i;
-                        cellDetails[i + 1][j].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 3rd Successor (East) ------------
-
-            if (isValid(i, j + 1) == true) {
-                if (isDestination(i, j + 1, dest) == true) {
-                    cellDetails[i][j + 1].parent_i = i;
-                    cellDetails[i][j + 1].parent_j = j;
-                    foundDest = true;
+                if (isDestination(ni, nj, dest)) {  // found destination
+                    cellDetails[ni][nj].parent_i = i; // set parent row
+                    cellDetails[ni][nj].parent_j = j; // set parent col
                     return tracePath(cellDetails, dest);
                 }
 
-                else if (closedList[i][j + 1] == false
-                    && isUnBlocked(i, j + 1)
-                    == true) {
-                    gNew = cellDetails[i][j].g + 1.0;
-                    hNew = calculateHValue(i, j + 1, dest);
-                    fNew = gNew + hNew;
+                if (!closedList[ni][nj]) {
+                    double gNew = cellDetails[i][j].g + moveCost[dir];   // cost from start
+                    double hNew = calculateHValue(ni, nj, dest);        // heuristic to destination
+                    double fNew = gNew + hNew;                          // total cost
 
-                    if (cellDetails[i][j + 1].f == FLT_MAX
-                        || cellDetails[i][j + 1].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i, j + 1)));
-
-                        cellDetails[i][j + 1].f = fNew;
-                        cellDetails[i][j + 1].g = gNew;
-                        cellDetails[i][j + 1].h = hNew;
-                        cellDetails[i][j + 1].parent_i = i;
-                        cellDetails[i][j + 1].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 4th Successor (West) ------------
-
-            if (isValid(i, j - 1) == true) {
-                if (isDestination(i, j - 1, dest) == true) {
-                    cellDetails[i][j - 1].parent_i = i;
-                    cellDetails[i][j - 1].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-
-                else if (closedList[i][j - 1] == false
-                    && isUnBlocked(i, j - 1)
-                    == true) {
-                    gNew = cellDetails[i][j].g + 1.0;
-                    hNew = calculateHValue(i, j - 1, dest);
-                    fNew = gNew + hNew;
-
-                    if (cellDetails[i][j - 1].f == FLT_MAX
-                        || cellDetails[i][j - 1].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i, j - 1)));
-
-                        cellDetails[i][j - 1].f = fNew;
-                        cellDetails[i][j - 1].g = gNew;
-                        cellDetails[i][j - 1].h = hNew;
-                        cellDetails[i][j - 1].parent_i = i;
-                        cellDetails[i][j - 1].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 5th Successor (North-East) ------------
-
-            if (isValid(i - 1, j + 1) == true) {
-                if (isDestination(i - 1, j + 1, dest) == true
-                    && isUnBlocked(i - 1, j) == true
-                    && isUnBlocked(i, j + 1) == true) {
-                    cellDetails[i - 1][j + 1].parent_i = i;
-                    cellDetails[i - 1][j + 1].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-
-                else if (closedList[i - 1][j + 1] == false
-                    && isUnBlocked(i - 1, j + 1)== true
-                    && isUnBlocked(i - 1, j) == true
-                    && isUnBlocked(i, j + 1) == true){
-                    gNew = cellDetails[i][j].g + 1.414;
-                    hNew = calculateHValue(i - 1, j + 1, dest);
-                    fNew = gNew + hNew;
-
-                    if (cellDetails[i - 1][j + 1].f == FLT_MAX
-                        || cellDetails[i - 1][j + 1].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i - 1, j + 1)));
-
-                        cellDetails[i - 1][j + 1].f = fNew;
-                        cellDetails[i - 1][j + 1].g = gNew;
-                        cellDetails[i - 1][j + 1].h = hNew;
-                        cellDetails[i - 1][j + 1].parent_i = i;
-                        cellDetails[i - 1][j + 1].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 6th Successor (North-West) -----------
-
-            if (isValid(i - 1, j - 1) == true) {
-                if (isDestination(i - 1, j - 1, dest) == true
-                    && isUnBlocked(i - 1, j) == true
-                    && isUnBlocked(i, j - 1) == true) {
-                    cellDetails[i - 1][j - 1].parent_i = i;
-                    cellDetails[i - 1][j - 1].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-
-                else if (closedList[i - 1][j - 1] == false
-                    && isUnBlocked(i - 1, j - 1)== true
-                    && isUnBlocked(i - 1, j) == true
-                    && isUnBlocked(i, j - 1) == true) {
-                    gNew = cellDetails[i][j].g + 1.414;
-                    hNew = calculateHValue(i - 1, j - 1, dest);
-                    fNew = gNew + hNew;
-
-                    if (cellDetails[i - 1][j - 1].f == FLT_MAX
-                        || cellDetails[i - 1][j - 1].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i - 1, j - 1)));
-                        cellDetails[i - 1][j - 1].f = fNew;
-                        cellDetails[i - 1][j - 1].g = gNew;
-                        cellDetails[i - 1][j - 1].h = hNew;
-                        cellDetails[i - 1][j - 1].parent_i = i;
-                        cellDetails[i - 1][j - 1].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 7th Successor (South-East) -----------
-
-            if (isValid(i + 1, j + 1) == true) {
-                if (isDestination(i + 1, j + 1, dest) == true
-                    && isUnBlocked(i + 1, j) == true
-                    && isUnBlocked(i, j + 1) == true) {
-                    cellDetails[i + 1][j + 1].parent_i = i;
-                    cellDetails[i + 1][j + 1].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-
-                else if (closedList[i + 1][j + 1] == false
-                    && isUnBlocked(i + 1, j + 1)== true
-                    && isUnBlocked(i + 1, j) == true
-                    && isUnBlocked(i, j + 1) == true) {
-                    gNew = cellDetails[i][j].g + 1.414;
-                    hNew = calculateHValue(i + 1, j + 1, dest);
-                    fNew = gNew + hNew;
-
-                    if (cellDetails[i + 1][j + 1].f == FLT_MAX
-                        || cellDetails[i + 1][j + 1].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i + 1, j + 1)));
-
-                        cellDetails[i + 1][j + 1].f = fNew;
-                        cellDetails[i + 1][j + 1].g = gNew;
-                        cellDetails[i + 1][j + 1].h = hNew;
-                        cellDetails[i + 1][j + 1].parent_i = i;
-                        cellDetails[i + 1][j + 1].parent_j = j;
-                    }
-                }
-            }
-
-            //----------- 8th Successor (South-West) -----------
-
-            if (isValid(i + 1, j - 1) == true) {
-                if (isDestination(i + 1, j - 1, dest) == true
-                    && isUnBlocked(i + 1, j) == true
-                    && isUnBlocked(i, j - 1) == true) {
-                    cellDetails[i + 1][j - 1].parent_i = i;
-                    cellDetails[i + 1][j - 1].parent_j = j;
-                    foundDest = true;
-                    return tracePath(cellDetails, dest);
-                }
-
-                else if (closedList[i + 1][j - 1] == false
-                    && isUnBlocked(i + 1, j - 1)== true
-                    && isUnBlocked(i + 1, j) == true
-                    && isUnBlocked(i, j - 1) == true) {
-                    gNew = cellDetails[i][j].g + 1.414;
-                    hNew = calculateHValue(i + 1, j - 1, dest);
-                    fNew = gNew + hNew;
-
-                    if (cellDetails[i + 1][j - 1].f == FLT_MAX
-                        || cellDetails[i + 1][j - 1].f > fNew) {
-                        openList.insert(std::make_pair(
-                            fNew, std::make_pair(i + 1, j - 1)));
-
-                        // Update the details of this cell
-                        cellDetails[i + 1][j - 1].f = fNew;
-                        cellDetails[i + 1][j - 1].g = gNew;
-                        cellDetails[i + 1][j - 1].h = hNew;
-                        cellDetails[i + 1][j - 1].parent_i = i;
-                        cellDetails[i + 1][j - 1].parent_j = j;
+                    if (cellDetails[ni][nj].f == FLT_MAX || cellDetails[ni][nj].f > fNew) {
+                        openList.push({ fNew, {ni, nj} });              // push neighbor to open list
+                        cellDetails[ni][nj].f = fNew;                 // update f-value
+                        cellDetails[ni][nj].g = gNew;                 // update g-value
+                        cellDetails[ni][nj].h = hNew;                 // update h-value
+                        cellDetails[ni][nj].parent_i = i;             // set parent row
+                        cellDetails[ni][nj].parent_j = j;             // set parent col
                     }
                 }
             }
         }
 
-        // When the destination cell is not found and the open
-        // list is empty, then we conclude that we failed to
-        // reach the destination cell. This may happen when the
-        // there is no way to destination cell (due to
-        // blockages)
-        if (foundDest == false)
-            printf("Failed to find the Destination Cell\n");
+        // 10.0 Destination not reached
         return emptyPath;
     }
 };
