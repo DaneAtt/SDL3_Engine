@@ -20,12 +20,12 @@ public:
 	friend ENGINE_API Vector2D operator-(const Vector2D& v1, const Vector2D& v2);
 	friend ENGINE_API Vector2D operator*(const Vector2D& vec, float scalar);
 	friend ENGINE_API Vector2D operator*(float scalar, const Vector2D& vec);
-	friend ENGINE_API Vector2D operator/(const Vector2D& v1, const Vector2D& v2);
+	friend ENGINE_API Vector2D operator/(const Vector2D& v, float scalar);
 
 	Vector2D& operator+=(const Vector2D& vec);
 	Vector2D& operator-=(const Vector2D& vec);
-	Vector2D& operator*=(const Vector2D& vec);
-	Vector2D& operator/=(const Vector2D& vec);
+	Vector2D& operator*=(float scalar);
+	Vector2D& operator/=(float scalar);
 
 	Vector2D& Zero();
 

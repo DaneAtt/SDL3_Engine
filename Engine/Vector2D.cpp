@@ -64,9 +64,10 @@ Vector2D operator*(float scalar, const Vector2D& vec)
 	return Vector2D(vec.x * scalar, vec.y * scalar);
 }
 
-Vector2D operator/(const Vector2D& v1, const Vector2D& v2)
+Vector2D operator/(const Vector2D& v, float scalar) 
 {
-	return Vector2D(v1.x / v2.x, v1.y / v2.y);
+	if (scalar == 0.0f) return Vector2D(0.0f, 0.0f);
+	return Vector2D(v.x / scalar, v.y / scalar);
 }
 
 Vector2D& Vector2D::operator+=(const Vector2D& vec)
@@ -81,16 +82,17 @@ Vector2D& Vector2D::operator-=(const Vector2D& vec)
 
 }
 
-Vector2D& Vector2D::operator*=(const Vector2D& vec)
+Vector2D& Vector2D::operator*=(float scalar)
 {
-	return this->Multiply(vec);
-
+	x *= scalar; y *= scalar;
+	return *this;
 }
 
-Vector2D& Vector2D::operator/=(const Vector2D& vec)
+Vector2D& Vector2D::operator/=(float scalar) 
 {
-	return this->Divide(vec);
-
+	if (scalar == 0.0f) { x = 0.0f; y = 0.0f; }
+	else { x /= scalar; y /= scalar; }
+	return *this;
 }
 
 Vector2D& Vector2D::Zero()
