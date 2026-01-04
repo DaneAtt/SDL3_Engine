@@ -51,7 +51,6 @@ public:
 		animationID = id;
 		setTex(id);
 		name = id;
-		float frameTimer = 0.0f;
 	}
 
 	~SpriteComponent() {}
@@ -59,7 +58,23 @@ public:
 	void setTex(std::string id)
 	{
 		texture = Engine::getAssetManager()->GetTexture(id);
+	}
 
+	void switchAnimation(std::string id)
+	{
+		setTex(id);
+
+		if (animated) {
+			currentAnimation = Engine::getJSON()->searchAnimation(id.c_str());
+			animIndex = 0;
+			frameTimer = 0.0f;
+
+			if (!currentAnimation.Frames.empty()) {
+				currentFrame = &currentAnimation.Frames[0];
+				transform->width = currentFrame->w;
+				transform->height = currentFrame->h;
+			}
+		}
 	}
 
 	void init() override
@@ -132,8 +147,6 @@ public:
 				{
 					destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
 					destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
-					//transform->width = currentFrame->w;
-					//transform->height = currentFrame->h ;
 					destRect.w = currentFrame->w * transform->scale;
 					destRect.h = currentFrame->h * transform->scale;
 				}
@@ -151,7 +164,8 @@ public:
 								boxStartX = transform->position.x;
 								boxStartY = transform->position.y;
 							}
-							hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY);
+							bool flip = (spriteFlip == SDL_FLIP_HORIZONTAL);
+							hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY, flip, currentFrame->w);
 						}
 
 					}

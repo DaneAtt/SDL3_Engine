@@ -6,10 +6,18 @@
 #include "Engine.h"
 #include "EngineAPI.h"
 #include "DamageComponent.h"
+#include "SpriteComponent.h"
 
-void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY)
+void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY, bool isFlipped, float width)
 {
-    worldHitbox.x = playerX + animHitbox->x * transform->scale;
+    if (isFlipped)
+    {
+        worldHitbox.x = playerX + (width * transform->scale) - (animHitbox->x * transform->scale) - (animHitbox->w * transform->scale);
+    }
+    else
+    {
+        worldHitbox.x = playerX + animHitbox->x * transform->scale;
+    }
     worldHitbox.y = playerY + animHitbox->y * transform->scale;
     worldHitbox.w = animHitbox->w * transform->scale;
     worldHitbox.h = animHitbox->h * transform->scale;

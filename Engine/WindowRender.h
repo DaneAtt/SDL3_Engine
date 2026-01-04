@@ -22,6 +22,7 @@ public:
 	void clean();
 
 	SDL_Renderer* getRenderer() const { return renderer; }
+	SDL_Window* getWindow() const { return window; }
 	Size getWinSize() const {
 		Size currentSize;
 		SDL_GetWindowSize(window, &currentSize.w, &currentSize.h);

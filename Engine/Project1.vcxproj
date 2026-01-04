@@ -143,6 +143,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="AnimationJSON.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="ECS.cpp" />
@@ -153,6 +154,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="LoadingManager.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="Spatialgrid.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />

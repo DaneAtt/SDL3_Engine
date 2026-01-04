@@ -60,11 +60,14 @@ void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_
 
 void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip)
 {
-	SDL_RenderTexture(
+	SDL_RenderTextureRotated(
 		renderer,
 		tex,
 		srcRect,
-		desRect
+		desRect,
+		0.0,
+		NULL,
+		flip
 	);
 
 }
