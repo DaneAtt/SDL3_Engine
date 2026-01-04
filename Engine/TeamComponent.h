@@ -57,6 +57,8 @@ public:
 		eTeam.behavior = newBehavior;
 	}
 
+	entityTeam getTeam() { return eTeam.EntityTeam; }
+
 
 private:
 	Team eTeam;

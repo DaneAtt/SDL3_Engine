@@ -100,7 +100,6 @@ public:
 			destRect.w = transform->width;
 			destRect.h = transform->height;
 		}
-
 	}
 
 	void update() override
@@ -136,28 +135,31 @@ public:
 
 				if (currentAnimation.fixedFrame)
 				{
-					float anchorOffsetX = currentAnimation.anchorX;
-					if (spriteFlip == SDL_FLIP_HORIZONTAL) {
-						anchorOffsetX = transform->width - currentAnimation.anchorX;
-					}
+					float anchorOffsetX = currentAnimation.anchorX * transform->scale;
 
-					destRect.x = static_cast<int>(transform->position.x) - anchorOffsetX - Engine::getCamera()->x;
-					destRect.y = static_cast<int>(transform->position.y) - currentAnimation.anchorY - Engine::getCamera()->y;
 					destRect.w = transform->width * transform->scale;
 					destRect.h = transform->height * transform->scale;
+					destRect.y = transform->position.y - (currentAnimation.anchorY * transform->scale) - Engine::getCamera()->y;
+
+					if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation.canFlip) {
+						destRect.x = transform->position.x - (destRect.w - anchorOffsetX) - Engine::getCamera()->x;
+					}
+					else {
+						destRect.x = transform->position.x - anchorOffsetX - Engine::getCamera()->x;
+					}
 				}
 				else
 				{
-					float anchorOffsetX = currentAnimation.anchorX;
+					float anchorOffsetX = currentAnimation.anchorX * transform->scale;
 
-					if (spriteFlip == SDL_FLIP_HORIZONTAL) {
-						anchorOffsetX = currentFrame->w - currentAnimation.anchorX;
-					}
-
-					destRect.x = static_cast<int>(transform->position.x) - anchorOffsetX - Engine::getCamera()->x;
-					destRect.y = static_cast<int>(transform->position.y) - currentAnimation.anchorY - Engine::getCamera()->y;
 					destRect.w = currentFrame->w * transform->scale;
 					destRect.h = currentFrame->h * transform->scale;
+					destRect.x = transform->position.x - anchorOffsetX - Engine::getCamera()->x;
+					destRect.y = transform->position.y - (currentAnimation.anchorY * transform->scale) - Engine::getCamera()->y;
+
+					if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation.canFlip) {
+						destRect.x = transform->position.x - (destRect.w - anchorOffsetX) - Engine::getCamera()->x;
+					}
 				}
 
 				if (hitbox)

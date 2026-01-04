@@ -13,6 +13,7 @@ struct Animation
 	double Duration;
 	bool fixedFrame;
 	bool Hitbo;
+	bool canFlip;
 	std::vector<SDL_FRect> Frames;
 	std::map<int, SDL_FRect> HitboxMap;
 	SDL_FRect collisionRect;
@@ -20,13 +21,14 @@ struct Animation
 
 	Animation() {}
 
-	Animation(bool loop, bool fixed, bool hitbo,std::map<int, SDL_FRect> hitboxmap, SDL_FRect collisionrect,double duration, int achX, int achY, const std::vector<SDL_FRect>& frames)
+	Animation(bool loop, bool fixed, bool hitbo,std::map<int, SDL_FRect> hitboxmap, SDL_FRect collisionrect, bool flip, double duration, int achX, int achY, const std::vector<SDL_FRect>& frames)
 	{
 		Loop = loop;
 		fixedFrame = fixed;
 		Hitbo = hitbo;
 		HitboxMap = hitboxmap;
-		collisionRect = collisionRect;
+		collisionRect = collisionrect;
+		canFlip = flip;
 		Duration = duration;
 		anchorX = achX;
 		anchorY = achY;

@@ -17,8 +17,8 @@ void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, floa
     }
 
     // Convert anchor position to top-left position
-    float topLeftX = playerX - adjustedAnchorX;
-    float topLeftY = playerY - anchorY;
+    float topLeftX = playerX - (adjustedAnchorX * transform->scale);
+    float topLeftY = playerY - (anchorY * transform->scale);
 
     if (isFlipped)
     {

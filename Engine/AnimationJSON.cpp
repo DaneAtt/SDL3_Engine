@@ -29,9 +29,10 @@ void AnimationJSON::loadAnimationJSON(const char* path)
             int anchorX = animData["defaultAnchor"]["x"];
             int anchorY = animData["defaultAnchor"]["y"];
 			bool fixedFrame = animData["fixedFrame"];
-			bool hitbox = animData["hasHitbox"];
 			collisionRect.w = animData["collisionBox"]["w"];
 			collisionRect.h = animData["collisionBox"]["h"];
+			bool canFlip = animData["canFlip"];
+			bool hitbox = animData["hasHitbox"];
 			if (fixedFrame)
 			{
 				srcRect.w = animData["fixedFrameSrc"]["w"];
@@ -62,7 +63,7 @@ void AnimationJSON::loadAnimationJSON(const char* path)
 				frames.push_back(srcRect);
 				
 			}
-			animations[name] = Animation(loop, fixedFrame, hitbox, hitboxMap, collisionRect,defaultDuration, anchorX, anchorY, frames);
+			animations[name] = Animation(loop, fixedFrame, hitbox, hitboxMap, collisionRect, canFlip,defaultDuration, anchorX, anchorY, frames);
 		}
 		catch (const json::exception& e) {
 			std::cout << "Error parsing " << name << ": " << e.what() << "\n";
