@@ -31,7 +31,7 @@ void AIComponent::ChaseEntity(Entity* entity)
 
     float distance = (targetPos - transform->position).Length();
 
-    if (distance < 150.0f) {
+    if (distance < 100.0f) {
         transform->velocity.Zero();
         return;
     }

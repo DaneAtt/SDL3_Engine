@@ -8,23 +8,31 @@
 #include "DamageComponent.h"
 #include "SpriteComponent.h"
 
-void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY, bool isFlipped, float width)
+void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY, bool isFlipped, float width, int anchorX, int anchorY)
 {
+    // Flip anchor X if sprite is flipped
+    float adjustedAnchorX = anchorX;
+    if (isFlipped) {
+        adjustedAnchorX = width - anchorX;
+    }
+
+    // Convert anchor position to top-left position
+    float topLeftX = playerX - adjustedAnchorX;
+    float topLeftY = playerY - anchorY;
+
     if (isFlipped)
     {
-        worldHitbox.x = playerX + (width * transform->scale) - (animHitbox->x * transform->scale) - (animHitbox->w * transform->scale);
+        worldHitbox.x = topLeftX + (width * transform->scale) - (animHitbox->x * transform->scale) - (animHitbox->w * transform->scale);
     }
     else
     {
-        worldHitbox.x = playerX + animHitbox->x * transform->scale;
+        worldHitbox.x = topLeftX + animHitbox->x * transform->scale;
     }
-    worldHitbox.y = playerY + animHitbox->y * transform->scale;
+    worldHitbox.y = topLeftY + animHitbox->y * transform->scale;
     worldHitbox.w = animHitbox->w * transform->scale;
     worldHitbox.h = animHitbox->h * transform->scale;
-
-    lastDebugHitbox = worldHitbox;  // always update
-    drawDebug = true;                // show hitbox
-
+    lastDebugHitbox = worldHitbox;
+    drawDebug = true;
     On = true;
     alreadyHit.clear();
 }

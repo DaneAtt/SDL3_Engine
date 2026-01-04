@@ -86,8 +86,6 @@ void Engine::handleEvents()
 		{
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 		case SDL_EVENT_MOUSE_BUTTON_UP:
-		case SDL_EVENT_MOUSE_MOTION:
-		case SDL_EVENT_KEY_DOWN:
 			events.push(*event);
 			break;
 

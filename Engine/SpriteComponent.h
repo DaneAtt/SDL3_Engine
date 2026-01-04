@@ -24,10 +24,8 @@ private:
 	HitBoxComponent* hitbox;
 	const char* animationID;
 	int previousAnimIndex = -1;
-	float boxStartX;
-	float boxStartY;
+	float boxStartX, boxStartY, frameTimer;
 	std::string name;
-	float frameTimer;
 
 public:
 
@@ -138,15 +136,26 @@ public:
 
 				if (currentAnimation.fixedFrame)
 				{
-					destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
-					destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
+					float anchorOffsetX = currentAnimation.anchorX;
+					if (spriteFlip == SDL_FLIP_HORIZONTAL) {
+						anchorOffsetX = transform->width - currentAnimation.anchorX;
+					}
+
+					destRect.x = static_cast<int>(transform->position.x) - anchorOffsetX - Engine::getCamera()->x;
+					destRect.y = static_cast<int>(transform->position.y) - currentAnimation.anchorY - Engine::getCamera()->y;
 					destRect.w = transform->width * transform->scale;
 					destRect.h = transform->height * transform->scale;
 				}
 				else
 				{
-					destRect.x = static_cast<int>(transform->position.x) - Engine::getCamera()->x;
-					destRect.y = static_cast<int>(transform->position.y) - Engine::getCamera()->y;
+					float anchorOffsetX = currentAnimation.anchorX;
+
+					if (spriteFlip == SDL_FLIP_HORIZONTAL) {
+						anchorOffsetX = currentFrame->w - currentAnimation.anchorX;
+					}
+
+					destRect.x = static_cast<int>(transform->position.x) - anchorOffsetX - Engine::getCamera()->x;
+					destRect.y = static_cast<int>(transform->position.y) - currentAnimation.anchorY - Engine::getCamera()->y;
 					destRect.w = currentFrame->w * transform->scale;
 					destRect.h = currentFrame->h * transform->scale;
 				}
@@ -165,7 +174,7 @@ public:
 								boxStartY = transform->position.y;
 							}
 							bool flip = (spriteFlip == SDL_FLIP_HORIZONTAL);
-							hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY, flip, currentFrame->w);
+							hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY, flip, currentFrame->w, currentAnimation.anchorX, currentAnimation.anchorY);
 						}
 
 					}

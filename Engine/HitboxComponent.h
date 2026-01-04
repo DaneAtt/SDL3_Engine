@@ -19,7 +19,7 @@ public:
 
     ENGINE_API void update() override;
 
-    ENGINE_API void updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY, bool flip, float width);
+    ENGINE_API void updateFromFrame(SDL_FRect* animHitbox, float playerX, float playerY, bool flip, float width, int anchorX, int anchorY);
 
     void deactivate()
     {
