@@ -33,8 +33,8 @@ public:
 
 private:
     void ENGINE_API ChaseEntity(Entity* entity);
-    void ENGINE_API updatePath(Entity* target);
-    void ENGINE_API followPathSmooth();
+    void updatePath(Entity* target);
+    void followPathSmooth();
 
     TransformComponent* transform = nullptr;
     TransformComponent* eTrans = nullptr;

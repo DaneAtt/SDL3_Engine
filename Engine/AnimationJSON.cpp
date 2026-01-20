@@ -29,6 +29,8 @@ void AnimationJSON::loadAnimationJSON(const char* path)
             int anchorX = animData["defaultAnchor"]["x"];
             int anchorY = animData["defaultAnchor"]["y"];
 			bool fixedFrame = animData["fixedFrame"];
+			collisionRect.x = animData["collisionBox"]["x"];
+			collisionRect.y = animData["collisionBox"]["y"];
 			collisionRect.w = animData["collisionBox"]["w"];
 			collisionRect.h = animData["collisionBox"]["h"];
 			bool canFlip = animData["canFlip"];
