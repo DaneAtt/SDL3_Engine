@@ -33,9 +33,9 @@ void LoadingScreen::init(const char* texturePath, const char* animJsonPath, cons
         return;
     }
 
-    textureKeyStr = "loading_screen_texture";
+    textureKeyStr = "";
     if (animName) {
-        animationNameStr = animName;
+        textureKeyStr = animName;
     }
 
     // Load texture

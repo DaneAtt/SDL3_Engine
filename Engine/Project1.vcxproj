@@ -151,7 +151,6 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="HitboxComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="LoadingManager.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PathFinder.cpp" />
