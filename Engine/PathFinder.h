@@ -21,7 +21,7 @@ public:
         double f, g, h;
     };
 
-    static constexpr bool PF_DEBUG = false;
+    static constexpr bool PF_DEBUG = true;
 
     PathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
     ~PathFinder() {};

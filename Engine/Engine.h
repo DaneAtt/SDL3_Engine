@@ -13,6 +13,7 @@ class CollisionComponent;
 class HitboxComponent;
 class LoadingManager;
 class PathFinder;
+class EventBus;
 struct Size;
 
 
@@ -43,6 +44,7 @@ public:
     static void calDeltaTime();
     static void initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
     static PathFinder* getPathFinder() { return pathFinder; }
+    static EventBus* getEventBus() { return eventBus; }
     static bool isRunning;
 
 private:
@@ -59,4 +61,5 @@ private:
     static float deltaTime;
     static Uint64 lastFrameTime;
     static PathFinder* pathFinder;
+    static EventBus* eventBus;
 };

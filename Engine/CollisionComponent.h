@@ -31,16 +31,17 @@ public:
 			if (!anim.Frames.empty())
 			{
 				collision = anim.collisionRect;
-				transformRect.x = transform->position.x - (anim.anchorX * transform->scale) + (collision.x * transform->scale);
-				transformRect.y = transform->position.y - (anim.anchorY * transform->scale) + (collision.y * transform->scale);
 			}
+			transformRect.x = transform->position.x - (anim.anchorX * transform->scale) + (collision.x * transform->scale);
+			transformRect.y = transform->position.y - (anim.anchorY * transform->scale) + (collision.y * transform->scale);
 		}
-
-		transformRect.x = transform->position.x + (collision.x * transform->scale);
-		transformRect.y = transform->position.y + (collision.y * transform->scale);
+		else 
+		{
+			transformRect.x = transform->position.x + (collision.x * transform->scale);
+			transformRect.y = transform->position.y + (collision.y * transform->scale);
+		}
 		transformRect.w = collision.w * transform->scale;
 		transformRect.h = collision.h * transform->scale;
-		lastRect = transformRect;
 
 		Engine::getCollisionGrid()->Insert(this, &transformRect);
 	}
@@ -49,14 +50,6 @@ public:
 	bool getIsStatic() const { return isStatic; }
 	SDL_FRect* getCollision() { return &collision; }
 	SDL_FRect* getLastRect() { return &lastRect; }
-
-	void setRect(const SDL_FRect& rect) {
-		transformRect = rect;
-	}
-
-	void setLastRect(const SDL_FRect& rect) {
-		lastRect = rect;
-	}
 
 private:
 	bool isStatic;

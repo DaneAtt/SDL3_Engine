@@ -60,9 +60,8 @@ void Map::loadMapJSON(const char* path)
 					data.xPos = xPos;
 					data.yPos = yPos;
 					data.flip = flip;
+					tileVec.push_back(data);
 				}
-
-				tileVec.push_back(data);
 
 				x++;
 				if (x >= width) {
@@ -121,6 +120,26 @@ void Map::createColliders(std::string id, int group)
 		std::cout << "Warning: Map '" << id << "' not found\n";
 		return;
 	}
+
+	/*
+	std::cout << "Creating colliders for layer: " << id << std::endl;
+	std::cout << "Total tiles in layer: " << mapLayers[id].size() << std::endl;
+
+	std::unordered_map<std::string, int> positions;
+	for (auto& tileData : mapLayers[id]) {
+		std::string key = std::to_string(tileData.xPos) + "," + std::to_string(tileData.yPos);
+		positions[key]++;
+	}
+
+	int duplicates = 0;
+	for (auto& [pos, count] : positions) {
+		if (count > 1) {
+			std::cout << "  Duplicate at " << pos << " x" << count << std::endl;
+			duplicates += (count - 1);
+		}
+	}
+	std::cout << "Unique positions: " << positions.size() << ", Duplicates: " << duplicates << std::endl;
+	*/
 	Manager* manager = Engine::getManager();
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());

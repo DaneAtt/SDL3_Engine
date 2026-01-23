@@ -54,10 +54,7 @@ public:
 
 	void update() override
 	{
-		deltaTime = Engine::getDeltaTime();
 		curPosition = position;
-		position.x += velocity.x * speed * deltaTime;
-		position.y += velocity.y * speed * deltaTime;
 	}
 
 	Vector2D getPreviousPos() { return curPosition; }

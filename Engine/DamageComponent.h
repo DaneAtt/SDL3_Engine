@@ -11,8 +11,8 @@ public:
 
 	~DamageComponent() {}
 
-	double getDamage() { return Damage; }
+	int getDamage() { return Damage; }
 
 private:
-	double Damage;
+	int Damage;
 };

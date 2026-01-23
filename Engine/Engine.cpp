@@ -8,6 +8,7 @@
 #include "SpatialGrid.h"
 #include "LoadingManager.h"
 #include "PathFinder.h"
+#include "EventBus.h"
 #include <vector>
 
 float Engine::deltaTime = 0.0f;
@@ -23,6 +24,7 @@ AnimationJSON* Engine::json = nullptr;
 SpatialGrid* Engine::collisionGrid = nullptr;
 LoadingManager* Engine::loadingMgr = nullptr;
 PathFinder* Engine::pathFinder = nullptr;
+EventBus* Engine::eventBus = nullptr;
 SDL_Rect Engine::camera = { 0, 0, 0, 0 };
 
 Engine::Engine()
@@ -34,6 +36,7 @@ Engine::Engine()
 	json = new AnimationJSON(1);
 	loadingMgr = new LoadingManager();
 	event = new SDL_Event;
+	eventBus = new EventBus();
 }
 
 Engine::~Engine()

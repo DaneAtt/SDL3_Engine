@@ -172,6 +172,8 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineAPI.h" />
+    <ClInclude Include="EventBus.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="KeyboardController.h" />
