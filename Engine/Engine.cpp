@@ -9,6 +9,8 @@
 #include "LoadingManager.h"
 #include "PathFinder.h"
 #include "EventBus.h"
+#include "Vector2D.h"
+#include "UIManager.h"
 #include <vector>
 
 float Engine::deltaTime = 0.0f;
@@ -26,6 +28,8 @@ LoadingManager* Engine::loadingMgr = nullptr;
 PathFinder* Engine::pathFinder = nullptr;
 EventBus* Engine::eventBus = nullptr;
 SDL_Rect Engine::camera = { 0, 0, 0, 0 };
+Vector2D Engine::mouse = Vector2D(0,0);
+UIManager* Engine::uiManager = nullptr;
 
 Engine::Engine()
 {
@@ -37,6 +41,7 @@ Engine::Engine()
 	loadingMgr = new LoadingManager();
 	event = new SDL_Event;
 	eventBus = new EventBus();
+	uiManager = new UIManager();
 }
 
 Engine::~Engine()
@@ -66,6 +71,9 @@ bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
 void Engine::update()
 {
 	calDeltaTime();
+	SDL_GetMouseState(&mouse.x, &mouse.y);
+	mouse.x += camera.x;
+	mouse.y += camera.y;
 }
 
 void Engine::handleEvents()
@@ -89,6 +97,11 @@ void Engine::handleEvents()
 		{
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 		case SDL_EVENT_MOUSE_BUTTON_UP:
+			events.push(*event);
+			break;
+
+		case SDL_EVENT_KEY_DOWN:
+		case SDL_EVENT_KEY_UP:
 			events.push(*event);
 			break;
 

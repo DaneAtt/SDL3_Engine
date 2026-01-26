@@ -14,6 +14,8 @@ class HitboxComponent;
 class LoadingManager;
 class PathFinder;
 class EventBus;
+class Vector2D;
+class UIManager;
 struct Size;
 
 
@@ -45,6 +47,8 @@ public:
     static void initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
     static PathFinder* getPathFinder() { return pathFinder; }
     static EventBus* getEventBus() { return eventBus; }
+    static Vector2D& getMouse() { return mouse; }
+    static UIManager* getUIManager() { return uiManager; }
     static bool isRunning;
 
 private:
@@ -62,4 +66,6 @@ private:
     static Uint64 lastFrameTime;
     static PathFinder* pathFinder;
     static EventBus* eventBus;
+    static Vector2D mouse;
+    static UIManager* uiManager;
 };
