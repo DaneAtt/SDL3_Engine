@@ -36,7 +36,10 @@ public:
     const SDL_FRect& getLastDebugHitbox() const { return lastDebugHitbox; }
     const SDL_FRect& getLastDebugTarget() const { return lastDebugTarget; }
 
-    bool getDrawDebug() const { return drawDebug; }
+    bool getDrawDebug() const 
+    { 
+        if(drawDebug) return drawDebug; 
+    }
 
 private:
     SDL_FRect worldHitbox;

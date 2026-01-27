@@ -39,8 +39,8 @@ void LoadingScreen::init(const char* texturePath, const char* animJsonPath, cons
     }
 
     // Load texture
-    assetManager->AddTexture(textureKeyStr.c_str(), texturePath);
-    texture = assetManager->GetTexture(textureKeyStr.c_str());
+    assetManager->addTexture(textureKeyStr.c_str(), texturePath);
+    texture = assetManager->getTexture(textureKeyStr.c_str());
 
     // Load animation if provided
     if (animJsonPath && animName) {

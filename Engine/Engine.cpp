@@ -58,6 +58,8 @@ bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
 		camera.w = winSize.w;
 		camera.h = winSize.h;
 
+		TTF_Init();
+
 		isRunning = true;
 		return true;
 	}
@@ -72,8 +74,6 @@ void Engine::update()
 {
 	calDeltaTime();
 	SDL_GetMouseState(&mouse.x, &mouse.y);
-	mouse.x += camera.x;
-	mouse.y += camera.y;
 }
 
 void Engine::handleEvents()
@@ -121,6 +121,7 @@ void Engine::clean()
 	delete manager;
 	delete json;
 	delete collisionGrid;
+	TTF_Quit();
 }
 
 void Engine::initCollisionGrid(int worldWidth, int worldHeight) 

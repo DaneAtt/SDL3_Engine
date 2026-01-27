@@ -27,7 +27,7 @@ public:
     }
 
     void draw() override {
-        SDL_Texture* texture = Engine::getAssetManager()->GetTexture(ID);
+        SDL_Texture* texture = Engine::getAssetManager()->getTexture(ID);
 
         destRect.x = transform->position.x - Engine::getCamera()->x;
         destRect.y = transform->position.y - Engine::getCamera()->y;
@@ -38,7 +38,7 @@ public:
             return;
         }
 
-        Engine::getTextureManager()->Draw(texture, &srcRect, &destRect, 0.0,flip);
+        Engine::getTextureManager()->draw(texture, &srcRect, &destRect, 0.0,flip);
     }
 
     float getY() const { return destRect.y; }

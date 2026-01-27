@@ -22,7 +22,7 @@ SpriteComponent::~SpriteComponent() {}
 
 void SpriteComponent::setTex(std::string id)
 {
-    texture = Engine::getAssetManager()->GetTexture(id);
+    texture = Engine::getAssetManager()->getTexture(id);
 }
 
 void SpriteComponent::switchAnimation(std::string id)
@@ -177,5 +177,5 @@ void SpriteComponent::update()
 void SpriteComponent::draw()
 {
     SDL_FlipMode actualFlip = (currentAnimation.canFlip) ? spriteFlip : SDL_FLIP_NONE;
-    Engine::getTextureManager()->Draw(texture, &srcRect, &destRect, actualFlip);
+    Engine::getTextureManager()->draw(texture, &srcRect, &destRect, actualFlip);
 }

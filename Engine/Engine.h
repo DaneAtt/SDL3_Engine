@@ -2,6 +2,7 @@
 #include "EngineAPI.h"
 #include "ECS.h"
 #include "SDL3/SDL.h"
+#include "SDL3_ttf/SDL_ttf.h"
 #include <queue>
 
 class WindowRender;

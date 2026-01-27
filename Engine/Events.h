@@ -13,3 +13,7 @@ struct ENGINE_API DamageEvent
 struct ENGINE_API DeathEvent {
 	Entity* entity;
 };
+
+struct ENGINE_API ButtonClickedEvent {
+	std::string text;
+};

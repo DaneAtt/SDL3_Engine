@@ -1,6 +1,7 @@
 #pragma once
 #include "TextureManager.h"
 #include "SDL3/SDL.h"
+#include "SDL3_ttf/SDL_ttf.h"
 #include <map>
 
 class TextureManager;
@@ -12,11 +13,15 @@ public:
 	AssetManager(Manager* man, TextureManager* texMgr);
 	~AssetManager();
 
-	void AddTexture(std::string id, const char* path);
-	SDL_Texture* GetTexture(std::string id);
+	void addTexture(std::string id, const char* path);
+	SDL_Texture* getTexture(std::string id);
+
+	void addFont(std::string id, const char* path, float ptsize);
+	TTF_Font* getFont(std::string id);
 
 private:
 	Manager* manager;
 	TextureManager* textureManager;
 	std::map<std::string, SDL_Texture*> textures;
+	std::map<std::string, TTF_Font*> fonts;
 };

@@ -151,7 +151,6 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="HitboxComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PathFinder.cpp" />
@@ -159,6 +158,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
+    <ClCompile Include="Widget.cpp" />
     <ClCompile Include="WindowRender.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +189,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Widget.h" />
     <ClInclude Include="WindowRender.h" />
   </ItemGroup>
   <ItemGroup>

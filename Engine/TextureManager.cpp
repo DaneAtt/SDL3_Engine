@@ -18,6 +18,11 @@ TextureManager::~TextureManager()
 		}
 	}
 	textures.clear();
+
+	for (auto& font : fonts)
+	{
+		TTF_CloseFont(font);
+	}
 }
 
 SDL_Texture* TextureManager::LoadTexture(const char* path)
@@ -45,7 +50,34 @@ SDL_Texture* TextureManager::LoadTexture(const char* path)
 	return tex;
 }
 
-void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip)
+TTF_Font* TextureManager::LoadFont(const char* path, float ptsize)
+{
+	TTF_Font* font = TTF_OpenFont(path, ptsize);
+	if (font == nullptr)
+	{
+		std::cout << "font load failed: " << std::string(SDL_GetError()) << std::endl;
+		return nullptr;
+	}
+
+	fonts.push_back(font);
+	return font;
+}
+
+void TextureManager::drawFont(TTF_Font* font, const char* text, SDL_Color fg, Vector2D pos)
+{
+	SDL_Surface* surface = TTF_RenderText_Blended(font, text, 0, fg);
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FRect destRect = { pos.x, pos.y, surface->w, surface->h };
+	SDL_DestroySurface(surface);
+	if (tex == nullptr)
+	{
+		std::cout << "Create font texture failed: " << std::string(SDL_GetError()) << std::endl;
+	}
+	SDL_RenderTexture(renderer, tex, NULL, &destRect);
+	SDL_DestroyTexture(tex);
+}
+
+void TextureManager::draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip)
 {
 	SDL_RenderTextureRotated(
 		renderer,
@@ -58,7 +90,7 @@ void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_
 		);
 }
 
-void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip)
+void TextureManager::draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip)
 {
 	SDL_RenderTextureRotated(
 		renderer,
@@ -72,6 +104,18 @@ void TextureManager::Draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_
 
 }
 
+void TextureManager::DrawRectF(const SDL_FRect* rect, SDL_Color color) {
+	if (!rect) return;
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderFillRect(renderer, rect);  // No camera subtraction!
+
+	// Outline
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
+	SDL_RenderRect(renderer, rect);
+}
+
 void TextureManager::DrawDebugRectF(const SDL_FRect* rect, SDL_Color color)
 {
 	if (!rect) return;
@@ -79,7 +123,6 @@ void TextureManager::DrawDebugRectF(const SDL_FRect* rect, SDL_Color color)
 	SDL_FRect drawRect = *rect;
 	drawRect.x -= Engine::getCamera()->x;
 	drawRect.y -= Engine::getCamera()->y;
-	SDL_Renderer* renderer = Engine::getWindowRender()->getRenderer();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);

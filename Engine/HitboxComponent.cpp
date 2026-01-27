@@ -32,7 +32,6 @@ void HitBoxComponent::updateFromFrame(SDL_FRect* animHitbox, float playerX, floa
     worldHitbox.w = animHitbox->w * transform->scale;
     worldHitbox.h = animHitbox->h * transform->scale;
     lastDebugHitbox = worldHitbox;
-    drawDebug = true;
     On = true;
     alreadyHit.clear();
 }
@@ -59,9 +58,5 @@ void HitBoxComponent::update()
                 alreadyHit.push_back(target);
             }
         }
-    }
-    else
-    {
-        drawDebug = false;
     }
 }
