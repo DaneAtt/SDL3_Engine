@@ -21,7 +21,6 @@ SpatialGrid::SpatialGrid(int worldWidth, int worldHeight)
     }
     // After this, each cells[y][x] is an empty vector of CollisionComponent*
 
-
 }
 
 SpatialGrid::~SpatialGrid() {}

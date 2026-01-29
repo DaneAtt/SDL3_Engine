@@ -17,6 +17,9 @@ public:
     bool containsPoint(Vector2D& position) override;
     void handleClick(Vector2D& position) override;
 
+    void setPosition(Vector2D position) { this->pos = position; }
+    void setSize(Vector2D size) { this->size = size; }
+
 private:
     std::string name;
     Vector2D pos;

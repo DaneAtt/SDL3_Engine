@@ -45,6 +45,46 @@ void Button::handleClick(Vector2D& position) {
     Engine::getEventBus()->emit(ButtonClickedEvent{ name + " Clicked" });
 }
 
+/*
+
+    // Create grid buttons
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            float imgX = GRID_START_X + (CELL_STRIDE * j);
+            float imgY = GRID_START_Y + (CELL_STRIDE * i);
+            float screenX = bounds.x + (imgX * inventoryScale);
+            float screenY = bounds.y + (imgY * inventoryScale);
+            float screenW = CELL_SIZE * inventoryScale;
+            float screenH = CELL_SIZE * inventoryScale;
+            Button* button = new Button(
+                "Button_" + std::to_string(i) + "_" + std::to_string(j),
+                { screenX, screenY },
+                { screenW, screenH },
+                "Button_" + std::to_string(i) + "_" + std::to_string(j)
+            );
+            buttons.push_back(button);
+        }
+    }
+
+    int btnIndex = 0;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            float imgX = GRID_START_X + (CELL_STRIDE * j);
+            float imgY = GRID_START_Y + (CELL_STRIDE * i);
+            float screenX = bounds.x + (imgX * inventoryScale);
+            float screenY = bounds.y + (imgY * inventoryScale);
+            float screenW = CELL_SIZE * inventoryScale;
+            float screenH = CELL_SIZE * inventoryScale;
+
+            // Update existing button position and size
+            buttons[btnIndex]->setPosition({ screenX, screenY });
+            buttons[btnIndex]->setSize({ screenW, screenH });
+            btnIndex++;
+        }
+    }
+*/
+
+
 // ===== LABEL =====
 
 Label::Label(std::string text, Vector2D position, SDL_Color color)

@@ -11,6 +11,7 @@ public:
     TileComponent(int srcX, int srcY, int scale, std::string texID, SDL_FlipMode flip)
     {
         ID = texID;
+        texture = Engine::getAssetManager()->getTexture(ID);
 
         srcRect.x = srcX;
         srcRect.y = srcY;
@@ -27,7 +28,6 @@ public:
     }
 
     void draw() override {
-        SDL_Texture* texture = Engine::getAssetManager()->getTexture(ID);
 
         destRect.x = transform->position.x - Engine::getCamera()->x;
         destRect.y = transform->position.y - Engine::getCamera()->y;
@@ -48,4 +48,5 @@ private:
     SDL_FlipMode flip;
     std::string ID;
     TransformComponent* transform;
+    SDL_Texture* texture;
 };

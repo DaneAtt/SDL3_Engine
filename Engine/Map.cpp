@@ -87,7 +87,7 @@ std::vector<Map::TileData>& Map::searchMap(std::string id)
 	return mapLayers[id];
 }
 
-void Map::createEntities(std::string texID, std::string id, int group)
+void Map::createEntities(std::string texID, std::string id, int group, int offsetX, int offsetY)
 {
 	if (mapLayers.find(id) == mapLayers.end()) {
 		std::cout << "Warning: Map '" << id << "' not found\n";
@@ -97,8 +97,8 @@ void Map::createEntities(std::string texID, std::string id, int group)
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());
 		tile.addComponent<TransformComponent>(
-			tileData.xPos,
-			tileData.yPos,
+			tileData.xPos + offsetX,
+			tileData.yPos + offsetY,
 			48,
 			32,
 			Scale
@@ -114,7 +114,7 @@ void Map::createEntities(std::string texID, std::string id, int group)
 	}
 }
 
-void Map::createColliders(std::string id, int group)
+void Map::createColliders(std::string id, int group, int offsetX, int offsetY)
 {
 	if (mapLayers.find(id) == mapLayers.end()) {
 		std::cout << "Warning: Map '" << id << "' not found\n";
@@ -144,8 +144,8 @@ void Map::createColliders(std::string id, int group)
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());
 		tile.addComponent<TransformComponent>(
-			tileData.xPos,
-			tileData.yPos,
+			tileData.xPos + offsetX,
+			tileData.yPos + offsetY,
 			48,
 			32,
 			Scale

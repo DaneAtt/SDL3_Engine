@@ -1,5 +1,6 @@
 #include "PathFinder.h"
 #include "Map.h"
+#include "TransformComponent.h"
 
 using Pair = PathFinder::Pair;
 
@@ -11,19 +12,20 @@ PathFinder::PathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY
 }
 
 // Build collision grid from map layer 
-void PathFinder::buildCollisionGrid(Map& map, std::string layerID, int inflateRadius)
+void PathFinder::buildCollisionGrid(std::vector<Entity*>& entities, int inflateRadius)
 {
     // Reset grid to all walkable
     for (int i = 0; i < rows; i++)
         for (int j = 0; j < cols; j++)
             collisionGrid[i][j] = true;
 
-    auto& collisionTiles = map.searchMap(layerID);
-
     // Mark tiles as blocked
-    for (const auto& tile : collisionTiles) {
-        int row = tile.yPos / cellSizeY;
-        int col = tile.xPos / cellSizeX;
+    for (auto* entity : entities) {
+        if (!entity->hasComponent<TransformComponent>()) continue;
+
+        auto& transform = entity->getComponent<TransformComponent>();
+        int row = transform.position.y / cellSizeY;
+        int col = transform.position.x / cellSizeX;
 
         // Mark the actual tile as blocked
         if (isValid(row, col)) {

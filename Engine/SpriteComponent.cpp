@@ -176,6 +176,10 @@ void SpriteComponent::update()
 
 void SpriteComponent::draw()
 {
+    if (destRect.x + destRect.w < 0 || destRect.x > Engine::getCamera()->w ||
+        destRect.y + destRect.h < 0 || destRect.y > Engine::getCamera()->h) {
+        return;
+    }
     SDL_FlipMode actualFlip = (currentAnimation.canFlip) ? spriteFlip : SDL_FLIP_NONE;
     Engine::getTextureManager()->draw(texture, &srcRect, &destRect, actualFlip);
 }

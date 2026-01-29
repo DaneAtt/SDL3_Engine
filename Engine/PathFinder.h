@@ -7,6 +7,7 @@
 #include <cfloat>
 #include <iostream>
 #include "EngineAPI.h"
+#include "ECS.h"
 
 class Map; // Forward declaration
 
@@ -26,7 +27,7 @@ public:
     PathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
     ~PathFinder() {};
 
-    void buildCollisionGrid(Map& map, std::string layerID, int inflateRadius = 0);
+    void buildCollisionGrid(std::vector<Entity*>& entities, int inflateRadius = 0);
     std::vector<Pair> findPath(Pair src, Pair dest) { return aStarSearch(src, dest); }
     std::vector<Pair> smoothPath(const std::vector<Pair>& path);
     bool hasLineOfSight(Pair a, Pair b);

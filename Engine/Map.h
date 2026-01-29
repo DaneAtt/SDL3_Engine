@@ -22,8 +22,8 @@ public:
 
     void loadMapJSON(const char* path);
     std::vector<Map::TileData>& searchMap(std::string name);
-    void createEntities(std::string texID, std::string name, int group);
-    void createColliders(std::string name, int group);
+    void createEntities(std::string texID, std::string name, int group, int offsetX, int offsetY);
+    void createColliders(std::string name, int group, int offsetX, int offsetY);
     int getMapWidth() const { return mapWidth * 32 * Scale; }
     int getMapHeight() const { return mapHeight * 48 * Scale; }
 
