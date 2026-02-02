@@ -103,13 +103,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS;_DEBUG;_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_image-3.2.4\include;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_ttf-3.1.0\include;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3-3.3.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_image-3.2.4\include;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_ttf-3.1.0\include;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3-3.4.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_ttf-3.1.0\lib\x64;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_image-3.2.4\lib\x64;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3-3.3.6\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_ttf-3.1.0\lib\x64;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3_image-3.2.4\lib\x64;C:\Users\$(USERNAME)\OneDrive\Documents\SDL3-3.4.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -176,6 +176,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="Events.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HitboxComponent.h" />
+    <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="LoadingManager.h" />

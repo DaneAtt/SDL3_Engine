@@ -8,31 +8,34 @@
 // ===== BUTTON =====
 
 Button::Button(std::string name, Vector2D position, Vector2D size, std::string text)
-    : name(name), pos(position), size(size), text(text) {
+    : name(name), pos(position), size(size), text(text) 
+{
     this->setVisible();
     font = Engine::getAssetManager()->getFont("Arial");
+    texMan = Engine::getTextureManager();
 }
 
-void Button::init() {
+void Button::init() 
+{
 
 }
 
-void Button::update() {
+void Button::update() 
+{
     // Optional: Handle hover states, animations, etc.
 }
 
-void Button::renderC() {
-    auto* textureManager = Engine::getTextureManager();
-
+void Button::renderC() 
+{
     // Draw button background (rectangle)
     SDL_FRect rect = { pos.x, pos.y, size.x, size.y };
-    SDL_Color buttonColor = { 100, 100, 100, 255 }; // Gray background
-    textureManager->DrawRectF(&rect, buttonColor);
+    SDL_Color buttonColor = { 25, 60, 180, 255 }; // Gray background
+    texMan->DrawRectF(&rect, buttonColor);
 
     // Draw button text
     SDL_Color textColor = { 0, 255, 255, 255 };
     Vector2D textPos = { pos.x + 10, pos.y + 10 }; // Offset from button corner
-    textureManager->drawFont(font, text.c_str(), textColor, textPos);
+    texMan->drawFont(font, text.c_str(), textColor, textPos);
 }
 
 bool Button::containsPoint(Vector2D& position) {
@@ -82,56 +85,79 @@ void Button::handleClick(Vector2D& position) {
             btnIndex++;
         }
     }
+
+    // Grid measurements
+    const float GRID_START_X = 8.0f;
+    const float GRID_START_Y = 8.0f;
+    const float CELL_SIZE = 32.0f;
+    const float CELL_GAP = 8.0f;
+    const float CELL_STRIDE = CELL_SIZE + CELL_GAP;
 */
 
 
 // ===== LABEL =====
 
 Label::Label(std::string text, Vector2D position, SDL_Color color)
-    : text(text), pos(position), color(color) {
+    : text(text), pos(position), color(color) 
+{
+    this->setVisible();
+    font = Engine::getAssetManager()->getFont("Arial");
+    texMan = Engine::getTextureManager();
 }
 
-void Label::init() {
+void Label::init() 
+{
     // Optional: Load any resources needed
 }
 
-void Label::update() {
+void Label::update() 
+{
     // Optional: Handle text animations, etc.
 }
 
-void Label::renderC() {
-    auto* textureManager = Engine::getTextureManager();
-    TTF_Font* font = Engine::getAssetManager()->getFont("PLACEHOLDER");
-    textureManager->drawFont(font, text.c_str(), color, pos);
-}
-
-bool Label::containsPoint(Vector2D& position) {
-    // Labels typically don't need click detection
-    // Return false so clicks pass through
-    return false;
+void Label::renderC() 
+{
+    texMan->drawFont(font, text.c_str(), color, pos);
 }
 
 // ===== PANEL =====
 
 Panel::Panel(Vector2D position, Vector2D size, SDL_Color backgroundColor)
-    : pos(position), size(size), bgColor(backgroundColor) {
+    : pos(position), size(size), bgColor(backgroundColor) 
+{
+    this->setVisible();
+    texMan = Engine::getTextureManager();
 }
 
-void Panel::init() {
-    // Optional: Load any resources needed
+void Panel::init()
+{
+    container.init();
 }
 
-void Panel::update() {
-    // Optional: Handle panel animations, etc.
+void Panel::update()
+{
+    container.update();
 }
 
-void Panel::renderC() {
-    auto* textureManager = Engine::getTextureManager();
+void Panel::renderC()
+{
     SDL_FRect rect = { pos.x, pos.y, size.x, size.y };
-    textureManager->DrawDebugRectF(&rect, bgColor);
+    texMan->DrawRectF(&rect, bgColor);
+    container.render();
 }
 
-bool Panel::containsPoint(Vector2D& position) {
+bool Panel::containsPoint(Vector2D& position)
+{
     return position.x >= pos.x && position.x <= pos.x + size.x &&
         position.y >= pos.y && position.y <= pos.y + size.y;
+}
+
+void Panel::handleClick(Vector2D& position) 
+{
+    container.handleClick(position);
+}
+
+void Panel::clearWidgets()
+{
+    container.clear();
 }

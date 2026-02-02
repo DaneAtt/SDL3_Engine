@@ -5,11 +5,10 @@
 class ENGINE_API Vector2D
 {
 public:
-	float x;
-	float y;
+	float x, y;
 
-	Vector2D();
-	Vector2D(float x, float y);
+	Vector2D() : x(0), y(0) {}
+	Vector2D(float x, float y) : x(x), y(y) {}
 
 	Vector2D& Add(const Vector2D& vec);
 	Vector2D& Subtract(const Vector2D& vec);
