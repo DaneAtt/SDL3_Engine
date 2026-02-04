@@ -21,13 +21,14 @@ private:
 
     bool animated = false;
     int frames = 0;
-    int speed = 1;
+    int dFrame = -1;
     Animation currentAnimation;
     HitBoxComponent* hitbox;
     const char* animationID;
     int previousAnimIndex = -1;
     float boxStartX, boxStartY, frameTimer;
     std::string name;
+    bool manualControl = false;
 
 public:
     int animIndex;
@@ -41,10 +42,15 @@ public:
     ENGINE_API ~SpriteComponent();
 
     ENGINE_API void setTex(std::string id);
-    ENGINE_API void switchAnimation(std::string id);
+    ENGINE_API void switchAnimation(std::string id, bool isAnimated);
     void init() override;
     void update() override;
     void draw() override;
+
+    bool isAnimated() { return animated; }
+
+    void setFrame(int index) { dFrame = index; }
+    void setManualControl(bool b) { manualControl = b; }
 
     SDL_FRect* getDestRect() { return &destRect; }
     Animation& getCurrentAnimation() { return currentAnimation; }

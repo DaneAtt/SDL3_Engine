@@ -6,6 +6,7 @@
 #include <vector>
 #include <typeindex>
 #include "EngineAPI.h"
+#include "NonCopyable.h"
 
 using ComponentID = std::size_t;
 using Group = std::size_t;
@@ -47,13 +48,10 @@ public:
 
 };
 
-class ENGINE_API Entity
+class ENGINE_API Entity : public NonCopyable
 {
 public:
 	Entity(Manager& mManager) : manager(mManager) {};
-
-	Entity(const Entity&) = delete;
-	Entity& operator=(const Entity&) = delete;
 
 	void update()
 	{
@@ -124,13 +122,11 @@ private:
 	GroupBitSet groupBitset;
 };
 
-class ENGINE_API Manager
+class ENGINE_API Manager : public NonCopyable
 {
 public:
 
 	Manager() = default;
-	Manager(const Manager&) = delete;
-	Manager& operator=(const Manager&) = delete;
 
 	void update()
 	{

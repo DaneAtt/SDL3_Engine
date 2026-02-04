@@ -19,10 +19,11 @@ TextureManager::~TextureManager()
 	}
 	textures.clear();
 
-	for (auto& font : fonts)
+	for (auto& pair : textCache) 
 	{
-		TTF_CloseFont(font);
+		SDL_DestroyTexture(pair.second.texture);
 	}
+	textCache.clear();
 }
 
 SDL_Texture* TextureManager::LoadTexture(const char* path)
@@ -65,16 +66,36 @@ TTF_Font* TextureManager::LoadFont(const char* path, float ptsize)
 
 void TextureManager::drawFont(TTF_Font* font, const char* text, SDL_Color fg, Vector2D pos)
 {
+	std::string cacheKey = makeTextCacheKey(text, fg);
+
+	// Check cache first
+	auto it = textCache.find(cacheKey);
+	if (it != textCache.end()) {
+		// Use cached texture
+		SDL_FRect destRect = { pos.x, pos.y, (float)it->second.width, (float)it->second.height };
+		SDL_RenderTexture(renderer, it->second.texture, NULL, &destRect);
+		return;
+	}
+
 	SDL_Surface* surface = TTF_RenderText_Blended(font, text, 0, fg);
 	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FRect destRect = { pos.x, pos.y, surface->w, surface->h };
-	SDL_DestroySurface(surface);
-	if (tex == nullptr)
+
+	if (tex != nullptr)
 	{
-		std::cout << "Create font texture failed: " << std::string(SDL_GetError()) << std::endl;
+		// Cache it
+		CachedText cached;
+		cached.text = text;
+		cached.color = fg;
+		cached.texture = tex;
+		cached.width = surface->w;
+		cached.height = surface->h;
+		textCache[cacheKey] = cached;
+
+		SDL_FRect destRect = { pos.x, pos.y, (float)surface->w, (float)surface->h };
+		SDL_RenderTexture(renderer, tex, NULL, &destRect);
 	}
-	SDL_RenderTexture(renderer, tex, NULL, &destRect);
-	SDL_DestroyTexture(tex);
+
+	SDL_DestroySurface(surface);
 }
 
 void TextureManager::draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip)
@@ -104,16 +125,26 @@ void TextureManager::draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_
 
 }
 
-void TextureManager::DrawRectF(const SDL_FRect* rect, SDL_Color color) {
+void TextureManager::DrawRectFOutline(const SDL_FRect* rect, SDL_Color color) 
+{
+	if (!rect) return;
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
+	SDL_RenderRect(renderer, rect);
+}
+
+void TextureManager::DrawRectF(const SDL_FRect* rect, SDL_Color color) 
+{
 	if (!rect) return;
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(renderer, rect);  // No camera subtraction!
+	SDL_RenderFillRect(renderer, rect);
+}
 
-	// Outline
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
-	SDL_RenderRect(renderer, rect);
+void TextureManager::DrawRectFCombined(const SDL_FRect* rect, SDL_Color color)
+{
+	DrawRectFOutline(rect, color);
+	DrawRectF(rect, color);
 }
 
 void TextureManager::DrawDebugRectF(const SDL_FRect* rect, SDL_Color color)

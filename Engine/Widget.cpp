@@ -10,19 +10,15 @@
 Button::Button(std::string name, Vector2D position, Vector2D size, std::string text)
     : name(name), pos(position), size(size), text(text) 
 {
-    this->setVisible();
+    this->toggleVisibility();
     font = Engine::getAssetManager()->getFont("Arial");
     texMan = Engine::getTextureManager();
+    eventBus = Engine::getEventBus();
 }
 
 void Button::init() 
 {
 
-}
-
-void Button::update() 
-{
-    // Optional: Handle hover states, animations, etc.
 }
 
 void Button::renderC() 
@@ -38,14 +34,10 @@ void Button::renderC()
     texMan->drawFont(font, text.c_str(), textColor, textPos);
 }
 
-bool Button::containsPoint(Vector2D& position) {
+bool Button::containsPoint(Vector2D& position) 
+{
     return position.x >= pos.x && position.x <= pos.x + size.x &&
         position.y >= pos.y && position.y <= pos.y + size.y;
-}
-
-void Button::handleClick(Vector2D& position) {
-    // Emit button clicked event through event bus
-    Engine::getEventBus()->emit(ButtonClickedEvent{ name + " Clicked" });
 }
 
 /*
@@ -100,7 +92,7 @@ void Button::handleClick(Vector2D& position) {
 Label::Label(std::string text, Vector2D position, SDL_Color color)
     : text(text), pos(position), color(color) 
 {
-    this->setVisible();
+    this->toggleVisibility();
     font = Engine::getAssetManager()->getFont("Arial");
     texMan = Engine::getTextureManager();
 }
@@ -108,11 +100,6 @@ Label::Label(std::string text, Vector2D position, SDL_Color color)
 void Label::init() 
 {
     // Optional: Load any resources needed
-}
-
-void Label::update() 
-{
-    // Optional: Handle text animations, etc.
 }
 
 void Label::renderC() 
@@ -125,7 +112,7 @@ void Label::renderC()
 Panel::Panel(Vector2D position, Vector2D size, SDL_Color backgroundColor)
     : pos(position), size(size), bgColor(backgroundColor) 
 {
-    this->setVisible();
+    this->toggleVisibility();
     texMan = Engine::getTextureManager();
 }
 
@@ -134,7 +121,7 @@ void Panel::init()
     container.init();
 }
 
-void Panel::update()
+void Panel::updateC()
 {
     container.update();
 }
@@ -154,7 +141,10 @@ bool Panel::containsPoint(Vector2D& position)
 
 void Panel::handleClick(Vector2D& position) 
 {
-    container.handleClick(position);
+    if (container.containsPoint(position))
+    {
+        container.handleClick(position);
+    }
 }
 
 void Panel::clearWidgets()

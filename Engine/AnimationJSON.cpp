@@ -25,7 +25,6 @@ void AnimationJSON::loadAnimationJSON(const char* path)
 		SDL_FRect srcRect, hitRect, collisionRect;
         try {
             bool loop = animData["loop"];
-            double defaultDuration = animData["defaultDuration"] * Speed;
             int anchorX = animData["defaultAnchor"]["x"];
             int anchorY = animData["defaultAnchor"]["y"];
 			bool fixedFrame = animData["fixedFrame"];
@@ -65,7 +64,7 @@ void AnimationJSON::loadAnimationJSON(const char* path)
 				frames.push_back(srcRect);
 				
 			}
-			animations[name] = Animation(loop, fixedFrame, hitbox, hitboxMap, collisionRect, canFlip,defaultDuration, anchorX, anchorY, frames);
+			animations[name] = Animation(loop, fixedFrame, hitbox, hitboxMap, collisionRect, canFlip, anchorX, anchorY, frames);
 		}
 		catch (const json::exception& e) {
 			std::cout << "Error parsing " << name << ": " << e.what() << "\n";

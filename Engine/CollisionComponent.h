@@ -21,8 +21,8 @@ public:
 	{
 		transform = &entity->getComponent<TransformComponent>();
 		collision.x = collision.y = 0;
-		collision.w = transform->width;
-		collision.h = transform->height;
+		collision.w = static_cast<float>(transform->width);
+		collision.h = static_cast<float>(transform->height);
 
 		// If entity has SpriteComponent with animation, get collision from that
 		if (entity->hasComponent<SpriteComponent>()) {

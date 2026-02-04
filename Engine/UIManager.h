@@ -10,7 +10,12 @@ class ENGINE_API UIElement
 {
 public:
 	virtual void init() {};
-	virtual void update() {};
+	
+	void update() 
+	{
+		if (!visible) return;
+		updateC();
+	};
 
 	void render()
 	{
@@ -23,11 +28,12 @@ public:
 	void handleInput(SDL_Event& event, Vector2D& position)
 	{
 
-		handleCustomInput(event);
+		handleCustomInput(event, position);
 
 		if (!isVisible()) return;
 
-		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN &&
+			event.button.button == SDL_BUTTON_LEFT)
 		{
 			if (containsPoint(position))
 			{
@@ -36,7 +42,7 @@ public:
 		}
 	}
 
-	void setVisible() { visible = !visible; }
+	void toggleVisibility() { visible = !visible; }
 	bool isVisible() { return visible; }
 	virtual void setPosition(const Vector2D& newPos) {};
 	virtual void setSize(const Vector2D& newSize) {};
@@ -45,18 +51,16 @@ public:
 
 protected:
 	virtual void renderC() {};
-	virtual void handleCustomInput(SDL_Event& event) {}
+	virtual void updateC() {};
+	virtual void handleCustomInput(SDL_Event& event, Vector2D& position) {}
 	bool visible = false;
 };
 
-class ENGINE_API UIManager
+class ENGINE_API UIManager : public NonCopyable
 {
 public:
 	UIManager() {};
 	~UIManager() {};
-
-	UIManager(const UIManager&) = delete;
-	UIManager& operator=(const UIManager&) = delete;
 
 	template<typename T, typename... TArgs>
 	T& addUI(TArgs&&... mArgs)

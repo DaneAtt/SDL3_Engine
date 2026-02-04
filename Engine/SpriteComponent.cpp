@@ -25,8 +25,9 @@ void SpriteComponent::setTex(std::string id)
     texture = Engine::getAssetManager()->getTexture(id);
 }
 
-void SpriteComponent::switchAnimation(std::string id)
+void SpriteComponent::switchAnimation(std::string id, bool isAnimated)
 {
+    animated = isAnimated;
     setTex(id);
 
     if (animated) {
@@ -36,8 +37,8 @@ void SpriteComponent::switchAnimation(std::string id)
 
         if (!currentAnimation.Frames.empty()) {
             currentFrame = &currentAnimation.Frames[0];
-            transform->width = currentFrame->w;
-            transform->height = currentFrame->h;
+            transform->width = static_cast<int>(currentFrame->w);
+            transform->height = static_cast<int>(currentFrame->h);
 
             // UPDATE COLLISION BOX
             if (entity->hasComponent<CollisionComponent>()) {
@@ -52,16 +53,16 @@ void SpriteComponent::init()
 {
     transform = &entity->getComponent<TransformComponent>();
 
-    srcRect.x = srcRect.y = 0;
-    srcRect.w = transform->width;
-    srcRect.h = transform->height;
+    srcRect.x = srcRect.y = 0.0f;
+    srcRect.w = static_cast<float>(transform->width);
+    srcRect.h = static_cast<float>(transform->height);
 
     if (animated)
     {
         currentAnimation = Engine::getJSON()->searchAnimation(animationID);
         currentFrame = &currentAnimation.Frames[0];
-        transform->width = currentFrame->w;
-        transform->height = currentFrame->h;
+        transform->width = static_cast<int>(currentFrame->w);
+        transform->height = static_cast<int>(currentFrame->h);
 
         if (currentAnimation.Hitbo)
         {
@@ -70,8 +71,8 @@ void SpriteComponent::init()
     }
     else
     {
-        destRect.w = transform->width;
-        destRect.h = transform->height;
+        destRect.w = static_cast<float>(transform->width);
+        destRect.h = static_cast<float>(transform->height);
     }
 }
 
@@ -79,6 +80,12 @@ void SpriteComponent::update()
 {
     try
     {
+        if (dFrame != -1)
+        {
+            animIndex = dFrame;
+            dFrame = -1;
+        }
+
         if (animated)
         {
             if (currentAnimation.Frames.empty()) {
@@ -86,20 +93,23 @@ void SpriteComponent::update()
                 return;
             }
 
-            float delta = Engine::getDeltaTime();
-            float frameDuration = (currentAnimation.Duration / currentAnimation.Frames.size()) / 5.0f;
-
-            frameTimer += delta;
-            if (frameTimer >= frameDuration)
+            if(!manualControl)
             {
-                frameTimer -= frameDuration;
-                animIndex++;
-                if (animIndex >= currentAnimation.Frames.size()) {
-                    if (currentAnimation.Loop) {
-                        animIndex = 0;
-                    }
-                    else {
-                        animIndex = currentAnimation.Frames.size() - 1;
+                float delta = Engine::getDeltaTime();
+                float frameDuration = 1.0f / 12.0f;
+
+                frameTimer += delta;
+                if (frameTimer >= frameDuration)
+                {
+                    frameTimer -= frameDuration;
+                    animIndex++;
+                    if (animIndex >= currentAnimation.Frames.size()) {
+                        if (currentAnimation.Loop) {
+                            animIndex = 0;
+                        }
+                        else {
+                            animIndex = static_cast<int>(currentAnimation.Frames.size()) - 1;
+                        }
                     }
                 }
             }
@@ -109,10 +119,10 @@ void SpriteComponent::update()
 
             if (currentAnimation.fixedFrame)
             {
-                float anchorOffsetX = currentAnimation.anchorX * transform->scale;
+                float anchorOffsetX = static_cast<float>(currentAnimation.anchorX) * transform->scale;
 
-                destRect.w = transform->width * transform->scale;
-                destRect.h = transform->height * transform->scale;
+                destRect.w = static_cast<float>(transform->width) * transform->scale;
+                destRect.h = static_cast<float>(transform->height) * transform->scale;
                 destRect.y = transform->position.y - (currentAnimation.anchorY * transform->scale) - Engine::getCamera()->y;
 
                 if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation.canFlip) {

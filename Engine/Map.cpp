@@ -97,8 +97,8 @@ void Map::createEntities(std::string texID, std::string id, int group, int offse
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());
 		tile.addComponent<TransformComponent>(
-			tileData.xPos + offsetX,
-			tileData.yPos + offsetY,
+			(float)(tileData.xPos + offsetX),
+			(float)(tileData.yPos + offsetY),
 			48,
 			32,
 			Scale
@@ -144,8 +144,8 @@ void Map::createColliders(std::string id, int group, int offsetX, int offsetY)
 	for (auto& tileData : mapLayers[id]) {
 		auto& tile(manager->addEntity());
 		tile.addComponent<TransformComponent>(
-			tileData.xPos + offsetX,
-			tileData.yPos + offsetY,
+			(float)(tileData.xPos + offsetX),
+			(float)(tileData.yPos + offsetY),
 			48,
 			32,
 			Scale

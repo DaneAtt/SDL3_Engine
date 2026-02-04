@@ -41,7 +41,22 @@ public:
 
     void handleClick(Vector2D& mouse)
     {
-        for (auto& e : elements) e->handleClick(mouse);
+        for (auto& e : elements)
+        {
+            if (e->containsPoint(mouse))
+            {
+                e->handleClick(mouse);
+            }
+        }
+    }
+
+    bool containsPoint(Vector2D& mouse)
+    {
+        for (auto& e : elements) 
+        {
+            if(e->containsPoint(mouse)) return true;
+        }
+        return false;
     }
 
     void clear() { elements.clear(); }
