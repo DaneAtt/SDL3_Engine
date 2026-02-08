@@ -158,7 +158,7 @@ void AIComponent::followPathSmooth()
     }
 
     // Get current waypoint in world coords
-    PathFinder::Pair waypoint = currentPath[currentPathIndex];
+    PathFinder::Pair& waypoint = currentPath[currentPathIndex];
     Vector2D waypointWorld;
     waypointWorld.x = (waypoint.second * cellSizeX) + (cellSizeX / 2.0f);
     waypointWorld.y = (waypoint.first * cellSizeY) + (cellSizeY / 2.0f);

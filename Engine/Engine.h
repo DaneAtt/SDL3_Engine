@@ -1,6 +1,5 @@
 #pragma once
 #include "EngineAPI.h"
-#include "ECS.h"
 #include "SDL3/SDL.h"
 #include "SDL3_ttf/SDL_ttf.h"
 #include <queue>
@@ -17,6 +16,7 @@ class PathFinder;
 class EventBus;
 class Vector2D;
 class UIManager;
+class Manager;
 struct Size;
 
 
@@ -43,7 +43,6 @@ public:
     static SDL_Event* getEvent() { return event; }
     static std::queue<SDL_Event>& getEventQueue() { return events; }
     static float& getDeltaTime() { return deltaTime; }
-    static void setDeltaTime(float dt);
     static void calDeltaTime();
     static void initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
     static PathFinder* getPathFinder() { return pathFinder; }

@@ -36,17 +36,11 @@ public:
     const SDL_FRect& getLastDebugHitbox() const { return lastDebugHitbox; }
     const SDL_FRect& getLastDebugTarget() const { return lastDebugTarget; }
 
-    bool getDrawDebug() const 
-    { 
-        if(drawDebug) return drawDebug; 
-    }
-
 private:
     SDL_FRect worldHitbox;
     TransformComponent* transform;
     bool On;
     SDL_FRect lastDebugHitbox;
     SDL_FRect lastDebugTarget;
-    bool drawDebug = false;
     std::vector<Entity*> alreadyHit;
 };

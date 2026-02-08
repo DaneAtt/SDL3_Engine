@@ -147,21 +147,12 @@ void TextureManager::DrawRectFCombined(const SDL_FRect* rect, SDL_Color color)
 	DrawRectF(rect, color);
 }
 
-void TextureManager::DrawDebugRectF(const SDL_FRect* rect, SDL_Color color)
+void TextureManager::DrawRectFCombinedCam(const SDL_FRect* rect, SDL_Color color)
 {
-	if (!rect) return;
-
 	SDL_FRect drawRect = *rect;
 	drawRect.x -= Engine::getCamera()->x;
 	drawRect.y -= Engine::getCamera()->y;
-
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(renderer, &drawRect);
-
-	// Outline with opaque version
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
-	SDL_RenderRect(renderer, &drawRect);
+	DrawRectFOutline(&drawRect, color);
+	DrawRectF(&drawRect, color);
 }
-
 

@@ -69,7 +69,7 @@ void Map::loadMapJSON(const char* path)
 					y++;
 				}
 			}
-			mapLayers[name] = tileVec;
+			mapLayers[name] = std::move(tileVec);
 		}
 		catch (const json::exception& e) {
 			std::cout << "Error parsing " << name << ": " << e.what() << "\n";
@@ -99,8 +99,8 @@ void Map::createEntities(std::string texID, std::string id, int group, int offse
 		tile.addComponent<TransformComponent>(
 			(float)(tileData.xPos + offsetX),
 			(float)(tileData.yPos + offsetY),
-			48,
 			32,
+			48,
 			Scale
 		);
 		tile.addComponent<TileComponent>(
@@ -146,8 +146,8 @@ void Map::createColliders(std::string id, int group, int offsetX, int offsetY)
 		tile.addComponent<TransformComponent>(
 			(float)(tileData.xPos + offsetX),
 			(float)(tileData.yPos + offsetY),
-			48,
 			32,
+			48,
 			Scale
 		);
 		tile.addComponent<CollisionComponent>(true);

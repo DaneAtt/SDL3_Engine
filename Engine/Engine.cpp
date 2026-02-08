@@ -1,4 +1,5 @@
 ﻿#include "Engine.h"
+#include "ECS.h"
 #include "SDL3/sdl.h"
 #include "TextureManager.h"
 #include "WindowRender.h"
@@ -37,7 +38,7 @@ Engine::Engine()
 	windowRender = new WindowRender();
 	textureManager = new TextureManager(windowRender);
 	assetManager = new AssetManager(manager, textureManager);
-	json = new AnimationJSON(1);
+	json = new AnimationJSON();
 	loadingMgr = new LoadingManager();
 	event = new SDL_Event;
 	eventBus = new EventBus();

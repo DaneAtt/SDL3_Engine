@@ -5,6 +5,7 @@
 #include "SDL3/SDL.h"
 #include "Engine.h"
 #include "UIContainer.h";
+#include "NonCopyable.h"
 
 class ENGINE_API UIElement
 {
@@ -35,14 +36,12 @@ public:
 		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN &&
 			event.button.button == SDL_BUTTON_LEFT)
 		{
-			if (containsPoint(position))
-			{
-				handleClick(position);
-			}
+			handleClick(position);
 		}
 	}
 
 	void toggleVisibility() { visible = !visible; }
+	void setVisibility(bool vis) { visible = vis; }
 	bool isVisible() { return visible; }
 	virtual void setPosition(const Vector2D& newPos) {};
 	virtual void setSize(const Vector2D& newSize) {};

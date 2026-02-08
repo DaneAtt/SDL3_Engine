@@ -4,6 +4,7 @@
 
 class Entity;
 class Items;
+class ChestComponent;
 
 struct ENGINE_API DamageEvent
 {
@@ -38,5 +39,16 @@ struct ENGINE_API InventoryRowRightClickedEvent
 
 struct ENGINE_API ChestClickedEvent
 {
-	
+	ChestComponent* chest;
+};
+
+struct ENGINE_API ContextMenuDeleteEvent
+{
+	int slotIndex;
+	Items* item;
+};
+
+struct ENGINE_API ChestUIExitEvent
+{
+	ChestComponent* chest;
 };

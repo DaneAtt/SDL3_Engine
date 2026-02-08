@@ -9,7 +9,7 @@
 #include "EngineAPI.h"
 #include "ECS.h"
 
-class Map; // Forward declaration
+class Map;
 
 class ENGINE_API PathFinder {
 public:

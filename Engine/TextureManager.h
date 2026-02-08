@@ -24,7 +24,7 @@ public:
 	void DrawRectFOutline(const SDL_FRect* rect, SDL_Color color);
 	void DrawRectF(const SDL_FRect* rect, SDL_Color color);
 	void DrawRectFCombined(const SDL_FRect* rect, SDL_Color color);
-	void DrawDebugRectF(const SDL_FRect* rect, SDL_Color color);
+	void DrawRectFCombinedCam(const SDL_FRect* rect, SDL_Color color);
 
 	void setRenderer(SDL_Renderer* r) { renderer = r; }
 
