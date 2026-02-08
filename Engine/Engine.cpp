@@ -106,6 +106,10 @@ void Engine::handleEvents()
 			events.push(*event);
 			break;
 
+		case SDL_EVENT_MOUSE_WHEEL:
+			events.push(*event);
+			break;
+
 		case SDL_EVENT_WINDOW_FOCUS_GAINED:
 		case SDL_EVENT_WINDOW_FOCUS_LOST:
 			// Handle focus events

@@ -157,6 +157,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="Spatialgrid.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="ScrollableHelper.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="Widget.cpp" />
     <ClCompile Include="WindowRender.cpp" />
@@ -177,7 +178,9 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="ScrollableHelper.h" />
     <ClInclude Include="UIContainer.h" />
+    <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="LoadingManager.h" />

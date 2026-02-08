@@ -1,9 +1,10 @@
 #pragma once
 #pragma once
 #include "EngineAPI.h"
-#include "UIManager.h"
+#include "UIElement.h"
 #include "Vector2D.h"
 #include "SDL3/SDL.h"
+#include "UIContainer.h"
 #include "NonCopyable.h"
 #include <string>
 

@@ -149,7 +149,7 @@ void SpriteComponent::switchAnimation(std::string id, bool isAnimated)
         if (!currentAnimation.FramesVariation.empty())
         {
             usingVariation = true;
-            currentVariation = "strike 1";
+            currentVariation = "strike 2";
             currentFrame = &currentAnimation.FramesVariation[currentVariation][0];
         }
         else if (!currentAnimation.Frames.empty()) 

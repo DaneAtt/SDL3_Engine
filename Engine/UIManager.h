@@ -6,54 +6,7 @@
 #include "Engine.h"
 #include "UIContainer.h";
 #include "NonCopyable.h"
-
-class ENGINE_API UIElement
-{
-public:
-	virtual void init() {};
-	
-	void update() 
-	{
-		if (!visible) return;
-		updateC();
-	};
-
-	void render()
-	{
-		if (!visible) return;
-		renderC();
-	}
-
-	virtual bool containsPoint(Vector2D& position) = 0;
-	virtual void handleClick(Vector2D& position) {};
-	void handleInput(SDL_Event& event, Vector2D& position)
-	{
-
-		handleCustomInput(event, position);
-
-		if (!isVisible()) return;
-
-		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN &&
-			event.button.button == SDL_BUTTON_LEFT)
-		{
-			handleClick(position);
-		}
-	}
-
-	void toggleVisibility() { visible = !visible; }
-	void setVisibility(bool vis) { visible = vis; }
-	bool isVisible() { return visible; }
-	virtual void setPosition(const Vector2D& newPos) {};
-	virtual void setSize(const Vector2D& newSize) {};
-
-	virtual ~UIElement() = default;
-
-protected:
-	virtual void renderC() {};
-	virtual void updateC() {};
-	virtual void handleCustomInput(SDL_Event& event, Vector2D& position) {}
-	bool visible = false;
-};
+#include "UIElement.h"
 
 class ENGINE_API UIManager : public NonCopyable
 {
