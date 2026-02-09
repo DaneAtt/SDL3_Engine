@@ -6,10 +6,7 @@ class ENGINE_API ScrollableListHelper {
 protected:
 	struct PanelLocation
 	{
-		float x;
-		float y;
-		float h;
-		float w;
+		float x, y, w, h;
 	};
 
 	PanelLocation& calculateStartLocation(PanelLocation& l)

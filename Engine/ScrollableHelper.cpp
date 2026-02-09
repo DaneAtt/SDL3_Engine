@@ -51,13 +51,13 @@ void ScrollableListHelper::updateRowHover(int& lastHoveredRow, std::vector<Panel
 	if (hoveredRow != lastHoveredRow)
 	{
 		// Unhover old row
-		if (lastHoveredRow >= 0 && lastHoveredRow < getRowCount())
+		if (lastHoveredRow >= 0 && lastHoveredRow < rowPanels.size())
 		{
 			rowPanels[lastHoveredRow]->setColor(SDL_Color{ 49, 49, 49, 255 });
 		}
 
 		// Hover new row
-		if (hoveredRow >= 0)
+		if (hoveredRow >= 0 && hoveredRow < rowPanels.size())
 		{
 			rowPanels[hoveredRow]->setColor(SDL_Color{ 100, 100, 150, 255 });
 		}
@@ -76,7 +76,7 @@ void ScrollableListHelper::checkScroll(SDL_Event& event)
 	else if (event.wheel.y < 0) // Scrolled Down
 	{
 		scrollOffset++;
-		int maxScroll = getRowCount() - visibleRows;
+		int maxScroll = std::max(0, getRowCount() - visibleRows);
 		scrollOffset = std::min(scrollOffset, maxScroll);
 	}
 }

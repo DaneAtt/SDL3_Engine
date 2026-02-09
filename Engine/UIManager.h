@@ -36,7 +36,26 @@ public:
 		container.update();
 	}
 
+	bool isAnyUIOpen() const { return currentOpenUI != nullptr; }
+
+	void openUI(UIElement* ui) 
+	{
+		if (currentOpenUI && currentOpenUI != ui) 
+		{
+			currentOpenUI->forceClose();
+		}
+		currentOpenUI = ui;
+	}
+
+	void closeUI(UIElement* ui) 
+	{
+		if (currentOpenUI == ui) 
+		{
+			currentOpenUI = nullptr;
+		}
+	}
+
 private:
 	UIContainer<UIElement> container;
-
+	UIElement* currentOpenUI = nullptr;
 };

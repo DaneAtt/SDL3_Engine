@@ -3,6 +3,10 @@
 #include "Vector2D.h"
 #include "SDL3/SDL.h"
 #include "EngineAPI.h"
+#include "TextureManager.h"
+#include "AssetManager.h"
+
+class Panel;
 
 class ENGINE_API UIElement
 {
@@ -38,10 +42,16 @@ public:
 	}
 
 	void toggleVisibility() { visible = !visible; }
-	void setVisibility(bool vis) { visible = vis; }
+	void setVisibility(bool vis);
 	bool isVisible() { return visible; }
+	void forceClose()
+	{
+		this->visible = false;
+	}
+
 	virtual void setPosition(const Vector2D& newPos) {};
 	virtual void setSize(const Vector2D& newSize) {};
+	bool screenChangeUpdate(Panel* mainPanel);
 
 	virtual ~UIElement() = default;
 
@@ -52,11 +62,13 @@ protected:
 	bool visible = false;
 
 	SDL_FRect bounds{ 0, 0, 0, 0 };
-	EventBus* eventBus;
-	TextureManager* texManager;
-	AssetManager* assets;
+	EventBus* eventBus = Engine::getEventBus();
+	TextureManager* texManager = Engine::getTextureManager();
+	AssetManager* assets = Engine::getAssetManager();
 	const int inventoryScale = 3;
-	float screenWidth, screenHeight, Screen_UI_Width, Screen_UI_Height, Screen_UI_X, Screen_UI_Y;
+	float Screen_UI_Width, Screen_UI_Height, Screen_UI_X, Screen_UI_Y;
+	float screenWidth = Engine::getCamera()->w;
+	float screenHeight = Engine::getCamera()->h;
 
 	// Screen
 	float lastScreenWidth = 0;

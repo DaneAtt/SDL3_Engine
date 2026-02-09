@@ -76,7 +76,7 @@ void AnimationJSON::parseAnimation()
 					int varFrameIdx = 0;
 					for (const auto& singleFrame : frameArray)
 					{
-						auto frame = parseFrameArray(singleFrame, fixedFrame, fixedW, fixedH, variationHitboxes, frameIdx);
+						auto frame = parseFrameArray(singleFrame, fixedFrame, fixedW, fixedH, variationHitboxes, varFrameIdx);
 						framesT.push_back(frame[0]);
 						varFrameIdx++;
 					}
