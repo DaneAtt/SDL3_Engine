@@ -6,9 +6,11 @@
 #include <fstream>
 #include "SDL3/SDL.h"
 #include "EngineAPI.h"
+#include "JSONTemplate.h"
+
 using json = nlohmann::json;
 
-class ENGINE_API Map
+class ENGINE_API Map : public JSONTemplate
 {
 public:
     struct TileData {
@@ -20,7 +22,7 @@ public:
     Map(const char* path, int scale);
     ~Map();
 
-    void loadMapJSON(const char* path);
+    void loadJSONC() override;
     std::vector<Map::TileData>& searchMap(std::string name);
     void createEntities(std::string texID, std::string name, int group, int offsetX, int offsetY);
     void createColliders(std::string name, int group, int offsetX, int offsetY);
@@ -29,7 +31,6 @@ public:
 
 
 private:
-    json mapJ;
     std::vector<TileData> tileVec;
     std::map<std::string, std::vector<TileData>> mapLayers;
     int Scale;

@@ -6,22 +6,16 @@
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
 
-Map::Map(const char* path, int scale) : Scale(scale)
+Map::Map(const char* path, int scale) : Scale(scale) 
 {
-	loadMapJSON(path);
+	loadJSON(path);
 }
 
 Map::~Map() {}
 
-void Map::loadMapJSON(const char* path)
+void Map::loadJSONC()
 {
-	if (!mapJ.empty()) return;
-	std::ifstream file(path);
-	if (!file.is_open()) { std::cout << "Map JSON File not found" << "\n"; return; }
-	file >> mapJ;
-	file.close();
-
-	for (auto& [name, tiles] : mapJ.items()) {
+	for (auto& [name, tiles] : jsonFile.items()) {
 		try {
 			tileVec.clear();
 			int x = 0; //current column

@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "EngineAPI.h"
 #include "UIElement.h"
 #include "Vector2D.h"
@@ -11,7 +10,13 @@
 // Button widget
 class ENGINE_API Button : public UIElement, public NonCopyable {
 public:
-    Button(std::string name, Vector2D position, Vector2D size, std::string text);
+    Button(const std::string& name,
+        const Vector2D& position,
+        const UISize& size,
+        const SDL_Color& uiColor,
+        const std::string& text,
+        const SDL_Color& fontColor,
+        const char* textSize);
     ~Button() {};
 
     void init() override;
@@ -20,25 +25,25 @@ public:
 
     std::string getName() { return name; }
 
-    void setPosition(const Vector2D& position) override { this->pos = position; }
-    void setSize(const Vector2D& size) override  { this->size = size; }
-
 protected:
+    std::string name;
+    const char* textSize;
+    std::string text;
+    SDL_Color uiColor;
+    SDL_Color fontColor;
+
     EventBus* eventBus;
     TTF_Font* font = nullptr;
     TextureManager* texMan;
-
-private:
-    std::string name;
-    Vector2D pos;
-    Vector2D size;
-    std::string text;
 };
 
 // Label widget
 class ENGINE_API Label : public UIElement, public NonCopyable {
 public:
-    Label(std::string text, Vector2D position, SDL_Color color = { 255, 255, 255, 255 });
+    Label(const std::string& text,
+        const Vector2D& position,
+        const SDL_Color& color,
+        const char* textSize);
     ~Label() {};
 
     void init() override;
@@ -47,18 +52,20 @@ public:
     bool containsPoint(Vector2D& position) override { return false; }
     void handleClick(Vector2D& position) override {}
 
-private:
+protected:
     std::string text;
-    Vector2D pos;
     SDL_Color color;
     TTF_Font* font = nullptr;
+    const char* textSize;
     TextureManager* texMan;
 };
 
 // Panel widget
 class ENGINE_API Panel : public UIElement, public NonCopyable {
 public:
-    Panel(Vector2D position, Vector2D size, SDL_Color backgroundColor = { 50, 50, 50, 255 });
+    Panel(const Vector2D& position,
+        const UISize& size,
+        const SDL_Color& bgColor);
     ~Panel() {};
 
     void init() override;
@@ -72,14 +79,10 @@ public:
         return container.add<T>(std::forward<TArgs>(mArgs)...);
     }
 
-    void setPosition(const Vector2D& position) override { this->pos = position; }
-    void setSize(const Vector2D& size) override { this->size = size; }
-    void setColor(SDL_Color newColor) { bgColor = newColor; }
+    void setColor(const SDL_Color& newColor) { bgColor = newColor; }
     void clearWidgets();
 
-private:
-    Vector2D pos;
-    Vector2D size;
+protected:
     SDL_Color bgColor;
     UIContainer<UIElement> container;
     TextureManager* texMan;

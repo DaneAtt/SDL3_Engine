@@ -18,7 +18,7 @@ public:
 	SDL_Texture* LoadTexture(const char* path);
 	TTF_Font* LoadFont(const char* path, float ptsize);
 
-	void drawFont(TTF_Font* font, const char* text, SDL_Color fg, Vector2D pos);
+	void drawFont(TTF_Font* font, const char* text, SDL_Color& fg, const Vector2D& pos);
 	void draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip);
 	void draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip);
 	void DrawRectFOutline(const SDL_FRect* rect, SDL_Color color);

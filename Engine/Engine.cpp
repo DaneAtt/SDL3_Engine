@@ -23,7 +23,7 @@ WindowRender* Engine::windowRender = nullptr;
 TextureManager* Engine::textureManager = nullptr;
 AssetManager* Engine::assetManager = nullptr;
 Manager* Engine::manager = nullptr;
-AnimationJSON* Engine::json = nullptr;
+AnimationJSON* Engine::animJson = nullptr;
 SpatialGrid* Engine::collisionGrid = nullptr;
 LoadingManager* Engine::loadingMgr = nullptr;
 PathFinder* Engine::pathFinder = nullptr;
@@ -38,7 +38,7 @@ Engine::Engine()
 	windowRender = new WindowRender();
 	textureManager = new TextureManager(windowRender);
 	assetManager = new AssetManager(manager, textureManager);
-	json = new AnimationJSON();
+	animJson = new AnimationJSON();
 	loadingMgr = new LoadingManager();
 	event = new SDL_Event;
 	eventBus = new EventBus();
@@ -124,7 +124,7 @@ void Engine::clean()
 	delete windowRender;
 	delete assetManager;
 	delete manager;
-	delete json;
+	delete animJson;
 	delete collisionGrid;
 	TTF_Quit();
 }

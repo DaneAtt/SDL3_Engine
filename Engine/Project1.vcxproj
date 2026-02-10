@@ -180,8 +180,10 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="GridHelper.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HitboxComponent.h" />
+    <ClInclude Include="JSONTemplate.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="ScrollableHelper.h" />
+    <ClInclude Include="SkillJSON.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />

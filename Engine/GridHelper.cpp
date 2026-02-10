@@ -34,7 +34,7 @@ void GridHelper::populateGrid()
 
             Panel& cellPanel = mainPanel->addWidget<Panel>(
                 Vector2D(screenX, screenY),
-                Vector2D(cell.w, cell.h),
+                UISize(cell.w, cell.h),
                 SDL_Color{ 49, 49, 49, 255 }
             );
 

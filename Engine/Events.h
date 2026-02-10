@@ -52,3 +52,10 @@ struct ENGINE_API ChestUIExitEvent
 {
 	ChestComponent* chest;
 };
+
+struct ENGINE_API SkillbarUIRightClickEvent
+{
+	int row;
+	int col;
+	Vector2D mousePosition;
+};

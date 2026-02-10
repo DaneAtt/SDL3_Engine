@@ -19,7 +19,7 @@ LoadingScreen::LoadingScreen()
     textureManager = Engine::getTextureManager();
     windowRender = Engine::getWindowRender();
     assetManager = Engine::getAssetManager();
-    json = Engine::getJSON();
+    json = Engine::getAnimJSON();
 }
 
 LoadingScreen::~LoadingScreen()
@@ -44,7 +44,7 @@ void LoadingScreen::init(const char* texturePath, const char* animJsonPath, cons
 
     // Load animation if provided
     if (animJsonPath && animName) {
-        json->loadAnimationJSON(animJsonPath);
+        json->loadJSON(animJsonPath);
         animation = &json->searchAnimation(animName);
 
         // Check if animation was found and valid

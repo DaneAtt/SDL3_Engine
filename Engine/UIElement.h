@@ -8,9 +8,25 @@
 
 class Panel;
 
+class ENGINE_API UISize 
+{
+public:
+	float w, h;
+	UISize(float width, float height) : w(width), h(height) {}
+};
+
 class ENGINE_API UIElement
 {
 public:
+	UIElement()
+		: pos(0, 0), size(0, 0) {}
+
+	UIElement(const Vector2D& position)
+		: pos(position), size(0, 0) {}
+
+	UIElement(const Vector2D& position, const UISize& size)
+		: pos(position), size(size) {}
+
 	virtual void init() {};
 
 	void update()
@@ -21,6 +37,9 @@ public:
 
 	void render()
 	{
+		screenWidth = Engine::getCamera()->w;
+		screenHeight = Engine::getCamera()->h;
+
 		if (!visible) return;
 		renderC();
 	}
@@ -42,15 +61,19 @@ public:
 	}
 
 	void toggleVisibility() { visible = !visible; }
-	void setVisibility(bool vis);
+	virtual void setVisibility(bool vis);
 	bool isVisible() { return visible; }
-	void forceClose()
+	void forceOpen()
+	{
+		this->visible = true;
+	}
+	virtual void forceClose()
 	{
 		this->visible = false;
 	}
 
-	virtual void setPosition(const Vector2D& newPos) {};
-	virtual void setSize(const Vector2D& newSize) {};
+	void setPosition(const Vector2D& position) { this->pos = position; }
+	void setSize(const UISize& size) { this->size = size; }
 	bool screenChangeUpdate(Panel* mainPanel);
 
 	virtual ~UIElement() = default;
@@ -69,6 +92,9 @@ protected:
 	float Screen_UI_Width, Screen_UI_Height, Screen_UI_X, Screen_UI_Y;
 	float screenWidth = Engine::getCamera()->w;
 	float screenHeight = Engine::getCamera()->h;
+
+	Vector2D pos;
+	UISize size;
 
 	// Screen
 	float lastScreenWidth = 0;

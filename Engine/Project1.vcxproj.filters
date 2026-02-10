@@ -176,6 +176,12 @@
     <ClInclude Include="GridHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SkillJSON.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JSONTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -35,7 +35,7 @@ void SpriteComponent::init()
 
     if (animated)
     {
-        currentAnimation = Engine::getJSON()->searchAnimation(animationID);
+        currentAnimation = Engine::getAnimJSON()->searchAnimation(animationID);
 
         if (!currentAnimation.FramesVariation.empty())
         {
@@ -141,7 +141,7 @@ void SpriteComponent::switchAnimation(std::string id, bool isAnimated)
     setTex(id);
 
     if (animated) {
-        currentAnimation = Engine::getJSON()->searchAnimation(id.c_str());
+        currentAnimation = Engine::getAnimJSON()->searchAnimation(id.c_str());
         animIndex = 0;
         frameTimer = 0.0f;
 

@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "Vector2D.h"
+#include "UIElement.h"
+#include "SDL3/SDL.h"
 
 template<typename ElementType>
 class UIContainer

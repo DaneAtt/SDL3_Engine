@@ -1,47 +1,12 @@
 #include "AnimationJSON.h"
 
-
-AnimationJSON::AnimationJSON(){}
+AnimationJSON::AnimationJSON() {}
 
 AnimationJSON::~AnimationJSON() {}
 
-void AnimationJSON::loadAnimationJSON(const char* path)
+void AnimationJSON::loadJSONC()
 {
-	if (alreadyLoaded(path)) return;
-	readJSONFile(path);
-	parseAnimation();
-}
-
-Animation& AnimationJSON::searchAnimation(std::string name)
-{
-	if (animations.find(name) == animations.end()) {
-		std::cout << "Warning: Animation '" << name << "' not found\n";
-		static Animation empty;  // Return empty animation as fallback
-		return empty;
-	}
-	return animations[name];
-}
-
-bool AnimationJSON::alreadyLoaded(const char* path)
-{
-	if (loadedFiles.find(path) != loadedFiles.end()) {
-		return true;  //Only blocks THIS specific file if already loaded
-	}
-	loadedFiles.insert(path);
-	return false;
-}
-
-void AnimationJSON::readJSONFile(const char* path)
-{
-	std::ifstream file(path);
-	if (!file.is_open()) { std::cout << "Animation JSON File not found" << "\n"; return; }
-	file >> animationJ;
-	file.close();
-}
-
-void AnimationJSON::parseAnimation()
-{
-	for (auto& [name, animData] : animationJ.items())
+	for (auto& [name, animData] : jsonFile.items())
 	{
 		std::unordered_map<int, SDL_FRect> hitboxMap;
 		std::unordered_map<std::string, std::vector<SDL_FRect>> varMap;
@@ -104,6 +69,16 @@ void AnimationJSON::parseAnimation()
 			std::cout << "Error parsing " << name << ": " << e.what() << "\n";
 		}
 	}
+}
+
+Animation& AnimationJSON::searchAnimation(std::string name)
+{
+	if (animations.find(name) == animations.end()) {
+		std::cout << "Warning: Animation '" << name << "' not found\n";
+		static Animation empty;  // Return empty animation as fallback
+		return empty;
+	}
+	return animations[name];
 }
 
 std::vector<SDL_FRect> AnimationJSON::parseFrameArray(const json& variationObj, bool fixedFrame, float fixedWidth, float fixedHeight, std::unordered_map<int, SDL_FRect>& hitboxMap, int frameIndex)

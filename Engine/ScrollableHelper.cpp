@@ -2,6 +2,7 @@
 #include "Widget.h"
 #include "Vector2D.h"
 #include "SDL3/SDL.h"
+#include "UIElement.h"
 
 
 void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Panel*>& rowPanels)
@@ -17,7 +18,7 @@ void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Pane
 		float yPos = loc.y + (i - scrollOffset) * loc.h;
 		Panel& rowPanel = mainPanel->addWidget<Panel>(
 			Vector2D(loc.x, yPos),
-			Vector2D(loc.w, loc.h),
+			UISize(loc.w, loc.h),
 			SDL_Color{ 49, 49, 49, 255 }
 		);
 		rowPanels.push_back(&rowPanel);

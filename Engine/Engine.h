@@ -35,7 +35,7 @@ public:
     static WindowRender* getWindowRender() { return windowRender; }
     static AssetManager* getAssetManager() { return assetManager; }
     static Manager* getManager() { return manager; }
-    static AnimationJSON* getJSON() { return json; }
+    static AnimationJSON* getAnimJSON() { return animJson; }
     static void initCollisionGrid(int worldWidth, int worldHeight);
     static SpatialGrid* getCollisionGrid() { return collisionGrid; }
     static SDL_Rect* getCamera() { return &camera; }
@@ -56,7 +56,7 @@ private:
     static TextureManager* textureManager;
     static AssetManager* assetManager;
     static Manager* manager;
-    static AnimationJSON* json;
+    static AnimationJSON* animJson;
     static SpatialGrid* collisionGrid;
     static SDL_Rect camera;
     static LoadingManager* loadingMgr;

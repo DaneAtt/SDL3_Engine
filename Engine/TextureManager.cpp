@@ -64,7 +64,7 @@ TTF_Font* TextureManager::LoadFont(const char* path, float ptsize)
 	return font;
 }
 
-void TextureManager::drawFont(TTF_Font* font, const char* text, SDL_Color fg, Vector2D pos)
+void TextureManager::drawFont(TTF_Font* font, const char* text, SDL_Color& fg, const Vector2D& pos)
 {
 	std::string cacheKey = makeTextCacheKey(text, fg);
 

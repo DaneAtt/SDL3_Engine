@@ -7,11 +7,30 @@
 
 // ===== BUTTON =====
 
-Button::Button(std::string name, Vector2D position, Vector2D size, std::string text)
-    : name(name), pos(position), size(size), text(text) 
+Button::Button(const std::string& name,
+    const Vector2D& position,
+    const UISize& size,
+    const SDL_Color& uiColor,
+    const std::string& text,
+    const SDL_Color& fontColor,
+    const char* textSize)
+    : UIElement(position, size), 
+    name(name),
+    text(text),
+    uiColor(uiColor),
+    fontColor(fontColor),
+    textSize(textSize)
 {
     this->toggleVisibility();
-    font = Engine::getAssetManager()->getFont("Arial");
+    if (textSize != nullptr)
+    {
+        font = Engine::getAssetManager()->getFont(textSize);
+    }
+    else
+    {
+        std::cout << "Font size is nullptr" << '\n';
+        return;
+    }
     texMan = Engine::getTextureManager();
     eventBus = Engine::getEventBus();
 }
@@ -24,76 +43,43 @@ void Button::init()
 void Button::renderC() 
 {
     // Draw button background (rectangle)
-    SDL_FRect rect = { pos.x, pos.y, size.x, size.y };
-    SDL_Color buttonColor = { 25, 60, 180, 255 }; // Gray background
-    texMan->DrawRectF(&rect, buttonColor);
+    SDL_FRect rect = { pos.x, pos.y, size.w, size.h };
+    texMan->DrawRectF(&rect, uiColor);
 
-    // Draw button text
-    SDL_Color textColor = { 0, 255, 255, 255 };
-    Vector2D textPos = { pos.x + 10, pos.y + 10 }; // Offset from button corner
-    texMan->drawFont(font, text.c_str(), textColor, textPos);
+    int textWidth, textHeight;
+    TTF_GetStringSize(font, text.c_str(), 0, &textWidth, &textHeight);
+
+    Vector2D textPos = { pos.x + (size.w - textWidth) / 2, pos.y + (size.h - textHeight) / 2};
+    texMan->drawFont(font, text.c_str(), fontColor, textPos);
 }
 
 bool Button::containsPoint(Vector2D& position) 
 {
-    return position.x >= pos.x && position.x <= pos.x + size.x &&
-        position.y >= pos.y && position.y <= pos.y + size.y;
+    return position.x >= pos.x && position.x <= pos.x + size.w &&
+        position.y >= pos.y && position.y <= pos.y + size.h;
 }
-
-/*
-
-    // Create grid buttons
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            float imgX = GRID_START_X + (CELL_STRIDE * j);
-            float imgY = GRID_START_Y + (CELL_STRIDE * i);
-            float screenX = bounds.x + (imgX * inventoryScale);
-            float screenY = bounds.y + (imgY * inventoryScale);
-            float screenW = CELL_SIZE * inventoryScale;
-            float screenH = CELL_SIZE * inventoryScale;
-            Button* button = new Button(
-                "Button_" + std::to_string(i) + "_" + std::to_string(j),
-                { screenX, screenY },
-                { screenW, screenH },
-                "Button_" + std::to_string(i) + "_" + std::to_string(j)
-            );
-            buttons.push_back(button);
-        }
-    }
-
-    int btnIndex = 0;
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            float imgX = GRID_START_X + (CELL_STRIDE * j);
-            float imgY = GRID_START_Y + (CELL_STRIDE * i);
-            float screenX = bounds.x + (imgX * inventoryScale);
-            float screenY = bounds.y + (imgY * inventoryScale);
-            float screenW = CELL_SIZE * inventoryScale;
-            float screenH = CELL_SIZE * inventoryScale;
-
-            // Update existing button position and size
-            buttons[btnIndex]->setPosition({ screenX, screenY });
-            buttons[btnIndex]->setSize({ screenW, screenH });
-            btnIndex++;
-        }
-    }
-
-    // Grid measurements
-    const float GRID_START_X = 8.0f;
-    const float GRID_START_Y = 8.0f;
-    const float CELL_SIZE = 32.0f;
-    const float CELL_GAP = 8.0f;
-    const float CELL_STRIDE = CELL_SIZE + CELL_GAP;
-*/
-
 
 // ===== LABEL =====
 
-Label::Label(std::string text, Vector2D position, SDL_Color color)
-    : text(text), pos(position), color(color) 
+Label::Label(const std::string& text,
+    const Vector2D& position,
+    const SDL_Color& color,
+    const char* textSize)
+    : text(text), 
+    UIElement(position), 
+    color(color), 
+    textSize(textSize)
 {
     this->toggleVisibility();
-    font = Engine::getAssetManager()->getFont("Arial");
+    if (textSize != nullptr)
+    {
+        font = Engine::getAssetManager()->getFont(textSize);
+    }
+    else
+    {
+        std::cout << "Font size is nullptr" << '\n';
+        return;
+    }
     texMan = Engine::getTextureManager();
 }
 
@@ -109,8 +95,11 @@ void Label::renderC()
 
 // ===== PANEL =====
 
-Panel::Panel(Vector2D position, Vector2D size, SDL_Color backgroundColor)
-    : pos(position), size(size), bgColor(backgroundColor) 
+Panel::Panel(const Vector2D& position,
+    const UISize& size,
+    const SDL_Color& bgColor)
+    : UIElement(position,size)
+    , bgColor(bgColor)
 {
     this->toggleVisibility();
     texMan = Engine::getTextureManager();
@@ -128,15 +117,15 @@ void Panel::updateC()
 
 void Panel::renderC()
 {
-    SDL_FRect rect = { pos.x, pos.y, size.x, size.y };
+    SDL_FRect rect = { pos.x, pos.y, size.w, size.h };
     texMan->DrawRectF(&rect, bgColor);
     container.render();
 }
 
 bool Panel::containsPoint(Vector2D& position)
 {
-    return position.x >= pos.x && position.x <= pos.x + size.x &&
-        position.y >= pos.y && position.y <= pos.y + size.y;
+    return position.x >= pos.x && position.x <= pos.x + size.w &&
+        position.y >= pos.y && position.y <= pos.y + size.h;
 }
 
 void Panel::handleClick(Vector2D& position) 
