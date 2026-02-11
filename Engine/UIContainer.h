@@ -16,6 +16,9 @@ public:
     T& add(TArgs&&... mArgs) 
     {
         T* element = new T(std::forward<TArgs>(mArgs)...);
+
+        element->setParent(owner);
+
         std::unique_ptr<ElementType> uPtr{ element };
         elements.emplace_back(std::move(uPtr));
         element->init();
@@ -27,7 +30,7 @@ public:
         for (auto& e : elements) e->init();
     }
 
-    void render() 
+    void render()
     {
         for (auto& e : elements) e->render();
     }
@@ -62,10 +65,13 @@ public:
         return false;
     }
 
+    void setOwner(UIElement* o) { owner = o; }
+
     void clear() { elements.clear(); }
 
 private:
     std::vector<std::unique_ptr<ElementType>> elements;
+    UIElement* owner = nullptr;
     
 };
 

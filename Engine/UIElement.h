@@ -39,7 +39,6 @@ public:
 	{
 		screenWidth = Engine::getCamera()->w;
 		screenHeight = Engine::getCamera()->h;
-
 		if (!visible) return;
 		renderC();
 	}
@@ -60,21 +59,33 @@ public:
 		}
 	}
 
-	void toggleVisibility() { visible = !visible; }
-	virtual void setVisibility(bool vis);
-	bool isVisible() { return visible; }
-	void forceOpen()
+	void setParent(UIElement* p) { parent = p; }
+
+	Vector2D getWorldPosition() const
 	{
-		this->visible = true;
-	}
-	virtual void forceClose()
-	{
-		this->visible = false;
+		if (parent) return parent->getWorldPosition() + pos;
+		return pos;
 	}
 
+	// Getters
+	bool isVisible() { return visible; }
+	bool isMouseOver(Vector2D& mouse) const;
+	const char* getFontSize() { return fontSize; }
+	Vector2D& getPosition() { return pos; }
+	int getScale() { return inventoryScale; }
+
+	// Setters
+	virtual void setVisibility(bool vis);
 	void setPosition(const Vector2D& position) { this->pos = position; }
-	void setSize(const UISize& size) { this->size = size; }
+	virtual void setSize(const UISize& size) { this->size = size; }
+	void setScale(const int& s) { this->inventoryScale = s; }
+	void setFontSize(const char* size) { this->fontSize = size; }
+	void forceOpen() { this->visible = true; }
+	virtual void forceClose() { this->visible = false; }
+
+	// Function
 	bool screenChangeUpdate(Panel* mainPanel);
+	const SDL_FRect& calculateScreenPosition(const float& Img_Width, const float& Img_Height);
 
 	virtual ~UIElement() = default;
 
@@ -88,11 +99,12 @@ protected:
 	EventBus* eventBus = Engine::getEventBus();
 	TextureManager* texManager = Engine::getTextureManager();
 	AssetManager* assets = Engine::getAssetManager();
-	const int inventoryScale = 3;
-	float Screen_UI_Width, Screen_UI_Height, Screen_UI_X, Screen_UI_Y;
+	int inventoryScale = 3;
 	float screenWidth = Engine::getCamera()->w;
 	float screenHeight = Engine::getCamera()->h;
-
+	UIElement* parent = nullptr;
+	
+	const char* fontSize = "font16";
 	Vector2D pos;
 	UISize size;
 

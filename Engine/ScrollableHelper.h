@@ -12,8 +12,8 @@ protected:
 	PanelLocation& calculateStartLocation(PanelLocation& l)
 	{
 		int inventoryScale = getInventoryScale();
-		l.x = getScreenUIX() + (getPanelStartX() * inventoryScale);
-		l.y = getScreenUIY() + (getPanelStartY() * inventoryScale);
+		l.x = getPanelStartX() * inventoryScale;
+		l.y = getPanelStartY() * inventoryScale;
 		l.w = getPanelWidth() * inventoryScale;
 		l.h = getPanelHeight() * inventoryScale;
 		return l;

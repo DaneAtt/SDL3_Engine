@@ -29,11 +29,8 @@ void GridHelper::populateGrid()
         {
             CellPosition cell = calculateCellPosition(row, col);
 
-            float screenX = getScreenUIX() + cell.x;
-            float screenY = getScreenUIY() + cell.y;
-
             Panel& cellPanel = mainPanel->addWidget<Panel>(
-                Vector2D(screenX, screenY),
+                Vector2D(cell.x, cell.y),
                 UISize(cell.w, cell.h),
                 SDL_Color{ 49, 49, 49, 255 }
             );
@@ -53,12 +50,7 @@ void GridHelper::trackGridHover()
     {
         for (int col = 0; col < gridPanel[row].size(); col++)
         {
-            CellPosition cell = calculateCellPosition(row, col);
-            float screenX = getScreenUIX() + cell.x;
-            float screenY = getScreenUIY() + cell.y;
-
-            if (mouse.x >= screenX && mouse.x <= screenX + cell.w &&
-                mouse.y >= screenY && mouse.y <= screenY + cell.h)
+            if (gridPanel[row][col]->containsPoint(mouse))
             {
                 hoveredRow = row;
                 hoveredCol = col;

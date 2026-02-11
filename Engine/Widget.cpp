@@ -4,6 +4,7 @@
 #include "AssetManager.h"
 #include "Events.h"
 #include "EventBus.h"
+#include "UIContainer.h"
 
 // ===== BUTTON =====
 
@@ -21,7 +22,7 @@ Button::Button(const std::string& name,
     fontColor(fontColor),
     textSize(textSize)
 {
-    this->toggleVisibility();
+    forceOpen();
     if (textSize != nullptr)
     {
         font = Engine::getAssetManager()->getFont(textSize);
@@ -42,21 +43,21 @@ void Button::init()
 
 void Button::renderC() 
 {
+    Vector2D world = getWorldPosition();
     // Draw button background (rectangle)
-    SDL_FRect rect = { pos.x, pos.y, size.w, size.h };
+    SDL_FRect rect = { world.x, world.y, size.w, size.h };
     texMan->DrawRectF(&rect, uiColor);
 
     int textWidth, textHeight;
     TTF_GetStringSize(font, text.c_str(), 0, &textWidth, &textHeight);
 
-    Vector2D textPos = { pos.x + (size.w - textWidth) / 2, pos.y + (size.h - textHeight) / 2};
+    Vector2D textPos = { world.x + (size.w - textWidth) / 2, world.y + (size.h - textHeight) / 2};
     texMan->drawFont(font, text.c_str(), fontColor, textPos);
 }
 
 bool Button::containsPoint(Vector2D& position) 
 {
-    return position.x >= pos.x && position.x <= pos.x + size.w &&
-        position.y >= pos.y && position.y <= pos.y + size.h;
+    return isMouseOver(position);
 }
 
 // ===== LABEL =====
@@ -70,7 +71,7 @@ Label::Label(const std::string& text,
     color(color), 
     textSize(textSize)
 {
-    this->toggleVisibility();
+    forceOpen();
     if (textSize != nullptr)
     {
         font = Engine::getAssetManager()->getFont(textSize);
@@ -90,7 +91,8 @@ void Label::init()
 
 void Label::renderC() 
 {
-    texMan->drawFont(font, text.c_str(), color, pos);
+    Vector2D world = getWorldPosition();
+    texMan->drawFont(font, text.c_str(), color, world);
 }
 
 // ===== PANEL =====
@@ -101,8 +103,9 @@ Panel::Panel(const Vector2D& position,
     : UIElement(position,size)
     , bgColor(bgColor)
 {
-    this->toggleVisibility();
+    forceOpen();
     texMan = Engine::getTextureManager();
+    container.setOwner(this);
 }
 
 void Panel::init()
@@ -117,15 +120,15 @@ void Panel::updateC()
 
 void Panel::renderC()
 {
-    SDL_FRect rect = { pos.x, pos.y, size.w, size.h };
+    Vector2D world = getWorldPosition();
+    SDL_FRect rect = { world.x, world.y, size.w, size.h };
     texMan->DrawRectF(&rect, bgColor);
     container.render();
 }
 
 bool Panel::containsPoint(Vector2D& position)
 {
-    return position.x >= pos.x && position.x <= pos.x + size.w &&
-        position.y >= pos.y && position.y <= pos.y + size.h;
+    return isMouseOver(position);
 }
 
 void Panel::handleClick(Vector2D& position) 
