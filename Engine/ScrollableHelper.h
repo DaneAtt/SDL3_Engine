@@ -2,7 +2,8 @@
 #include "EngineAPI.h"
 #include "Widget.h"
 
-class ENGINE_API ScrollableListHelper {
+class ENGINE_API ScrollableListHelper 
+{
 protected:
 	struct PanelLocation
 	{

@@ -34,11 +34,11 @@ public:
     void destRectCalculation();
     void checkHitBox();
 
-    bool isAnimated() { return animated; }
-
     void setFrame(int index) { dFrame = index; }
     void setManualControl(bool b) { manualControl = b; }
+    ENGINE_API void setVariation(const std::string& variationName);
 
+    bool isAnimated() { return animated; }
     SDL_FRect* getDestRect() { return &destRect; }
     Animation& getCurrentAnimation() { return currentAnimation; }
     std::string* getName() { return &name; }

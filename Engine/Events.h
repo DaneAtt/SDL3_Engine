@@ -53,7 +53,7 @@ struct ENGINE_API ChestUIExitEvent
 	ChestComponent* chest;
 };
 
-struct ENGINE_API SkillbarUIRightClickEvent
+struct ENGINE_API SkillbarUILeftClickEvent
 {
 	int row;
 	int col;

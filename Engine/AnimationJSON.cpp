@@ -1,9 +1,5 @@
 #include "AnimationJSON.h"
 
-AnimationJSON::AnimationJSON() {}
-
-AnimationJSON::~AnimationJSON() {}
-
 void AnimationJSON::loadJSONC()
 {
 	for (auto& [name, animData] : jsonFile.items())

@@ -40,11 +40,7 @@ void SpriteComponent::init()
         if (!currentAnimation.FramesVariation.empty())
         {
             usingVariation = true;
-
-            // HARDCODED TEST: Use first variation
             currentVariation = currentAnimation.FramesVariation.begin()->first;
-            // For "protag_west_slashing", this would be "strike 1"
-
             currentFrame = &currentAnimation.FramesVariation[currentVariation][0];
         }
         else
@@ -149,7 +145,7 @@ void SpriteComponent::switchAnimation(std::string id, bool isAnimated)
         if (!currentAnimation.FramesVariation.empty())
         {
             usingVariation = true;
-            currentVariation = "strike 2";
+            currentVariation = currentAnimation.FramesVariation.begin()->first;
             currentFrame = &currentAnimation.FramesVariation[currentVariation][0];
         }
         else if (!currentAnimation.Frames.empty()) 
@@ -288,4 +284,13 @@ void SpriteComponent::checkHitBox()
         }
     }
     previousAnimIndex = animIndex;
+}
+
+void SpriteComponent::setVariation(const std::string& variationName) 
+{
+    if (usingVariation) 
+    {
+        currentVariation = variationName;
+        animIndex = 0;
+    }
 }

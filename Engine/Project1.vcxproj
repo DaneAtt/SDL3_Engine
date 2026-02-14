@@ -155,6 +155,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PathFinder.cpp" />
+    <ClCompile Include="SkillJSON.cpp" />
     <ClCompile Include="Spatialgrid.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />

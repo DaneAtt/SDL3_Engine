@@ -32,6 +32,7 @@ public:
 		if (!file.is_open()) { std::cout << "Animation JSON File not found" << "\n"; return; }
 		file >> jsonFile;
 		file.close();
+		if (jsonFile.empty()) { std::cout << "JSON file is empty!\n"; return; }
 	}
 
 protected:
