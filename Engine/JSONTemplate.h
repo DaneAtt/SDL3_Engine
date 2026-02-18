@@ -26,14 +26,16 @@ public:
 		return false;
 	}
 
-	void readJSONFile(const char* path)
+	virtual void readJSONFile(const char* path)
 	{
 		std::ifstream file(path);
-		if (!file.is_open()) { std::cout << "Animation JSON File not found" << "\n"; return; }
+		if (!file.is_open()) { std::cout << getClassName() <<" JSON File not found" << "\n"; return; }
 		file >> jsonFile;
 		file.close();
 		if (jsonFile.empty()) { std::cout << "JSON file is empty!\n"; return; }
 	}
+
+	virtual const char* getClassName() const { return "JSONTemplate"; }
 
 protected:
 	std::set<std::string> loadedFiles;

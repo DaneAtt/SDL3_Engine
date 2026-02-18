@@ -19,23 +19,37 @@ GridHelper::CellPosition GridHelper::calculateCellPosition(int row, int col)
 
 void GridHelper::populateGrid()
 {
+    std::cout << "populateGrid called from: " << __LINE__ << "\n";
     mainPanel->clearWidgets();
     gridPanel.clear();
     gridPanel.resize(getGridRows());
 
+    cellAnimations.clear();
+    cellAnimations.resize(getGridRows());
+
     for (int row = 0; row < getGridRows(); row++)
     {
+        cellAnimations[row].resize(getGridCols());
+
         for (int col = 0; col < getGridCols(); col++)
         {
             CellPosition cell = calculateCellPosition(row, col);
 
             Panel& cellPanel = mainPanel->addWidget<Panel>(
                 Vector2D(cell.x, cell.y),
-                UISize(cell.w, cell.h),
-                SDL_Color{ 49, 49, 49, 255 }
+                Size(cell.w, cell.h),
+                SDL_Color{ 0, 0, 0, 0 }
             );
 
             gridPanel[row].push_back(&cellPanel);
+
+            auto& effectAnim = cellPanel.addWidget<Panel>(
+                Vector2D(0, 0),
+                Size(cell.w, cell.h),
+                SDL_Color{ 0, 0, 0, 0 }
+            );
+            cellAnimations[row][col] = &effectAnim;
+
         }
     }
 }
@@ -59,6 +73,14 @@ void GridHelper::trackGridHover()
         }
         if (hoveredRow != -1) break; // Break outer loop
     }
+}
 
-    // Now update colors based on hoveredRow/hoveredCol
+void GridHelper::playEffectAt(int row, int col, const char* animName)
+{
+    if (cellAnimations[row][col]) 
+    {
+        auto* anim = cellAnimations[row][col];
+        anim->setAnimation(animName, true);  // true = auto-hide when done
+        anim->setVisibility(true);
+    }
 }

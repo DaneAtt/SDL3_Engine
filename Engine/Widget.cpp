@@ -10,7 +10,7 @@
 
 Button::Button(const std::string& name,
     const Vector2D& position,
-    const UISize& size,
+    const Size& size,
     const SDL_Color& uiColor,
     const std::string& text,
     const SDL_Color& fontColor,
@@ -98,7 +98,7 @@ void Label::renderC()
 // ===== PANEL =====
 
 Panel::Panel(const Vector2D& position,
-    const UISize& size,
+    const Size& size,
     const SDL_Color& bgColor)
     : UIElement(position,size)
     , bgColor(bgColor)

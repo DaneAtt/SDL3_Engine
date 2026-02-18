@@ -5,6 +5,8 @@
 #include "WindowRender.h"
 #include "AssetManager.h"
 #include "AnimationJSON.h"
+#include "UIAnimationJSON.h"
+#include "StaticObjectJSON.h"
 #include "Components.h"
 #include "SpatialGrid.h"
 #include "LoadingManager.h"
@@ -24,6 +26,8 @@ TextureManager* Engine::textureManager = nullptr;
 AssetManager* Engine::assetManager = nullptr;
 Manager* Engine::manager = nullptr;
 AnimationJSON* Engine::animJson = nullptr;
+StaticObjectJSON* Engine::objJson = nullptr;
+UIAnimationJSON* Engine::uiAnimJson = nullptr;
 SpatialGrid* Engine::collisionGrid = nullptr;
 LoadingManager* Engine::loadingMgr = nullptr;
 PathFinder* Engine::pathFinder = nullptr;
@@ -39,10 +43,12 @@ Engine::Engine()
 	textureManager = new TextureManager(windowRender);
 	assetManager = new AssetManager(manager, textureManager);
 	animJson = new AnimationJSON();
+	objJson = new StaticObjectJSON();
 	loadingMgr = new LoadingManager();
 	event = new SDL_Event;
 	eventBus = new EventBus();
 	uiManager = new UIManager();
+	uiAnimJson = new UIAnimationJSON();
 }
 
 Engine::~Engine()

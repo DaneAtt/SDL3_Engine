@@ -2,6 +2,8 @@
 #include "EngineAPI.h"
 #include "Widget.h"
 #include <memory>
+#include <unordered_map>
+#include "Size.h"
 
 class ENGINE_API GridHelper
 {
@@ -14,6 +16,7 @@ protected:
     CellPosition calculateCellPosition(int row, int col);
     void populateGrid();
     void trackGridHover();
+    void playEffectAt(int row, int col, const char* animName);
 
     virtual float getGridStartX() const = 0;
     virtual float getGridStartY() const = 0;
@@ -28,6 +31,7 @@ protected:
 
 	std::unique_ptr<Panel> mainPanel;
 	std::vector<std::vector<Panel*>> gridPanel;
+    std::vector<std::vector<Panel*>> cellAnimations;
     int hoveredRow = -1;
     int hoveredCol = -1;
     int lastHoveredRow = -1;

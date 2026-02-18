@@ -158,8 +158,10 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="SkillJSON.cpp" />
     <ClCompile Include="Spatialgrid.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="StaticObjectJSON.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="ScrollableHelper.cpp" />
+    <ClCompile Include="UIAnimationJSON.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="Widget.cpp" />
@@ -184,7 +186,10 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="JSONTemplate.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="ScrollableHelper.h" />
+    <ClInclude Include="Size.h" />
     <ClInclude Include="SkillJSON.h" />
+    <ClInclude Include="StaticObjectJSON.h" />
+    <ClInclude Include="UIAnimationJSON.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />

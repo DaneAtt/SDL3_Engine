@@ -3,12 +3,15 @@
 #include <string>
 #include "SDL3/SDL.h"
 #include <unordered_map>
+#include "Vector2D.h"
+#include "Size.h"
 
 
 struct Animation
 {
-	int anchorX;
-	int anchorY;
+	std::string textureID;
+	Vector2D anchor;
+	Vector2D atlasOffset;
 	bool Loop;
 	bool fixedFrame;
 	bool Hitbo;
@@ -22,29 +25,35 @@ struct Animation
 
 	Animation() {}
 
-	Animation(bool loop, bool fixed, bool hitbo,std::unordered_map<int, SDL_FRect> hitboxmap, SDL_FRect collisionrect, bool flip, int achX, int achY, std::vector<SDL_FRect>&& frames)
+	Animation(std::string tex, const bool& loop, const bool& fixed, const bool& hitbo,std::unordered_map<int, SDL_FRect> hitboxmap, const SDL_FRect& collisionrect, const bool& flip, const Vector2D& ach, const Vector2D& atlasPos,std::vector<SDL_FRect>&& frames)
 	{
+		textureID = tex;
 		Loop = loop;
 		fixedFrame = fixed;
 		Hitbo = hitbo;
 		HitboxMap = hitboxmap;
 		collisionRect = collisionrect;
 		canFlip = flip;
-		anchorX = achX;
-		anchorY = achY;
+		anchor.x = ach.x;
+		anchor.y = ach.y;
+		atlasOffset.x = atlasPos.x;
+		atlasOffset.y = atlasPos.y;
 		Frames = std::move(frames);
 	}
 
-	Animation(bool loop, bool fixed, bool hitbo, std::unordered_map<std::string, std::unordered_map<int, SDL_FRect>> hitboxmap, SDL_FRect collisionrect, bool flip, int achX, int achY, std::unordered_map <std::string, std::vector<SDL_FRect>> map)
+	Animation(std::string tex, bool& loop, const bool& fixed, const bool& hitbo, std::unordered_map<std::string, std::unordered_map<int, SDL_FRect>> hitboxmap, SDL_FRect collisionrect, const bool& flip, const Vector2D& ach, const Vector2D& atlasPos, std::unordered_map<std::string, std::vector<SDL_FRect>> map)
 	{
+		textureID = tex;
 		Loop = loop;
 		fixedFrame = fixed;
 		Hitbo = hitbo;
 		VariationHitboxMap = std::move(hitboxmap);
 		collisionRect = collisionrect;
 		canFlip = flip;
-		anchorX = achX;
-		anchorY = achY;
+		anchor.x = ach.x;
+		anchor.y = ach.y;
+		atlasOffset.x = atlasPos.x;
+		atlasOffset.y = atlasPos.y;
 		FramesVariation = std::move(map);
 	}
 

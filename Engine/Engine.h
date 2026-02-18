@@ -17,6 +17,8 @@ class EventBus;
 class Vector2D;
 class UIManager;
 class Manager;
+class StaticObjectJSON;
+class UIAnimationJSON;
 struct Size;
 
 
@@ -36,6 +38,8 @@ public:
     static AssetManager* getAssetManager() { return assetManager; }
     static Manager* getManager() { return manager; }
     static AnimationJSON* getAnimJSON() { return animJson; }
+    static StaticObjectJSON* getObjJSON() { return objJson; }
+    static UIAnimationJSON* getUIAnimJSON() { return uiAnimJson; }
     static void initCollisionGrid(int worldWidth, int worldHeight);
     static SpatialGrid* getCollisionGrid() { return collisionGrid; }
     static SDL_Rect* getCamera() { return &camera; }
@@ -57,6 +61,8 @@ private:
     static AssetManager* assetManager;
     static Manager* manager;
     static AnimationJSON* animJson;
+    static StaticObjectJSON* objJson;
+    static UIAnimationJSON* uiAnimJson;
     static SpatialGrid* collisionGrid;
     static SDL_Rect camera;
     static LoadingManager* loadingMgr;

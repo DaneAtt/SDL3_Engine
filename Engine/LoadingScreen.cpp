@@ -27,15 +27,15 @@ LoadingScreen::~LoadingScreen()
     cleanup();
 }
 
-void LoadingScreen::init(const char* texturePath, const char* animJsonPath, const char* animName)
+void LoadingScreen::init(const char* texturePath, const char* animJsonPath, const char* textureKey, const char* animName)
 {
     if (initialized) {
         return;
     }
 
     textureKeyStr = "";
-    if (animName) {
-        textureKeyStr = animName;
+    if (textureKey) {
+        textureKeyStr = textureKey;
     }
 
     // Load texture
@@ -45,7 +45,7 @@ void LoadingScreen::init(const char* texturePath, const char* animJsonPath, cons
     // Load animation if provided
     if (animJsonPath && animName) {
         json->loadJSON(animJsonPath);
-        animation = &json->searchAnimation(animName);
+        animation = json->searchAnimation(animName);
 
         // Check if animation was found and valid
         if (animation && !animation->Frames.empty()) {

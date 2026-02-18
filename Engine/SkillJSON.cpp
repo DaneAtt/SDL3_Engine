@@ -2,13 +2,15 @@
 
 void SkillJSON::loadJSONC() 
 {
-    for (auto& [familyKey, familyObj] : jsonFile.items()) {
+    for (auto& [familyKey, familyObj] : jsonFile.items()) 
+    {
         FamilyData family;
         family.familyName = familyKey;
         
         family.animationPrefix = familyObj["animationPrefix"];
         
-        for (auto& moveObj : familyObj["moves"]) {
+        for (auto& moveObj : familyObj["moves"]) 
+        {
             MoveData move;
             move.name = moveObj["name"];
             move.baseDamage = moveObj["baseDamage"];

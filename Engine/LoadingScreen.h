@@ -16,7 +16,7 @@ public:
     ~LoadingScreen();
 
     // Initialize loading screen with texture and animation
-    void init(const char* texturePath, const char* animJsonPath, const char* animName);
+    void init(const char* texturePath, const char* animJsonPath, const char* textureKey, const char* animName);
 
     // Update animation frame based on time
     void update(float deltaTime);

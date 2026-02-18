@@ -8,6 +8,7 @@
 #include <nlohmann/json.hpp>
 #include <unordered_map>
 #include "JSONTemplate.h"
+#include "Vector2D.h"
 
 using json = nlohmann::json;
 
@@ -17,8 +18,9 @@ public:
 	AnimationJSON() {}
 	~AnimationJSON() {}
 	void loadJSONC() override;
-	Animation& searchAnimation(std::string name);
+	Animation* searchAnimation(std::string name);
 	std::vector<SDL_FRect> parseFrameArray(const json& variationObj, bool fixedFrame, float fixedWidth, float fixedHeight, std::unordered_map<int, SDL_FRect>& hitboxMap, int frameIndex);
+	const char* getClassName() const override { return "Animation"; }
 
 private:
 	std::unordered_map<std::string, Animation> animations;

@@ -5,14 +5,15 @@
 #include "SDL3/SDL.h"
 #include "UIContainer.h"
 #include "NonCopyable.h"
-#include <string>
+#include <string> 
+#include "Size.h"
 
 // Button widget
 class ENGINE_API Button : public UIElement, public NonCopyable {
 public:
     Button(const std::string& name,
         const Vector2D& position,
-        const UISize& size,
+        const Size& size,
         const SDL_Color& uiColor,
         const std::string& text,
         const SDL_Color& fontColor,
@@ -64,7 +65,7 @@ protected:
 class ENGINE_API Panel : public UIElement, public NonCopyable {
 public:
     Panel(const Vector2D& position,
-        const UISize& size,
+        const Size& size,
         const SDL_Color& bgColor);
     ~Panel() {};
 

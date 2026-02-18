@@ -17,34 +17,38 @@ public:
 	CollisionComponent(bool staticCollider) : isStatic(staticCollider) {}
 	~CollisionComponent() { Engine::getCollisionGrid()->Remove(this); }
 
-	void init() override
-	{
-		transform = &entity->getComponent<TransformComponent>();
-		collision.x = collision.y = 0;
-		collision.w = static_cast<float>(transform->width);
-		collision.h = static_cast<float>(transform->height);
+    void init() override
+    {
+        transform = &entity->getComponent<TransformComponent>();
+        collision.x = collision.y = 0;
+        collision.w = static_cast<float>(transform->width);
+        collision.h = static_cast<float>(transform->height);
 
-		// If entity has SpriteComponent with animation, get collision from that
-		if (entity->hasComponent<SpriteComponent>()) {
-			sprite = &entity->getComponent<SpriteComponent>();
-			Animation& anim = sprite->getCurrentAnimation();
-			if (!anim.Frames.empty())
-			{
-				collision = anim.collisionRect;
-			}
-			transformRect.x = transform->position.x - (anim.anchorX * transform->scale) + (collision.x * transform->scale);
-			transformRect.y = transform->position.y - (anim.anchorY * transform->scale) + (collision.y * transform->scale);
-		}
-		else 
-		{
-			transformRect.x = transform->position.x + (collision.x * transform->scale);
-			transformRect.y = transform->position.y + (collision.y * transform->scale);
-		}
-		transformRect.w = collision.w * transform->scale;
-		transformRect.h = collision.h * transform->scale;
+        // Default position calculation
+        transformRect.x = transform->position.x + (collision.x * transform->scale);
+        transformRect.y = transform->position.y + (collision.y * transform->scale);
 
-		Engine::getCollisionGrid()->Insert(this, &transformRect);
-	}
+        // Override with animation data if available
+        if (entity->hasComponent<SpriteComponent>())
+        {
+            sprite = &entity->getComponent<SpriteComponent>();
+            if (sprite->isAnimated())
+            {
+                Animation& anim = *sprite->getCurrentAnimation();
+                if (!anim.Frames.empty())
+                {
+                    collision = anim.collisionRect;
+                }
+                // Adjust for anchor
+                transformRect.x = transform->position.x - (anim.anchor.x * transform->scale) + (collision.x * transform->scale);
+                transformRect.y = transform->position.y - (anim.anchor.y * transform->scale) + (collision.y * transform->scale);
+            }
+        }
+
+        transformRect.w = collision.w * transform->scale;
+        transformRect.h = collision.h * transform->scale;
+        Engine::getCollisionGrid()->Insert(this, &transformRect);
+    }
 
 	SDL_FRect* getRect() { return &transformRect; }
 	bool getIsStatic() const { return isStatic; }

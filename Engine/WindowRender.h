@@ -2,19 +2,14 @@
 #include "EngineAPI.h"
 #include "SDL3/SDL.h"
 #include <vector>
-
-struct Size
-{
-	int w;
-	int h;
-};
+#include "Size.h"
 
 class ENGINE_API WindowRender
 {
 public:
 
-	WindowRender();
-	~WindowRender();
+	WindowRender() {}
+	~WindowRender() {}
 
 	bool init(const char* title, int w, int h, int xpos, int ypos);
 	void clearRenderer();
@@ -25,7 +20,10 @@ public:
 	SDL_Window* getWindow() const { return window; }
 	Size getWinSize() const {
 		Size currentSize;
-		SDL_GetWindowSize(window, &currentSize.w, &currentSize.h);
+		int size_width, size_height;
+		SDL_GetWindowSize(window, &size_width, &size_height);
+		currentSize.w = static_cast<float>(size_width);
+		currentSize.h = static_cast<float>(size_height);
 		return currentSize;
 	}
 

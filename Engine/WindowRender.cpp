@@ -2,16 +2,6 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 
-WindowRender::WindowRender()
-{
-
-}
-
-WindowRender::~WindowRender()
-{
-
-}
-
 bool WindowRender::init(const char* title, int w, int h, int xpos, int ypos)
 {
 	winSize.w = w;

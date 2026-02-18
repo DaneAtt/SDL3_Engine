@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineAPI.h"
 #include "Widget.h"
+#include "Size.h"
 
 class ENGINE_API ScrollableListHelper 
 {

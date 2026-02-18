@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include "AnimationJSON.h"
 #include "EngineAPI.h"
+#include "StaticObjectJSON.h"
 
 class HitBoxComponent;
 class TransformComponent;
@@ -15,13 +16,9 @@ class TransformComponent;
 class SpriteComponent : public Component
 {
 public:
-    int animIndex;
-    Uint32 currentTime;
-    SDL_FRect* currentFrame = nullptr;
     SDL_FlipMode spriteFlip = SDL_FLIP_NONE;
 
     SpriteComponent() = default;
-    ENGINE_API SpriteComponent(const char* id);
     ENGINE_API SpriteComponent(const char* id, bool animation);
     ENGINE_API ~SpriteComponent();
 
@@ -40,18 +37,21 @@ public:
 
     bool isAnimated() { return animated; }
     SDL_FRect* getDestRect() { return &destRect; }
-    Animation& getCurrentAnimation() { return currentAnimation; }
+    Animation* getCurrentAnimation() { return currentAnimation; }
     std::string* getName() { return &name; }
 
 private:
     TransformComponent* transform;
     SDL_Texture* texture;
     SDL_FRect srcRect, destRect;
+    int animIndex;
+    Uint32 currentTime;
+    SDL_FRect* currentFrame = nullptr;
 
     bool animated = false;
     int frames = 0;
     int dFrame = -1;
-    Animation currentAnimation;
+    Animation* currentAnimation;
     HitBoxComponent* hitbox;
     const char* animationID;
     int previousAnimIndex = -1;

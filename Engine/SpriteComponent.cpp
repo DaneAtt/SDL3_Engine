@@ -3,18 +3,11 @@
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
 
-SpriteComponent::SpriteComponent(const char* id)
-{
-    setTex(id);
-    name = id;
-}
-
 SpriteComponent::SpriteComponent(const char* id, bool animation)
 {
     animated = animation;
     animIndex = 0;
     animationID = id;
-    setTex(id);
     name = id;
 }
 
@@ -36,31 +29,48 @@ void SpriteComponent::init()
     if (animated)
     {
         currentAnimation = Engine::getAnimJSON()->searchAnimation(animationID);
+        if (currentAnimation == nullptr)
+        {
+            std::cout << "Current Animation is nullptr" << '\n';
+            return;
+        }
+        setTex(currentAnimation->textureID);
 
-        if (!currentAnimation.FramesVariation.empty())
+        if (!currentAnimation->FramesVariation.empty())
         {
             usingVariation = true;
-            currentVariation = currentAnimation.FramesVariation.begin()->first;
-            currentFrame = &currentAnimation.FramesVariation[currentVariation][0];
+            currentVariation = currentAnimation->FramesVariation.begin()->first;
+            currentFrame = &currentAnimation->FramesVariation[currentVariation][0];
         }
         else
         {
             usingVariation = false;
-            currentFrame = &currentAnimation.Frames[0];
+            currentFrame = &currentAnimation->Frames[0];
         }
 
         transform->width = static_cast<int>(currentFrame->w);
         transform->height = static_cast<int>(currentFrame->h);
 
-        if (currentAnimation.Hitbo)
+        if (currentAnimation->Hitbo)
         {
             hitbox = &entity->addComponent<HitBoxComponent>();
         }
     }
     else
     {
-        destRect.w = static_cast<float>(transform->width);
-        destRect.h = static_cast<float>(transform->height);
+        staticObjPos* spriteInfo = Engine::getObjJSON()->search(name);
+
+        if (spriteInfo) 
+        {
+            srcRect.x = spriteInfo->pos.x;
+            srcRect.y = spriteInfo->pos.y;
+            srcRect.w = spriteInfo->size.w;
+            srcRect.h = spriteInfo->size.h;
+            setTex(spriteInfo->texName);
+
+            destRect.w = static_cast<float>(transform->width);
+            destRect.h = static_cast<float>(transform->height);
+        }
     }
 }
 
@@ -79,7 +89,7 @@ void SpriteComponent::update()
         {
             if (usingVariation)
             {
-                auto& variationFrames = currentAnimation.FramesVariation[currentVariation];
+                auto& variationFrames = currentAnimation->FramesVariation[currentVariation];
                 if (variationFrames.empty()) 
                 {
                     std::cout << "ERROR: Variation has no frames!\n";
@@ -92,7 +102,7 @@ void SpriteComponent::update()
             }
             else
             {
-                if (currentAnimation.Frames.empty()) 
+                if (currentAnimation->Frames.empty())
                 {
                     std::cout << "ERROR: Animation has no frames!\n";
                     return;
@@ -100,7 +110,7 @@ void SpriteComponent::update()
 
                 checkManualControl(manualControl);
 
-                currentFrame = &currentAnimation.Frames[animIndex];
+                currentFrame = &currentAnimation->Frames[animIndex];
             }
 
             srcRect = *currentFrame;
@@ -127,46 +137,20 @@ void SpriteComponent::draw()
         destRect.y + destRect.h < 0 || destRect.y > Engine::getCamera()->h) {
         return;
     }
-    SDL_FlipMode actualFlip = (currentAnimation.canFlip) ? spriteFlip : SDL_FLIP_NONE;
-    Engine::getTextureManager()->draw(texture, &srcRect, &destRect, actualFlip);
-}
 
-void SpriteComponent::switchAnimation(std::string id, bool isAnimated)
-{
-    animated = isAnimated;
-    setTex(id);
+    if (animated && currentAnimation) {
+        SDL_FlipMode actualFlip = (currentAnimation->canFlip) ? spriteFlip : SDL_FLIP_NONE;
 
-    if (animated) {
-        currentAnimation = Engine::getAnimJSON()->searchAnimation(id.c_str());
-        animIndex = 0;
-        frameTimer = 0.0f;
+        // Apply atlas offset
+        SDL_FRect adjustedSrc = srcRect;
+        adjustedSrc.x += currentAnimation->atlasOffset.x;
+        adjustedSrc.y += currentAnimation->atlasOffset.y;
 
-
-        if (!currentAnimation.FramesVariation.empty())
-        {
-            usingVariation = true;
-            currentVariation = currentAnimation.FramesVariation.begin()->first;
-            currentFrame = &currentAnimation.FramesVariation[currentVariation][0];
-        }
-        else if (!currentAnimation.Frames.empty()) 
-        {
-            usingVariation = false;
-            currentFrame = &currentAnimation.Frames[0];
-        }
-        else
-        {
-            std::cout << "ERROR: Animation '" << id << "' has no frames!\n";
-            return;
-        }
-
-        transform->width = static_cast<int>(currentFrame->w);
-        transform->height = static_cast<int>(currentFrame->h);
-
-        // UPDATE COLLISION BOX
-        if (entity->hasComponent<CollisionComponent>()) {
-            auto& collision = entity->getComponent<CollisionComponent>();
-            *collision.getCollision() = currentAnimation.collisionRect;
-        }
+        Engine::getTextureManager()->draw(texture, &adjustedSrc, &destRect, actualFlip);
+    }
+    else 
+    {
+        Engine::getTextureManager()->draw(texture, &srcRect, &destRect, SDL_FLIP_NONE);
     }
 }
 
@@ -186,16 +170,16 @@ void SpriteComponent::checkManualControl(bool control)
             size_t maxFrames = 0;
             if (usingVariation) 
             {
-                maxFrames = currentAnimation.FramesVariation[currentVariation].size();
+                maxFrames = currentAnimation->FramesVariation[currentVariation].size();
             }
             else 
             {
-                maxFrames = currentAnimation.Frames.size();
+                maxFrames = currentAnimation->Frames.size();
             }
 
             if (animIndex >= maxFrames) 
             {
-                if (currentAnimation.Loop) 
+                if (currentAnimation->Loop)
                 {
                     animIndex = 0;
                 }
@@ -209,15 +193,15 @@ void SpriteComponent::checkManualControl(bool control)
 
 void SpriteComponent::destRectCalculation()
 {
-    if (currentAnimation.fixedFrame)
+    if (currentAnimation->fixedFrame)
     {
-        float anchorOffsetX = static_cast<float>(currentAnimation.anchorX) * transform->scale;
+        float anchorOffsetX = static_cast<float>(currentAnimation->anchor.x) * transform->scale;
 
         destRect.w = static_cast<float>(transform->width) * transform->scale;
         destRect.h = static_cast<float>(transform->height) * transform->scale;
-        destRect.y = transform->position.y - (currentAnimation.anchorY * transform->scale) - Engine::getCamera()->y;
+        destRect.y = transform->position.y - (currentAnimation->anchor.y * transform->scale) - Engine::getCamera()->y;
 
-        if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation.canFlip) {
+        if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation->canFlip) {
             destRect.x = transform->position.x - (destRect.w - anchorOffsetX) - Engine::getCamera()->x;
         }
         else {
@@ -226,14 +210,14 @@ void SpriteComponent::destRectCalculation()
     }
     else
     {
-        float anchorOffsetX = static_cast<float>(currentAnimation.anchorX) * transform->scale;
+        float anchorOffsetX = static_cast<float>(currentAnimation->anchor.x) * transform->scale;
 
         destRect.w = currentFrame->w * transform->scale;
         destRect.h = currentFrame->h * transform->scale;
         destRect.x = transform->position.x - anchorOffsetX - Engine::getCamera()->x;
-        destRect.y = transform->position.y - (currentAnimation.anchorY * transform->scale) - Engine::getCamera()->y;
+        destRect.y = transform->position.y - (currentAnimation->anchor.y * transform->scale) - Engine::getCamera()->y;
 
-        if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation.canFlip) {
+        if (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation->canFlip) {
             destRect.x = transform->position.x - (destRect.w - anchorOffsetX) - Engine::getCamera()->x;
         }
     }
@@ -249,8 +233,8 @@ void SpriteComponent::checkHitBox()
         if (usingVariation)
         {
             // Check variation hitbox map
-            auto& varHitboxMap = currentAnimation.VariationHitboxMap[currentVariation];
-            if (currentAnimation.Hitbo && varHitboxMap.count(animIndex))
+            auto& varHitboxMap = currentAnimation->VariationHitboxMap[currentVariation];
+            if (currentAnimation->Hitbo && varHitboxMap.count(animIndex))
             {
                 frameHitbox = &varHitboxMap[animIndex];
                 hasHitbox = true;
@@ -258,9 +242,9 @@ void SpriteComponent::checkHitBox()
         }
         else
         {
-            if (currentAnimation.Hitbo && currentAnimation.HitboxMap.count(animIndex))
+            if (currentAnimation->Hitbo && currentAnimation->HitboxMap.count(animIndex))
             {
-                frameHitbox = &currentAnimation.HitboxMap[animIndex];
+                frameHitbox = &currentAnimation->HitboxMap[animIndex];
                 hasHitbox = true;
             }
         }
@@ -274,8 +258,8 @@ void SpriteComponent::checkHitBox()
                     boxStartX = transform->position.x;
                     boxStartY = transform->position.y;
                 }
-                bool flip = (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation.canFlip);
-                hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY, flip, currentFrame->w, currentAnimation.anchorX, currentAnimation.anchorY);
+                bool flip = (spriteFlip == SDL_FLIP_HORIZONTAL && currentAnimation->canFlip);
+                hitbox->updateFromFrame(frameHitbox, boxStartX, boxStartY, flip, currentFrame->w, currentAnimation->anchor.x, currentAnimation->anchor.y);
             }
         }
         else
@@ -284,6 +268,50 @@ void SpriteComponent::checkHitBox()
         }
     }
     previousAnimIndex = animIndex;
+}
+
+void SpriteComponent::switchAnimation(std::string id, bool isAnimated)
+{
+    animated = isAnimated;
+
+    if (animated) {
+        currentAnimation = Engine::getAnimJSON()->searchAnimation(id.c_str());
+        if (currentAnimation == nullptr)
+        {
+            std::cout << "Current Animation is nullptr" << '\n';
+            return;
+        }
+        setTex(currentAnimation->textureID);
+        animIndex = 0;
+        frameTimer = 0.0f;
+
+
+        if (!currentAnimation->FramesVariation.empty())
+        {
+            usingVariation = true;
+            currentVariation = currentAnimation->FramesVariation.begin()->first;
+            currentFrame = &currentAnimation->FramesVariation[currentVariation][0];
+        }
+        else if (!currentAnimation->Frames.empty())
+        {
+            usingVariation = false;
+            currentFrame = &currentAnimation->Frames[0];
+        }
+        else
+        {
+            std::cout << "ERROR: Animation '" << id << "' has no frames!\n";
+            return;
+        }
+
+        transform->width = static_cast<int>(currentFrame->w);
+        transform->height = static_cast<int>(currentFrame->h);
+
+        // UPDATE COLLISION BOX
+        if (entity->hasComponent<CollisionComponent>()) {
+            auto& collision = entity->getComponent<CollisionComponent>();
+            *collision.getCollision() = currentAnimation->collisionRect;
+        }
+    }
 }
 
 void SpriteComponent::setVariation(const std::string& variationName) 

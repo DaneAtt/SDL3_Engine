@@ -53,3 +53,89 @@ bool UIElement::isMouseOver(Vector2D& mouse) const
 	return mouse.x >= world.x && mouse.x <= world.x + size.w &&
 		mouse.y >= world.y && mouse.y <= world.y + size.h;
 }
+
+void UIElement::uiAnimUpdate()
+{
+	if (animated && currentAnimation)
+	{
+		frameTimer += Engine::getDeltaTime();
+		if (frameTimer >= frameDuration)
+		{
+			frameTimer = 0;
+			animIndex++;
+
+			// Check if animation finished
+			if (animIndex >= currentAnimation->frames.size())
+			{
+				if (currentAnimation->loop) 
+				{
+					animIndex = 0;
+				}
+				else
+				{
+					animIndex = currentAnimation->frames.size() - 1;
+
+					// Hide when complete if auto-hide enabled
+					if (autoHideOnComplete)
+					{
+						setVisibility(false);
+						animated = false;
+					}
+				}
+			}
+		}
+
+		uiSrcRect.x = currentAnimation->frames[animIndex].x;
+		uiSrcRect.y = currentAnimation->frames[animIndex].y;
+		uiSrcRect.x += currentAnimation->atlasPosition.x;
+		uiSrcRect.y += currentAnimation->atlasPosition.y;
+	}
+	destRectCalculation();
+}
+
+void UIElement::destRectCalculation()
+{
+	Vector2D worldPos = getWorldPosition();
+
+	uiDestRect.x = worldPos.x;
+	uiDestRect.y = worldPos.y;
+	uiDestRect.w = size.w;
+	uiDestRect.h = size.h;
+}
+
+void UIElement::setAnimation(const char* animName, bool autoHide)
+{
+	currentAnimation = Engine::getUIAnimJSON()->search(animName);
+	texture = Engine::getAssetManager()->getTexture(currentAnimation->textureID);
+	uiSrcRect.x = currentAnimation->frames[0].x + currentAnimation->atlasPosition.x;
+	uiSrcRect.y = currentAnimation->frames[0].y + currentAnimation->atlasPosition.y;
+	uiSrcRect.w = currentAnimation->size.w;
+	uiSrcRect.h = currentAnimation->size.h;
+	animated = true;
+	animIndex = 0;
+	frameTimer = 0.0f;
+	autoHideOnComplete = autoHide;
+
+	destRectCalculation();
+}
+
+void UIElement::setTexture(const char* texID)
+{
+	staticObjPos* spriteInfo = Engine::getObjJSON()->search(texID);
+
+	if (spriteInfo)
+	{
+		texture = Engine::getAssetManager()->getTexture(spriteInfo->texName);
+		uiSrcRect.x = spriteInfo->pos.x;
+		uiSrcRect.y = spriteInfo->pos.y;
+		uiSrcRect.w = spriteInfo->size.w;
+		uiSrcRect.h = spriteInfo->size.h;
+
+		destRectCalculation();
+	}
+	else
+	{
+		std::cout << "Texture not in atlas" << '\n';
+		return;
+	}
+}

@@ -31,6 +31,8 @@
 
         void loadJSONC() override;
 
+        const char* getClassName() const override { return "SkillJson"; }
+
     private:
         std::vector<FamilyData> familyVec;
     };

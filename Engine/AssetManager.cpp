@@ -18,16 +18,13 @@ void AssetManager::addFont(std::string id, const char* path, float ptsize)
 
 SDL_Texture* AssetManager::getTexture(std::string id)
 {
-	if (textures[id] == nullptr)
-	{
-		std::cout << "Textures not found: " << id << '\n';
-		return nullptr;
-	}
-	else 
-	{
-		return textures[id];
-	}
-
+    auto it = textures.find(id);
+    if (it == textures.end())
+    {
+        std::cout << "Texture not found: " << id << '\n';
+        return nullptr;
+    }
+    return it->second;
 }
 
 TTF_Font* AssetManager::getFont(std::string id)
