@@ -69,8 +69,6 @@ public:
 	{
 		if (texture != nullptr)
 		{
-			std::cout << "drawing texture: " << texture << " dest: " << uiDestRect.x << "," << uiDestRect.y << "\n";
-
 			Engine::getTextureManager()->draw(texture, &uiSrcRect, &uiDestRect, SDL_FLIP_NONE);
 		}
 	}
