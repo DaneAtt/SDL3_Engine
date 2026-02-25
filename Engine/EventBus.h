@@ -9,23 +9,23 @@ class ENGINE_API EventBus
 {
 public:
 	template<typename T>
-	void subscribe(std::function<void(T&)> callback)
+	void subscribe(const std::function<void(T&)>& callback)
 	{
-		auto wrapper = [callback](void* data) {
+		auto wrapper = [callback = std::move(callback)](void* data) {
 			callback(*static_cast<T*>(data));
 		};
 		subscribers[typeid(T)].push_back(wrapper);
 	}
 
 	template<typename T>
-	void emit(T event)
+	void emit(const T& event)
 	{
 		auto it = subscribers.find(typeid(T));
 		if (it != subscribers.end())
 		{
 			for (auto& callback : it->second)
-			{
-				callback(&event);
+			{	
+				callback(const_cast<T*>(&event));
 			}
 		}
 	}
