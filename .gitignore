@@ -41,7 +41,5 @@
 *.tlog
 *.ipdb
 *.iobj
-*.recipe
-*.lastbuildstate
-*.recipe
-*.lastbuildstate
+Engine/Engine/x64/Debug/Engine.dll.recipe
+Engine/Engine/x64/Debug/Engine.dll.recipe
