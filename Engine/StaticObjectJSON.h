@@ -4,14 +4,14 @@
 #include "Size.h"
 #include <unordered_map>
 
-struct staticObjPos
+struct ENGINE_API staticObjPos
 {
 	std::string texName;
 	Vector2D pos;
 	Size size;
 };
 
-class StaticObjectJSON : public JSONTemplate
+class ENGINE_API StaticObjectJSON : public JSONTemplate
 {
 public:
 	void loadJSONC() override;

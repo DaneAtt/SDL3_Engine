@@ -40,6 +40,6 @@ protected:
 	std::unique_ptr<Panel> mainPanel;
 	std::vector<Panel*> rowPanels;
 	int scrollOffset = 0;
-	int visibleRows = 0;
+	int visibleRows = 16;
 
 };

@@ -33,7 +33,6 @@ void ScrollableListHelper::updateRowHover(int& lastHoveredRow, std::vector<Panel
 
 	PanelLocation loc;
 	loc = calculateStartLocation(loc);
-	int endIndex = std::min(scrollOffset + visibleRows, getRowCount());
 
 	int hoveredRow = -1;
 	for (int i = 0; i < rowPanels.size(); ++i)

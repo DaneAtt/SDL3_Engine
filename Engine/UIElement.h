@@ -127,8 +127,9 @@ protected:
 	UIAnimInfo* currentAnimation = nullptr;
 	bool animated = false;
 	int animIndex = 0;
-	SDL_FRect uiSrcRect,uiDestRect;
-	float frameTimer;
+	SDL_FRect uiSrcRect { 0,0,0,0 };
+	SDL_FRect uiDestRect { 0,0,0,0 };
+	float frameTimer = 0;
 	float frameDuration = 1.0f / 12.0f;
 	bool autoHideOnComplete = false;
 
