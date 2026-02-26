@@ -9,6 +9,8 @@ void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Pane
 {
 	mainPanel->clearWidgets();
 	rowPanels.clear();
+	originalY.clear();
+	rowAnimStates.clear();
 
 	PanelLocation loc;
 	loc = calculateStartLocation(loc);
@@ -16,6 +18,8 @@ void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Pane
 
 	for (int i = scrollOffset; i < endIndex; i++) {
 		float yPos = loc.y + (i - scrollOffset) * loc.h;
+		originalY.push_back(yPos); // save the ypos for panel dragging animation
+		rowAnimStates.push_back({ yPos, yPos });  // currentY and targetY both start at yPos
 		Panel& rowPanel = mainPanel->addWidget<Panel>(
 			Vector2D(loc.x, yPos),
 			Size(loc.w, loc.h),
@@ -75,5 +79,67 @@ void ScrollableListHelper::checkScroll(SDL_Event& event)
 		scrollOffset++;
 		int maxScroll = std::max(0, getRowCount() - visibleRows);
 		scrollOffset = std::min(scrollOffset, maxScroll);
+	}
+}
+
+int ScrollableListHelper::getClickedSlot(Vector2D& position)
+{
+	PanelLocation loc;
+	loc = calculateStartLocation(loc);
+	for (size_t i = 0; i < rowPanels.size(); i++)
+	{
+		float top = getScreenUIY() + originalY[i];
+		float bottom = top + loc.h;
+		float left = getScreenUIX() + loc.x;
+		float right = left + loc.w;
+
+		if (position.x >= left && position.x <= right &&
+			position.y >= top && position.y <= bottom)
+		{
+			return scrollOffset + i;
+		}
+	}
+	return -1;
+}
+
+void ScrollableListHelper::updateRowAnimations(int sourceIndex, int hoverIndex)
+{
+	for (int i = 0; i < rowPanels.size(); i++)
+	{
+		if (i == sourceIndex)
+		{
+			continue;
+		}
+
+		if (sourceIndex < hoverIndex) //dragging downwards
+		{
+			if (i > sourceIndex && i <= hoverIndex)
+				rowAnimStates[i].targetY = originalY[i - 1];
+			else
+				rowAnimStates[i].targetY = originalY[i];
+		}
+		else // dragging upwards
+		{
+			if (i >= hoverIndex && i < sourceIndex)
+				rowAnimStates[i].targetY = originalY[i + 1];
+			else
+				rowAnimStates[i].targetY = originalY[i];
+		}
+	}
+}
+
+void ScrollableListHelper::tickRowAnimations(int index)
+{
+	for (int i = 0; i < rowPanels.size(); i++)
+	{
+		if (index != -1 && i == index)
+		{
+			rowPanels[i]->setVisibility(false);
+			continue;
+		}
+
+		auto& state = rowAnimStates[i];
+		state.currentY += (state.targetY - state.currentY) * 10.0f * Engine::getDeltaTime();
+		rowPanels[i]->setPosition({ rowPanels[i]->getPosition().x, state.currentY });
 	}
 }

@@ -11,6 +11,12 @@ protected:
 		float x, y, w, h;
 	};
 
+	struct RowAnimState 
+	{
+		float currentY;
+		float targetY;
+	};
+
 	PanelLocation& calculateStartLocation(PanelLocation& l)
 	{
 		int inventoryScale = getInventoryScale();
@@ -24,7 +30,10 @@ protected:
 	void rebuildVisibleRows(Panel* mainPanel, std::vector<Panel*>& rowPanels);
 	void updateRowHover(int& lastHoveredRow, std::vector<Panel*>& rowPanels);
 	void checkScroll(SDL_Event& event);
+	int getClickedSlot(Vector2D& pos);
 
+	void updateRowAnimations(int sourceIndex, int hoverIndex);  // calculates targetY
+	void tickRowAnimations(int index);   // lerps currentY toward targetY each frame
 
 	virtual int getRowCount() const = 0;
 	virtual void populateRow(Panel& row, int index, const PanelLocation& loc, float yPos) = 0;
@@ -39,7 +48,8 @@ protected:
 	// Shared members
 	std::unique_ptr<Panel> mainPanel;
 	std::vector<Panel*> rowPanels;
+	std::vector<RowAnimState> rowAnimStates;
+	std::vector<float> originalY;
 	int scrollOffset = 0;
 	int visibleRows = 16;
-
 };
