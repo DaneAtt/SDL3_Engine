@@ -1,4 +1,5 @@
 ﻿#include "Engine.h"
+#include <vector>
 #include "ECS.h"
 #include "SDL3/sdl.h"
 #include "TextureManager.h"
@@ -14,7 +15,7 @@
 #include "EventBus.h"
 #include "Vector2D.h"
 #include "UIManager.h"
-#include <vector>
+#include "SoundManager.h"
 
 float Engine::deltaTime = 0.0f;
 Uint64 Engine::lastFrameTime = 0;
@@ -35,6 +36,7 @@ EventBus* Engine::eventBus = nullptr;
 SDL_Rect Engine::camera = { 0, 0, 0, 0 };
 Vector2D Engine::mouse = Vector2D(0,0);
 UIManager* Engine::uiManager = nullptr;
+SoundManager* Engine::soundManager = nullptr;
 
 Engine::Engine()
 {
@@ -49,6 +51,7 @@ Engine::Engine()
 	eventBus = new EventBus();
 	uiManager = new UIManager();
 	uiAnimJson = new UIAnimationJSON();
+	soundManager = new SoundManager();
 }
 
 Engine::~Engine()
@@ -66,6 +69,7 @@ bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
 		camera.h = winSize.h;
 
 		TTF_Init();
+		soundManager->init();
 
 		isRunning = true;
 		return true;
@@ -81,6 +85,7 @@ void Engine::update()
 {
 	calDeltaTime();
 	SDL_GetMouseState(&mouse.x, &mouse.y);
+	soundManager->update();
 }
 
 void Engine::handleEvents()

@@ -20,6 +20,7 @@ class Manager;
 class StaticObjectJSON;
 class UIAnimationJSON;
 struct Size;
+class SoundManager;
 
 
 class ENGINE_API Engine {
@@ -53,6 +54,7 @@ public:
     static EventBus* getEventBus() { return eventBus; }
     static Vector2D& getMouse() { return mouse; }
     static UIManager* getUIManager() { return uiManager; }
+    static SoundManager* getSoundManager() { return soundManager; }
     static bool isRunning;
 
 private:
@@ -74,4 +76,5 @@ private:
     static EventBus* eventBus;
     static Vector2D mouse;
     static UIManager* uiManager;
+    static SoundManager* soundManager;
 };

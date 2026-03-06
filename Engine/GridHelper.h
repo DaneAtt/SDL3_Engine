@@ -3,6 +3,7 @@
 #include "Widget.h"
 #include <memory>
 #include <unordered_map>
+#include "TextureManager.h"
 #include "Size.h"
 
 class ENGINE_API GridHelper
@@ -29,6 +30,7 @@ protected:
     virtual float getScreenUIY() const = 0;
     virtual int getInventoryScale() const = 0;
 
+    TextureManager* texManager = Engine::getTextureManager();
 	std::unique_ptr<Panel> mainPanel;
 	std::vector<std::vector<Panel*>> gridPanel;
     std::vector<std::vector<Panel*>> cellAnimations;

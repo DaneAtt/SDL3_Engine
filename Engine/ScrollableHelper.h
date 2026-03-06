@@ -2,6 +2,7 @@
 #include "EngineAPI.h"
 #include "Widget.h"
 #include "Size.h"
+#include "TextureManager.h"
 
 class ENGINE_API ScrollableListHelper 
 {
@@ -32,8 +33,10 @@ protected:
 	void checkScroll(SDL_Event& event);
 	int getClickedSlot(Vector2D& pos);
 
-	void updateRowAnimations(int sourceIndex, int hoverIndex);  // calculates targetY
+	void updateRowAnimation(int sourceLocal, int sourceIndex);
+	void trackDragDirection(int sourceIndex, int hoverIndex);  // calculates targetY
 	void tickRowAnimations(int index);   // lerps currentY toward targetY each frame
+	void drawHighlight();
 
 	virtual int getRowCount() const = 0;
 	virtual void populateRow(Panel& row, int index, const PanelLocation& loc, float yPos) = 0;
@@ -52,4 +55,6 @@ protected:
 	std::vector<float> originalY;
 	int scrollOffset = 0;
 	int visibleRows = 16;
+	int hoverLocal = -1;
+	TextureManager* texManager = Engine::getTextureManager();
 };

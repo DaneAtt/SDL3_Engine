@@ -19,7 +19,6 @@ GridHelper::CellPosition GridHelper::calculateCellPosition(int row, int col)
 
 void GridHelper::populateGrid()
 {
-    std::cout << "populateGrid called from: " << __LINE__ << "\n";
     mainPanel->clearWidgets();
     gridPanel.clear();
     gridPanel.resize(getGridRows());

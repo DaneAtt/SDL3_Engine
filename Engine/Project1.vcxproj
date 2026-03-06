@@ -156,6 +156,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="SkillJSON.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spatialgrid.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="StaticObjectJSON.cpp" />
@@ -188,6 +189,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="ScrollableHelper.h" />
     <ClInclude Include="Size.h" />
     <ClInclude Include="SkillJSON.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StaticObjectJSON.h" />
     <ClInclude Include="UIAnimationJSON.h" />
     <ClInclude Include="UIContainer.h" />

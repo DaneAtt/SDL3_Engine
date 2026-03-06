@@ -112,7 +112,6 @@ protected:
 
 	SDL_FRect bounds{ 0, 0, 0, 0 };
 	EventBus* eventBus = Engine::getEventBus();
-	TextureManager* texManager = Engine::getTextureManager();
 	AssetManager* assets = Engine::getAssetManager();
 	int inventoryScale = 3;
 	float screenWidth = Engine::getCamera()->w;

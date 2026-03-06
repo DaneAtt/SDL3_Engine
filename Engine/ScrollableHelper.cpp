@@ -4,7 +4,6 @@
 #include "SDL3/SDL.h"
 #include "UIElement.h"
 
-
 void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Panel*>& rowPanels)
 {
 	mainPanel->clearWidgets();
@@ -102,7 +101,7 @@ int ScrollableListHelper::getClickedSlot(Vector2D& position)
 	return -1;
 }
 
-void ScrollableListHelper::updateRowAnimations(int sourceIndex, int hoverIndex)
+void ScrollableListHelper::trackDragDirection(int sourceIndex, int hoverIndex)
 {
 	for (int i = 0; i < rowPanels.size(); i++)
 	{
@@ -142,4 +141,31 @@ void ScrollableListHelper::tickRowAnimations(int index)
 		state.currentY += (state.targetY - state.currentY) * 10.0f * Engine::getDeltaTime();
 		rowPanels[i]->setPosition({ rowPanels[i]->getPosition().x, state.currentY });
 	}
+}
+
+void ScrollableListHelper::updateRowAnimation(int sourceLocal, int sourceIndex)
+{
+	Vector2D& mouse = Engine::getMouse();
+	int hoverIndex = getClickedSlot(mouse);	
+	sourceLocal = sourceIndex - scrollOffset;
+	hoverLocal = hoverIndex - scrollOffset;
+	if (hoverIndex != -1)
+		trackDragDirection(sourceLocal, hoverLocal);
+	else hoverLocal = -1;
+
+	tickRowAnimations(sourceLocal);
+}
+
+void ScrollableListHelper::drawHighlight()
+{
+	PanelLocation loc;
+	loc = calculateStartLocation(loc);
+
+	SDL_FRect highlight = {
+		getScreenUIX() + loc.x,
+		getScreenUIY() + originalY[hoverLocal],
+		loc.w,
+		loc.h
+	};
+	texManager->DrawRectFCombined(&highlight, { 74, 227, 232, 255 }, { 129, 165, 166, 150 });
 }

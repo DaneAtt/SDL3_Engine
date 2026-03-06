@@ -21,10 +21,10 @@ public:
 	void drawFont(TTF_Font* font, const char* text, SDL_Color& fg, const Vector2D& pos);
 	void draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, double angle, SDL_FlipMode flip);
 	void draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_FRect* desRect, SDL_FlipMode flip);
-	void DrawRectFOutline(const SDL_FRect* rect, SDL_Color color);
-	void DrawRectF(const SDL_FRect* rect, SDL_Color color);
-	void DrawRectFCombined(const SDL_FRect* rect, SDL_Color color);
-	void DrawRectFCombinedCam(const SDL_FRect* rect, SDL_Color color);
+	void DrawRectFOutline(const SDL_FRect* rect, const SDL_Color& color);
+	void DrawRectF(const SDL_FRect* rect, const SDL_Color& color);
+	void DrawRectFCombined(const SDL_FRect* rect, const SDL_Color& color1, const SDL_Color& color2);
+	void DrawRectFCombinedCam(const SDL_FRect* rect, const SDL_Color& color);
 
 	void setRenderer(SDL_Renderer* r) { renderer = r; }
 

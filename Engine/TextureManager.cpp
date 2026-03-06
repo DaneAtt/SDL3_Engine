@@ -125,14 +125,14 @@ void TextureManager::draw(SDL_Texture* tex, const SDL_FRect* srcRect, const SDL_
 
 }
 
-void TextureManager::DrawRectFOutline(const SDL_FRect* rect, SDL_Color color) 
+void TextureManager::DrawRectFOutline(const SDL_FRect* rect, const SDL_Color& color)
 {
 	if (!rect) return;
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderRect(renderer, rect);
 }
 
-void TextureManager::DrawRectF(const SDL_FRect* rect, SDL_Color color) 
+void TextureManager::DrawRectF(const SDL_FRect* rect, const SDL_Color& color)
 {
 	if (!rect) return;
 
@@ -141,13 +141,13 @@ void TextureManager::DrawRectF(const SDL_FRect* rect, SDL_Color color)
 	SDL_RenderFillRect(renderer, rect);
 }
 
-void TextureManager::DrawRectFCombined(const SDL_FRect* rect, SDL_Color color)
+void TextureManager::DrawRectFCombined(const SDL_FRect* rect, const SDL_Color& color1 , const SDL_Color& color2)
 {
-	DrawRectFOutline(rect, color);
-	DrawRectF(rect, color);
+	DrawRectFOutline(rect, color1);
+	DrawRectF(rect, color2);
 }
 
-void TextureManager::DrawRectFCombinedCam(const SDL_FRect* rect, SDL_Color color)
+void TextureManager::DrawRectFCombinedCam(const SDL_FRect* rect, const SDL_Color& color)
 {
 	SDL_FRect drawRect = *rect;
 	drawRect.x -= Engine::getCamera()->x;
