@@ -37,9 +37,7 @@
 *.idb
 *.log
 *.exp
-/Engine/Engine/x64/Debug/Engine.tlog
 *.tlog
 *.ipdb
 *.iobj
-Engine/Engine/x64/Debug/Engine.dll.recipe
-Engine/Engine/x64/Debug/Engine.dll.recipe
+Engine/Engine/x64/Debug/*
