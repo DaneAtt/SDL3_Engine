@@ -83,7 +83,8 @@ void AnimationJSON::loadJSONC()
 
 Animation* AnimationJSON::searchAnimation(std::string name)
 {
-	if (animations.find(name) == animations.end()) {
+	if (animations.find(name) == animations.end()) 
+	{
 		std::cout << "Warning: Animation '" << name << "' not found\n";
 		return nullptr;
 	}

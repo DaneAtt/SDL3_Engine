@@ -10,20 +10,11 @@ TextureManager::TextureManager(WindowRender* windowRender)
 
 TextureManager::~TextureManager()
 {
-	for (auto tex : textures)
-	{
-		if(tex)
-		{
-			SDL_DestroyTexture(tex);
-		}
-	}
-	textures.clear();
+	for (auto tex : textures) SDL_DestroyTexture(tex);
 
-	for (auto& pair : textCache) 
-	{
-		SDL_DestroyTexture(pair.second.texture);
-	}
-	textCache.clear();
+	for (auto font : fonts) TTF_CloseFont(font);
+
+	for (auto& pair : textCache) SDL_DestroyTexture(pair.second.texture);
 }
 
 SDL_Texture* TextureManager::LoadTexture(const char* path)
@@ -64,19 +55,21 @@ TTF_Font* TextureManager::LoadFont(const char* path, float ptsize)
 	return font;
 }
 
+// Good for static words, bad for dynamic changing words
 void TextureManager::drawFont(TTF_Font* font, const char* text, SDL_Color& fg, const Vector2D& pos)
 {
-	std::string cacheKey = makeTextCacheKey(text, fg);
+	// Instanced on the stack instantly no string allocations
+	TextKey cacheKey{ text, fg };
 
-	// Check cache first
+	// Check cache using the struct key
 	auto it = textCache.find(cacheKey);
 	if (it != textCache.end()) {
 		// Use cached texture
 		SDL_FRect destRect = { pos.x, pos.y, (float)it->second.width, (float)it->second.height };
 		SDL_RenderTexture(renderer, it->second.texture, NULL, &destRect);
-		return;
+		return; // Texts has been created, returning without creating new texts
 	}
-
+	// Create new text that is not found in map
 	SDL_Surface* surface = TTF_RenderText_Blended(font, text, 0, fg);
 	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -150,6 +143,7 @@ void TextureManager::DrawRectFCombined(const SDL_FRect* rect, const SDL_Color& c
 void TextureManager::DrawRectFCombinedCam(const SDL_FRect* rect, const SDL_Color& color)
 {
 	SDL_FRect drawRect = *rect;
+	// draws objects relative to the moving camera
 	drawRect.x -= Engine::getCamera()->x;
 	drawRect.y -= Engine::getCamera()->y;
 	DrawRectFOutline(&drawRect, color);

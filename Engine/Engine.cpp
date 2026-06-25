@@ -43,7 +43,7 @@ Engine::Engine()
 	manager = new Manager;
 	windowRender = new WindowRender();
 	textureManager = new TextureManager(windowRender);
-	assetManager = new AssetManager(manager, textureManager);
+	assetManager = new AssetManager(textureManager);
 	animJson = new AnimationJSON();
 	objJson = new StaticObjectJSON();
 	loadingMgr = new LoadingManager();

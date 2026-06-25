@@ -2,21 +2,21 @@
 #include "SDL3/sdl.h"
 
 
-AssetManager::AssetManager(Manager* man, TextureManager* texMgr) : manager(man), textureManager(texMgr){}
+AssetManager::AssetManager(TextureManager* texMgr) : textureManager(texMgr){}
 
 AssetManager::~AssetManager() {}
 
 void AssetManager::addTexture(std::string id, const char* path)
 {
-	textures.emplace(id, textureManager->LoadTexture(path));
+	textures.emplace(std::move(id), textureManager->LoadTexture(path));
 }
 
 void AssetManager::addFont(std::string id, const char* path, float ptsize)
 {
-	fonts.emplace(id, textureManager->LoadFont(path, ptsize));
+	fonts.emplace(std::move(id), textureManager->LoadFont(path, ptsize));
 }
 
-SDL_Texture* AssetManager::getTexture(std::string id)
+SDL_Texture* AssetManager::getTexture(const std::string& id)
 {
     auto it = textures.find(id);
     if (it == textures.end())
@@ -27,7 +27,13 @@ SDL_Texture* AssetManager::getTexture(std::string id)
     return it->second;
 }
 
-TTF_Font* AssetManager::getFont(std::string id)
+TTF_Font* AssetManager::getFont(const std::string& id)
 {
-	return fonts[id];
+	auto it = fonts.find(id);
+	if (it == fonts.end())
+	{
+		std::cout << "Font not found: " << id << '\n';
+		return nullptr;
+	}
+	return it->second;
 }
