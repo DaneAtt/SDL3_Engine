@@ -9,10 +9,12 @@ class ENGINE_API EventBus
 {
 public:
 	template<typename T>
-	void subscribe(const std::function<void(T&)>& callback)
+	void subscribe(std::function<void(const T&)> callback)
 	{
-		auto wrapper = [callback = std::move(callback)](void* data) {
-			callback(*static_cast<T*>(data));
+		// std::function<void(void*)> is the auto
+		auto wrapper = [callback = std::move(callback)](const void* data) 
+		{
+			callback(*static_cast<const T*>(data));
 		};
 		subscribers[typeid(T)].push_back(wrapper);
 	}
@@ -25,11 +27,11 @@ public:
 		{
 			for (auto& callback : it->second)
 			{	
-				callback(const_cast<T*>(&event));
+				callback(&event);
 			}
 		}
 	}
 
 private:
-	std::unordered_map<std::type_index, std::vector<std::function<void(void*)>>> subscribers;
+	std::unordered_map<std::type_index, std::vector<std::function<void(const void*)>>> subscribers;
 };

@@ -1,5 +1,4 @@
 #include "SoundManager.h"
-#include <iostream>
 
 SoundManager::~SoundManager()
 {
@@ -7,9 +6,14 @@ SoundManager::~SoundManager()
 	{
 		SDL_free(sound.first);
 	}
+
+	for (auto& stream : streams)
+	{
+		SDL_DestroyAudioStream(stream.stream);
+	}
 }
 
-void SoundManager::init()
+bool SoundManager::init()
 {
 	if(SDL_Init(SDL_INIT_AUDIO))
 	{
@@ -17,13 +21,13 @@ void SoundManager::init()
 		if (!SDL_GetAudioDeviceFormat(devID, &destSpec, NULL))
 		{
 			std::cout << "SDL_GetAudioDeviceFormat failed" << '\n';
-			return;
+			return false;
 		}
 		srcSpec.freq = 48000;
 		srcSpec.channels = 2;
 		srcSpec.format = SDL_AUDIO_F32;
 
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < MAX_STREAMS; i++)
 		{
 			SDL_AudioStream* stream = SDL_CreateAudioStream(&srcSpec, &destSpec);
 			AudioStream strm;
@@ -32,7 +36,10 @@ void SoundManager::init()
 			streams.push_back(std::move(strm));
 			SDL_BindAudioStream(devID, stream);
 		}
+		return true;
 	}
+	std::cout << "SoundManager initialization failed" << '\n';
+	return false;
 }
 
 void SoundManager::update()
@@ -53,8 +60,13 @@ void SoundManager::loadAudio(const char* path, const std::string& name)
 	Uint32 len = 0;
 	if (path)
 	{
-		SDL_LoadWAV(path, &srcSpec, &buff, &len);
-		audioMap[name] = std::make_pair(buff, len);
+		if (!SDL_LoadWAV(path, &srcSpec, &buff, &len))
+		{
+			std::cout << "Failed to load audio: " << path << '\n';
+			return;
+		}
+		size_t id = std::hash<std::string>{} (name);
+		audioMap[id] = std::make_pair(buff, len);
 	}
 	else
 	{

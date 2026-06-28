@@ -19,7 +19,6 @@ class UIManager;
 class Manager;
 class StaticObjectJSON;
 class UIAnimationJSON;
-struct Size;
 class SoundManager;
 
 

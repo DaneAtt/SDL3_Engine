@@ -40,22 +40,14 @@ SoundManager* Engine::soundManager = nullptr;
 
 Engine::Engine()
 {
-	manager = new Manager;
 	windowRender = new WindowRender();
-	textureManager = new TextureManager(windowRender);
-	assetManager = new AssetManager(textureManager);
-	animJson = new AnimationJSON();
-	objJson = new StaticObjectJSON();
 	loadingMgr = new LoadingManager();
-	event = new SDL_Event;
-	eventBus = new EventBus();
-	uiManager = new UIManager();
-	uiAnimJson = new UIAnimationJSON();
-	soundManager = new SoundManager();
+	textureManager = new TextureManager(windowRender);
 }
 
 Engine::~Engine()
 {
+	clean();
 }
 
 bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
@@ -68,10 +60,20 @@ bool Engine::init(const char* title, int w, int h, int xpos, int ypos)
 		camera.w = winSize.w;
 		camera.h = winSize.h;
 
-		TTF_Init();
-		soundManager->init();
+		manager = new Manager;
+		assetManager = new AssetManager(textureManager);
+		animJson = new AnimationJSON();
+		objJson = new StaticObjectJSON();
+		event = new SDL_Event;
+		eventBus = new EventBus();
+		uiManager = new UIManager();
+		uiAnimJson = new UIAnimationJSON();
+		soundManager = new SoundManager();
+		if (!TTF_Init()) return false;
+		if (!soundManager->init()) return false;
 
 		isRunning = true;
+		lastFrameTime = SDL_GetTicks();
 		return true;
 	}
 	else
@@ -92,21 +94,21 @@ void Engine::handleEvents()
 {
 	while (SDL_PollEvent(event))
 	{
-
-		if (event->type == SDL_EVENT_QUIT)
+		switch (event->type)
 		{
+		case SDL_EVENT_QUIT:
 			isRunning = false;
-		}
-		if (event->type == SDL_EVENT_WINDOW_RESIZED)
+			break;
+
+		case SDL_EVENT_WINDOW_RESIZED:
 		{
 			Size winSize = windowRender->getWinSize();
 			camera.w = winSize.w;
 			camera.h = winSize.h;
 			std::cout << "Window resized! New camera size: " << camera.w << " x " << camera.h << "\n";
+			break;
 		}
 
-		switch (event->type)
-		{
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 		case SDL_EVENT_MOUSE_BUTTON_UP:
 			events.push(*event);
@@ -131,12 +133,20 @@ void Engine::handleEvents()
 
 void Engine::clean()
 {
-	delete textureManager;
-	delete windowRender;
-	delete assetManager;
 	delete manager;
+	delete windowRender;
+	delete textureManager;
+	delete assetManager;
 	delete animJson;
+	delete objJson;
+	delete loadingMgr;
+	delete eventBus;
+	delete uiManager;
+	delete uiAnimJson;
+	delete soundManager;
 	delete collisionGrid;
+	delete pathFinder;
+	delete event;
 	TTF_Quit();
 }
 
