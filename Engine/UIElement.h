@@ -8,6 +8,9 @@
 #include "Size.h"
 #include "UIAnimationJSON.h"
 #include "StaticObjectJSON.h"
+#include "InputHelper.h"
+
+using namespace InputHelper;
 
 class Panel;
 
@@ -47,8 +50,7 @@ public:
 
 		if (!isVisible()) return;
 
-		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN &&
-			event.button.button == SDL_BUTTON_LEFT)
+		if (isMouseLButtonDown(event))
 		{
 			handleClick(position);
 		}
@@ -100,7 +102,7 @@ public:
 
 	// Function
 	bool screenChangeUpdate(Panel* mainPanel);
-	const SDL_FRect& calculateScreenPosition(const float& Img_Width, const float& Img_Height);
+	const SDL_FRect& calculateScreenPosition(float Img_Width, float Img_Height);
 
 	virtual ~UIElement() = default;
 

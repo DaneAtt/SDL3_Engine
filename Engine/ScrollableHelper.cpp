@@ -4,7 +4,7 @@
 #include "SDL3/SDL.h"
 #include "UIElement.h"
 
-void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Panel*>& rowPanels)
+void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel)
 {
 	mainPanel->clearWidgets();
 	rowPanels.clear();
@@ -30,7 +30,7 @@ void ScrollableListHelper::rebuildVisibleRows(Panel* mainPanel, std::vector<Pane
 	}
 }
 
-void ScrollableListHelper::updateRowHover(int& lastHoveredRow, std::vector<Panel*>& rowPanels)
+void ScrollableListHelper::updateRowHover(int& lastHoveredRow)
 {
 	Vector2D mouse = Engine::getMouse();
 

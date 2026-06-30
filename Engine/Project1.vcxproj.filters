@@ -197,9 +197,6 @@
     <ClInclude Include="StaticObjectJSON.h">
       <Filter>Header Files\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="SkillJSON.h">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Widget.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
@@ -223,6 +220,15 @@
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillJSON.h">
+      <Filter>Header Files\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="LayoutHelperBase.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHelper.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

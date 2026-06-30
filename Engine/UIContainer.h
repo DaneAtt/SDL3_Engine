@@ -17,7 +17,7 @@ public:
     {
         T* element = new T(std::forward<TArgs>(mArgs)...);
 
-        element->setParent(owner);
+        element->setParent(owner);  // first ui is nullptr
 
         std::unique_ptr<ElementType> uPtr{ element };
         elements.emplace_back(std::move(uPtr));
@@ -52,6 +52,7 @@ public:
             if (e->containsPoint(mouse))
             {
                 e->handleClick(mouse);
+                break;
             }
         }
     }

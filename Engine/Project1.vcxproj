@@ -184,7 +184,9 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="GridHelper.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HitboxComponent.h" />
+    <ClInclude Include="InputHelper.h" />
     <ClInclude Include="JSONTemplate.h" />
+    <ClInclude Include="LayoutHelperBase.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="ScrollableHelper.h" />

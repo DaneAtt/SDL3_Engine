@@ -9,8 +9,8 @@ GridHelper::CellPosition GridHelper::calculateCellPosition(int row, int col)
     float scaledGapH = getHorizontalGap() * scale;
     float scaledGapV = getVerticalGap() * scale;
 
-    pos.x = getGridStartX() * scale + col * (scaledCell + scaledGapH);
-    pos.y = getGridStartY() * scale + row * (scaledCell + scaledGapV);
+    pos.x = getPanelStartX() * scale + col * (scaledCell + scaledGapH);
+    pos.y = getPanelStartY() * scale + row * (scaledCell + scaledGapV);
     pos.w = scaledCell;
     pos.h = scaledCell;
 

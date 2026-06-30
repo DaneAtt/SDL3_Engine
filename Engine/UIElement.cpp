@@ -38,7 +38,7 @@ void UIElement::setVisibility(bool visible)
 	this->visible = visible;
 }
 
-const SDL_FRect& UIElement::calculateScreenPosition(const float& Img_Width, const float& Img_Height)
+const SDL_FRect& UIElement::calculateScreenPosition(float Img_Width, float Img_Height)
 {
 	size.w = Img_Width * inventoryScale;
 	size.h = Img_Height * inventoryScale;
