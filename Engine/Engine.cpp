@@ -150,9 +150,9 @@ void Engine::clean()
 	TTF_Quit();
 }
 
-void Engine::initCollisionGrid(int worldWidth, int worldHeight) 
+SpatialGrid* Engine::initCollisionGrid(int worldWidth, int worldHeight) 
 {
-	collisionGrid = new SpatialGrid(worldWidth, worldHeight);
+	return collisionGrid = new SpatialGrid(worldWidth, worldHeight);
 }
 
 void Engine::calDeltaTime()
@@ -163,8 +163,8 @@ void Engine::calDeltaTime()
 	deltaTime = dt;
 }
 
-void Engine::initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY)
+PathFinder* Engine::initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY)
 {
-	pathFinder = new PathFinder(mapWidth, mapHeight, cellSizeX, cellSizeY);
+	return pathFinder = new PathFinder(mapWidth, mapHeight, cellSizeX, cellSizeY);
 
 }

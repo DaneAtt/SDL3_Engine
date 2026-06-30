@@ -186,6 +186,7 @@ xcopy "$(TargetDir)engine.dll" "$(SolutionDir)..\..\..\Game_cpp\Game\x64\Release
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="JSONTemplate.h" />
     <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="ScrollableHelper.h" />
     <ClInclude Include="Size.h" />
     <ClInclude Include="SkillJSON.h" />

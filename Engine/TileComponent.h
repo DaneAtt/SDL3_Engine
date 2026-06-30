@@ -4,8 +4,9 @@
 #include "AssetManager.h"
 #include "TextureManager.h"
 #include "TransformComponent.h"
+#include "RenderComponent.h"
 
-class TileComponent : public Component
+class TileComponent : public RenderComponent
 {
 public:
     TileComponent(int srcX, int srcY, int scale, std::string texID, SDL_FlipMode flip)
@@ -32,7 +33,7 @@ public:
         destRect.x = transform->position.x - Engine::getCamera()->x;
         destRect.y = transform->position.y - Engine::getCamera()->y;
 
-        SDL_Rect* cam = Engine::getCamera();
+        const SDL_Rect* cam = Engine::getCamera();
         if (destRect.x + destRect.w < 0 || destRect.x > cam->w ||
             destRect.y + destRect.h < 0 || destRect.y > cam->h) {
             return;

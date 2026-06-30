@@ -9,11 +9,12 @@
 #include "AnimationJSON.h"
 #include "EngineAPI.h"
 #include "StaticObjectJSON.h"
+#include "RenderComponent.h"
 
 class HitBoxComponent;
 class TransformComponent;
 
-class SpriteComponent : public Component
+class SpriteComponent : public RenderComponent
 {
 public:
     SDL_FlipMode spriteFlip = SDL_FLIP_NONE;

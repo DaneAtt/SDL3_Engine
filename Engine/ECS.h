@@ -42,7 +42,6 @@ public:
 	Entity* entity;
 	virtual void init() {};
 	virtual void update() {};
-	virtual void draw() {};
 
 	virtual ~Component() {};
 
@@ -61,13 +60,7 @@ public:
 		}
 	}
 
-	void draw()
-	{
-		for (auto& c : components)
-		{
-			c->draw();
-		}
-	}
+	void draw();
 
 	bool const isActive() { return active; };
 	void destroy() { active = false; };

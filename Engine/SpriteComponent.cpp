@@ -2,6 +2,7 @@
 #include "HitBoxComponent.h"
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
+#include "RenderComponent.h"
 
 SpriteComponent::SpriteComponent(const char* id, bool animation)
 {

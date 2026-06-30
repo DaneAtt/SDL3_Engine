@@ -3,6 +3,7 @@
 #include "SDL3/SDL.h"
 #include "SDL3_ttf/SDL_ttf.h"
 #include <queue>
+#include <optional>
 
 class WindowRender;
 class TextureManager;
@@ -40,15 +41,20 @@ public:
     static AnimationJSON* getAnimJSON() { return animJson; }
     static StaticObjectJSON* getObjJSON() { return objJson; }
     static UIAnimationJSON* getUIAnimJSON() { return uiAnimJson; }
-    static void initCollisionGrid(int worldWidth, int worldHeight);
+    static SpatialGrid* initCollisionGrid(int worldWidth, int worldHeight);
     static SpatialGrid* getCollisionGrid() { return collisionGrid; }
-    static SDL_Rect* getCamera() { return &camera; }
+    static const SDL_Rect* getCamera() { return &camera; }
+    static void setCameraPosition(std::optional<int> x = std::nullopt, std::optional<int> y = std::nullopt)
+    {
+        if (x.has_value()) camera.x = x.value();
+        if (y.has_value()) camera.y = y.value();
+    }
     static LoadingManager* getLoadingMgr() { return loadingMgr; }
     static SDL_Event* getEvent() { return event; }
     static std::queue<SDL_Event>& getEventQueue() { return events; }
-    static float& getDeltaTime() { return deltaTime; }
+    static float getDeltaTime() { return deltaTime; }
     static void calDeltaTime();
-    static void initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
+    static PathFinder* initPathFinder(int mapWidth, int mapHeight, int cellSizeX, int cellSizeY);
     static PathFinder* getPathFinder() { return pathFinder; }
     static EventBus* getEventBus() { return eventBus; }
     static Vector2D& getMouse() { return mouse; }

@@ -2,6 +2,7 @@
 #include <mutex>
 #include <unordered_map>
 #include <typeindex>
+#include "RenderComponent.h"
 
 // single shared counter defined in one translation unit so all TUs/DLLs see same IDs
 ENGINE_API ComponentID getNewComponentTypeID()
@@ -29,4 +30,17 @@ void Entity::addGroup(Group mGroup)
 {
 	groupBitset[mGroup] = true;
 	manager.AddToGroup(this, mGroup);
+}
+
+ENGINE_API void Entity::draw()
+{
+	for (auto& c : components)
+	{
+		// Check if this component inherits from RenderComponent
+		auto* renderComp = dynamic_cast<RenderComponent*>(c.get());
+		if (renderComp)
+		{
+			renderComp->draw();
+		}
+	}
 }
